@@ -6,16 +6,43 @@
     padding: 0;
     box-sizing: inherit;
 
-    // border: 1px solid black;
+    border: 1px solid black;
 }
+
+
+
+:root {  //this is like the global parent ! all stuff in here , accessible to all elements.
+    --color-primary : #eb2f64;   //this is a custom property. it is a CSS variable.
+    --color-primary-light : #FF3366;   
+    --color-primary-dark : #BA265D;
+
+    --color-grey-light-1: #faf9f9 ;
+    --color-grey-light-2: #f4f2f2 ;
+    --color-grey-light-3: #f0eeee ;
+    --color-grey-light-4: #ccc ;
+    
+    --color-grey-dark-1: #333 ;
+    --color-grey-dark-2: #777 ;
+    --color-grey-dark-3: #999 ;
+
+    --line : 1px solid var(--color-grey-light-2);
+
+    --shadow-dark : 0 2rem 6rem rgba(0, 0, 0, 0.351);
+    --shadow-light : 0 2rem 5rem rgba(0, 0, 0, 0.151);
+
+
+}
+
 
 html { // this defines what 1 rem is : 1rem = 10px
     font-size: 62.5%;  /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */        
+    font-family: 'Roboto', sans-serif;
 }
 
 
 body { /* all the stuff in here , will be inherited to the child elements.*/
     box-sizing: border-box;
+    background-color: #EAF0F5;
 }
 
 

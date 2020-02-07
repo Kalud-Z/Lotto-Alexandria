@@ -1,0 +1,125 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  border: 1px solid black; }
+
+:root {
+  --color-primary: #eb2f64;
+  --color-primary-light: #FF3366;
+  --color-primary-dark: #BA265D;
+  --color-grey-light-1: #faf9f9 ;
+  --color-grey-light-2: #f4f2f2 ;
+  --color-grey-light-3: #f0eeee ;
+  --color-grey-light-4: #ccc ;
+  --color-grey-dark-1: #333 ;
+  --color-grey-dark-2: #777 ;
+  --color-grey-dark-3: #999 ;
+  --line: 1px solid var(--color-grey-light-2);
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.351);
+  --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.151); }
+
+html {
+  font-size: 62.5%;
+  /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */
+  font-family: 'Roboto', sans-serif; }
+
+body {
+  /* all the stuff in here , will be inherited to the child elements.*/
+  box-sizing: border-box;
+  background-color: #EAF0F5; }
+
+.jackpot-text {
+  font-size: 4rem;
+  color: #544c4c; }
+
+.winning_chances {
+  color: #544c4c; }
+
+.center-element {
+  text-align: center; }
+
+.margin-bottom-small {
+  margin-bottom: 1rem; }
+
+.margin-bottom-medium {
+  margin-bottom: 2rem; }
+
+.margin-bottom-big {
+  margin-bottom: 4rem; }
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  border: 1px solid black; }
+
+:root {
+  --color-primary: #eb2f64;
+  --color-primary-light: #FF3366;
+  --color-primary-dark: #BA265D;
+  --color-grey-light-1: #faf9f9 ;
+  --color-grey-light-2: #f4f2f2 ;
+  --color-grey-light-3: #f0eeee ;
+  --color-grey-light-4: #ccc ;
+  --color-grey-dark-1: #333 ;
+  --color-grey-dark-2: #777 ;
+  --color-grey-dark-3: #999 ;
+  --line: 1px solid var(--color-grey-light-2);
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.351);
+  --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.151); }
+
+html {
+  font-size: 62.5%;
+  /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */
+  font-family: 'Roboto', sans-serif; }
+
+body {
+  /* all the stuff in here , will be inherited to the child elements.*/
+  box-sizing: border-box;
+  background-color: #EAF0F5; }
+
+.header {
+  background-color: #F3DE2E;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0; }
+  .header__logo {
+    height: 5rem;
+    margin-bottom: 2rem; }
+  .header__text-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; }
+
+.row {
+  max-width: 120rem;
+  margin: 0 auto; }
+  .row:not(:last-child) {
+    margin-bottom: 5rem; }
+  .row::after {
+    content: "";
+    display: table;
+    clear: both; }
+  .row [class^="col-"] {
+    float: left; }
+    .row [class^="col-"]:not(:last-child) {
+      margin-right: 5rem; }
+  .row .col-1-of-1 {
+    width: 100%; }
+  .row .col-1-of-2 {
+    width: calc( (100% - 5rem) / 2); }
+  .row .col-1-of-3 {
+    width: calc( (100% - (5rem * 2) ) / 3); }
+  .row .col-2-of-3 {
+    width: calc( 2 * ((100% - 2 * 5rem) / 3) + 5rem); }
+  .row .col-1-of-4 {
+    width: calc( (100% - (5rem * 3) ) / 4); }

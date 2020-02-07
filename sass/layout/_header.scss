@@ -1,0 +1,26 @@
+
+
+
+.header {
+    background-color: #F3DE2E;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;     // centers elements along the cross axis
+    justify-content: center; // centers elements along the main axis
+
+    padding:2rem 0;
+
+    &__logo {
+        height: 5rem;
+        margin-bottom: 2rem;
+    }
+
+    &__text-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+}
