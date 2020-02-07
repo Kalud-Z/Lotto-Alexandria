@@ -1,0 +1,14 @@
+{
+  "name": "simple-me",
+  "version": "1.0.0",
+  "description": "website for practice",
+  "main": "index.js",
+  "scripts": {
+    "watch:sass": "node-sass sass/main.scss css/style.css -w"
+  },
+  "author": "Kalud",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.13.0"
+  }
+}
