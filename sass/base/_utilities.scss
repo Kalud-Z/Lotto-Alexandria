@@ -11,11 +11,28 @@
 .margin-bottom-big    { margin-bottom: 4rem; }
 
 
+.margin-left-very-small { margin-left: 0.5rem; }
+
+
 .display-none {
     display: none !important;
 }
 
 .hide {
-    visibility: hidden;
+    visibility: hidden !important;
     opacity: 0;
 }
+
+
+
+.show {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.showPopup {
+    opacity: 1;
+    visibility: visible !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+}
+

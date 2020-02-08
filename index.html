@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="css/style.css">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300&display=swap" rel="stylesheet">
 
 
     <title> Project Name </title>
@@ -32,7 +33,7 @@
     <main class="section-play">
 
         <div class="section-play__left">
-            <h1 class="section-play__h1">Ihre Spielfelder</h1>
+            <h1 class="primary-heading margin-bottom-medium">Ihre Spielfelder</h1>
 
             <div class="couponsGroup">
                     <div class="couponsGroup__coupon">
@@ -321,7 +322,21 @@
 
 
         <div class="section-play__right">
-            right side xddgdgdsgsdgsdhdhshshss
+            <h1 class="primary-heading margin-bottom-medium">Quick-Tipps</h1>
+            
+            <div class="quickTips">
+                <div class="quickTips__item" id="quickTipsItemZufall">
+            
+                <svg class="quickTips__logo">  <use xlink:href="img/symbol-defs.svg#icon-dice"></use> </svg>
+                  Zufall </div>
+                <div class="quickTips__item" id="quickTipsItemAstro"> 
+                <svg class="quickTips__logo">  <use xlink:href="img/symbol-defs.svg#icon-star"></use> </svg>
+                    Astro </div>
+                <div class="quickTips__item" id="quickTipsItemStatistik"> 
+                <svg class="quickTips__logo">  <use xlink:href="img/symbol-defs.svg#icon-bar-graph"></use> </svg>
+                    Statistik </div>
+            </div>
+
         </div>
 
 
@@ -329,6 +344,84 @@
 
 
 
+    <div class="allPopups">
+
+         <div class="randomNumbers-popup" id="popupZufall">
+                    <div class="randomNumbers-popup__container">
+                        <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
+                        <p>Wie viele Felder sollen befüllt werden ?</p>
+                        <div class="randomNumbers-popup__ButtonsGroup">
+                            <div class="randomNumbers-popup__button"> Feld   <span>  +1  </span></div>
+                            <div class="randomNumbers-popup__button"> Felder <span> +3 </span></div>
+                            <div class="randomNumbers-popup__button"> Felder <span> +6 </span></div>
+                        </div>
+                        <button class="button-primary"> Komplett befüllen </button>
+                    </div>
+         </div>
+
+
+         <div class="randomNumbers-popup " id="popupAstro">
+            <div class="randomNumbers-popup__container">
+                <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
+                <p>Welches ist Ihr Sternzeichen?</p>
+                <div class="randomNumbers-popup__ButtonsGroup randomNumbers-popup__ButtonsGroup--astro ">
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-database"></use> </svg> Widder </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-clubs"></use> </svg> Stier </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-pacman"></use> </svg> Jungrau </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-database"></use> </svg> Schütze </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-bullhorn"></use> </svg> Waage </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-clubs"></use> </svg> Krebs </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-database"></use> </svg> Löwe </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-pacman"></use> </svg> Wassermann </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-droplet"></use> </svg> Zwillinge </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-droplet"></use> </svg> Fische </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-clubs"></use> </svg> Steinbock </div>
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--astro">  <svg class="randomNumbers-popup__logo-astro">  <use xlink:href="img/symbol-defs.svg#icon-droplet"></use> </svg> Skorpion </div>
+                </div>
+            </div>
+         </div>
+
+
+         <div class="randomNumbers-popup" id="popupStatistik">
+            <div class="randomNumbers-popup__container randomNumbers-popup__container--statistik">
+                <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
+                <p>Wählen Sie Ihren Statistik-Tipp</p>
+    
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--statistik">
+                        <h2 class="randomNumbers-popup__button--statistik__title"> Der Hot-Numbers-Tipp</h2>
+                        <p class="randomNumbers-popup__button--statistik__description"> Bei dem Hot-Numbers-Tipp wird aus den zwanzig am häufigsten gezogenen Zahlen aller bisherigen Ziehungen eine Kombination pro Spielfeld ausgewählt. </p>
+                    </div>
+
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--statistik">
+                        <h2 class="randomNumbers-popup__button--statistik__title"> Der Hot-Numbers-Tipp</h2>
+                        <p class="randomNumbers-popup__button--statistik__description"> Bei dem Hot-Numbers-Tipp wird aus den zwanzig am häufigsten gezogenen Zahlen aller bisherigen Ziehungen eine Kombination pro Spielfeld ausgewählt. </p>
+                    </div>
+                   
+
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--statistik">
+                        <h2 class="randomNumbers-popup__button--statistik__title"> Der Hot-Numbers-Tipp</h2>
+                        <p class="randomNumbers-popup__button--statistik__description"> Bei dem Hot-Numbers-Tipp wird aus den zwanzig am häufigsten gezogenen Zahlen aller bisherigen Ziehungen eine Kombination pro Spielfeld ausgewählt. </p>
+                    </div>
+
+                    <div class="randomNumbers-popup__button randomNumbers-popup__button--statistik">
+                        <h2 class="randomNumbers-popup__button--statistik__title"> Der Hot-Numbers-Tipp</h2>
+                        <p class="randomNumbers-popup__button--statistik__description"> Bei dem Hot-Numbers-Tipp wird aus den zwanzig am häufigsten gezogenen Zahlen aller bisherigen Ziehungen eine Kombination pro Spielfeld ausgewählt. </p>
+                    </div>
+
+                </div>
+            </div>
+         </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
 
 
 
