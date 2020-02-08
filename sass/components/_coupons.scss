@@ -1,0 +1,71 @@
+
+
+
+
+.couponsGroup {
+    // width: 40rem;
+    display: flex;
+    flex-wrap: wrap;
+
+
+    &__coupon {
+        flex: 1 0 25.3%;
+        background-color: white;
+
+
+        margin: .5rem;
+        padding: .4rem;
+        border-radius: 6px;
+        box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+        cursor: pointer;
+
+        //start state
+        opacity: 0;
+        transition: all .5s;
+       
+    }
+
+    &__couponNumber {
+        height: 100%;
+        width: 100%;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        
+    }
+
+    &__couponValue {
+        font-size: 4rem;
+        color: rgb(146, 193, 231);
+        opacity: 0.5;
+        font-weight: 300;
+    }
+
+    &__poolNumbersContainer {
+        display: flex;
+        flex-wrap: wrap;
+
+        padding: .3rem;
+    }
+
+
+    &__poolNumber {
+        flex: 0 0 20%;
+        padding: 0.1rem;
+        
+        
+        &::after {
+            content: '';
+            display: block;
+            background: #f6f6f8;
+            border-radius: 2px;
+            padding-bottom: 100%;
+        }
+    }
+    
+
+
+
+}

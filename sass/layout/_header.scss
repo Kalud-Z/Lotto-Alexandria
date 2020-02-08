@@ -2,6 +2,9 @@
 
 
 .header {
+    clip-path: ellipse(71% 75% at 50% 25%);
+
+
     background-color: #F3DE2E;
     width: 100%;
 
@@ -10,7 +13,7 @@
     align-items: center;     // centers elements along the cross axis
     justify-content: center; // centers elements along the main axis
 
-    padding:2rem 0;
+    padding:2rem 20rem;
 
     &__logo {
         height: 5rem;

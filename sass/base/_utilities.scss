@@ -9,3 +9,13 @@
 .margin-bottom-small { margin-bottom: 1rem; }
 .margin-bottom-medium { margin-bottom: 2rem; }
 .margin-bottom-big    { margin-bottom: 4rem; }
+
+
+.display-none {
+    display: none !important;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+}

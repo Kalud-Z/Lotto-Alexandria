@@ -1,0 +1,27 @@
+
+
+.section-play {
+    margin: 5rem 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-evenly;
+
+    &__h1 {
+        font-size: 2rem;
+        margin-bottom:2rem;
+        margin-left: 0.5rem;
+        font-weight: 400;
+        color: #7587a4;
+    }
+
+    &__left {
+        flex: 0 0 40%;
+    }
+
+    &__right {
+        
+    }
+
+
+
+}

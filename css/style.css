@@ -3,8 +3,7 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
-  border: 1px solid black; }
+  box-sizing: inherit; }
 
 :root {
   --color-primary: #eb2f64;
@@ -50,13 +49,19 @@ body {
 .margin-bottom-big {
   margin-bottom: 4rem; }
 
+.display-none {
+  display: none !important; }
+
+.hide {
+  visibility: hidden;
+  opacity: 0; }
+
 *,
 *::after,
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
-  border: 1px solid black; }
+  box-sizing: inherit; }
 
 :root {
   --color-primary: #eb2f64;
@@ -84,13 +89,14 @@ body {
   background-color: #EAF0F5; }
 
 .header {
+  clip-path: ellipse(71% 75% at 50% 25%);
   background-color: #F3DE2E;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0; }
+  padding: 2rem 20rem; }
   .header__logo {
     height: 5rem;
     margin-bottom: 2rem; }
@@ -123,3 +129,55 @@ body {
     width: calc( 2 * ((100% - 2 * 5rem) / 3) + 5rem); }
   .row .col-1-of-4 {
     width: calc( (100% - (5rem * 3) ) / 4); }
+
+.couponsGroup {
+  display: flex;
+  flex-wrap: wrap; }
+  .couponsGroup__coupon {
+    flex: 1 0 25.3%;
+    background-color: white;
+    margin: .5rem;
+    padding: .4rem;
+    border-radius: 6px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+    opacity: 0;
+    transition: all .5s; }
+  .couponsGroup__couponNumber {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .couponsGroup__couponValue {
+    font-size: 4rem;
+    color: #92c1e7;
+    opacity: 0.5;
+    font-weight: 300; }
+  .couponsGroup__poolNumbersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: .3rem; }
+  .couponsGroup__poolNumber {
+    flex: 0 0 20%;
+    padding: 0.1rem; }
+    .couponsGroup__poolNumber::after {
+      content: '';
+      display: block;
+      background: #f6f6f8;
+      border-radius: 2px;
+      padding-bottom: 100%; }
+
+.section-play {
+  margin: 5rem 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly; }
+  .section-play__h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 0.5rem;
+    font-weight: 400;
+    color: #7587a4; }
+  .section-play__left {
+    flex: 0 0 40%; }
