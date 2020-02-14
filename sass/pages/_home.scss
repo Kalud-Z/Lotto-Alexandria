@@ -8,12 +8,18 @@
     justify-content: center;
 
     &__left {
-        flex: 0 0 40%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
     }
 
     &__right {
         flex: 0 0 15%;
         margin-left: 6rem;
+        
+        display: flex;
+        flex-direction: column;
+
     }
 
 

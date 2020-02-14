@@ -80,7 +80,7 @@ var UIController = (function() {
         nextCouponButton: document.querySelector('.nextCoupon'),
         fillRandomlyButton: document.querySelector('.random'),
         couponsTitle: document.querySelectorAll('.coupon__title'),
-        // crossSymbol: document.querySelector
+        quickTips: document.querySelector('.quickTips')
 
     };
 
@@ -149,8 +149,39 @@ var UIController = (function() {
 
 
     return {
+        openPopup: function() {
+            var elementClickedID;
+            var elementClickedID = event.target.id;
+        
+            //extract the specific type of the popup , from the clicked item.
+            var exactType =  elementClickedID.substring(13, elementClickedID.length);
+        
+            // we add that type to the second part of the id of the target popup
+            var exactPopupID = 'popup' + exactType;
+        
+            document.getElementById(exactPopupID).classList.add('show');
+            document.getElementById(exactPopupID).firstElementChild.classList.add('showPopup');
+        },
 
-        setInitialUI:function() {
+        closePopup: function() {
+    
+            var elementClicked   =  event.target;
+            var elementClickedID = elementClicked.id;
+            var allFatherID;
+        
+            //we are trying to find out the popupid. if one of its children is clicked. go up , and check out their fathers, in case one of them is the popup.
+            if(elementClicked.hasAttribute('id')) { allFatherID = elementClickedID; }
+            else if(elementClicked.parentNode.hasAttribute('id')) { allFatherID = elementClicked.parentNode.id; }
+            else if(elementClicked.parentNode.parentNode.hasAttribute('id')) { allFatherID = elementClicked.parentNode.parentNode.id; }
+           
+            // if the outer element is clicked , or the cancel logo is clicked.
+            if(elementClickedID == allFatherID || elementClicked.classList.contains('randomNumbers-popup__cancel-logo')) {
+                document.getElementById(allFatherID).classList.remove('show');
+                document.getElementById(allFatherID).firstElementChild.classList.remove('showPopup');
+            }     
+        },
+
+        setInitialUI: function() {
             deleteAll()
             showNumbersOfallCoupons();
             hideAllFields();
@@ -448,9 +479,14 @@ var controller = (function(jackpotCtrl , UICtrl) {
         selectedElementIs.deleteAllButton.addEventListener('click', CtrlReset);
         selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon)
         selectedElementIs.fillRandomlyButton.addEventListener('click', CtrlRandomButton)
-
+        selectedElementIs.quickTips.addEventListener('click', openPopupCtrl);
     };
 
+    function openPopupCtrl(){
+        UICtrl.openPopup();
+        //we activate this event listener only when we open the popup.
+        document.querySelector('body').addEventListener('click', UICtrl.closePopup);
+    }
     // this is a helping function. its is not called directly from any event listener.
     function CtrlAddNewCoupon(){
         //create name of the coupon U gonna add to the allCoupons object in the Jackpot module.

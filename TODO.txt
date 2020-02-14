@@ -1,0 +1,15 @@
+
+
+
+
+* when you click +1 (randomly fill) ,
+1) the fields will be filled
+2) close the popup
+3) display the next empty filled.
+
+
+* make everything in English
+
+* make UI nicer. colors and shapes wise.
+
+* add submit button

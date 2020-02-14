@@ -4,11 +4,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 3rem;
+    // margin-right: 3rem;
 
     &__title {
         align-self: flex-start;
     }
+
+    .bitch { font-size: 1.3rem;}
 }
 
 
