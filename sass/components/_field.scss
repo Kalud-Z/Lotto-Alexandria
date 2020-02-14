@@ -1,0 +1,62 @@
+
+
+
+.field {
+    flex: 0 0 18.4%;
+    border-radius: 5px;  // when small : 5px | when big : 10px
+    background-color: #F6F6F8; // the become white , when they get bigger.
+    // background-color: blue; // the become white , when they get bigger.
+    // border:1px solid F6F6F8;
+    // transition: all .1s;
+    transition: all $main-transition-duration;
+    position: relative;
+    pointer-events: none;   // when it get bigger. then you can click it.
+
+    &:not(:nth-child(5n+1)) {margin-right: 2%;}  
+    &:nth-last-child(n+6) {margin-bottom: 2%;}
+
+
+    &__cross {
+        height:60.3%;  // 4rem when they go big
+        width:60.3%;   // 4rem when they go big
+        position: absolute;
+        left:50%;
+        top: 50%;
+        z-index: 34;
+        transform: translate(-50%,-50%) scale(0.01);
+        pointer-events: none;   // to make this element literally invisible to the cursor ! so U can click stuff behind it
+        transition:all $main-transition-duration;
+        // transition-duration: 2s;
+
+        //starts hidden
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    &__number {
+        font-size: 2rem; 
+        font-weight: 500;
+        position: absolute;
+        left:50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        color : red;
+        pointer-events: none;   // to make this element literally invisible to the cursor ! so U can click stuff behind it
+        transition:transform $main-transition-duration;
+        // transition-delay: .4s;
+
+        //they are invisible when the coupon is small
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    &--goingBig {
+        background-color: white;
+    // background-color: blue; // the become white , when they get bigger.
+ 
+        border-radius: 10px;
+        cursor: pointer;
+        pointer-events: auto ;
+    }
+
+}

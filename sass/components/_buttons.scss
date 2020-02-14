@@ -1,4 +1,9 @@
 
+// remove the stupid dotted line on the buttons upon click ! well , in firefox
+button::-moz-focus-inner {
+    border: 0;
+  }  
+
 
 
 .button-primary {
@@ -22,24 +27,79 @@
 }
 
 
-.goback {
-    border: none;
-    background-color: transparent;
-    font-size: 1rem;
+// ################################################################## IMPORTED ############################
 
-    &::after {
-        // content: "\u2190";
-        display: block;
+
+.allButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    // align-items: center;
+
+    & > *:not(:last-child) {
+        margin-bottom: 5rem;
+        // flex: 1;
+        background-color: orangered;
+        width: 100%;
+    }
+}
+
+.btn {
+    font-size: 2rem;
+    text-transform: uppercase;
+    padding: 1rem;
+    border-radius: 7px;
+    border: none;
+    &:visited {
+        outline: none;
 
     }
 }
 
 
 
+.goback {
+    cursor: pointer;
+    // it starts hidden.
+    opacity: 0;
+    visibility: hidden; 
+}
 
+.deleteAll {
+    cursor: pointer;
 
+     // it starts hidden.
+     opacity: 0;
+     visibility: hidden; 
+}
 
+.delete {
+    flex: 0 0 0%;
+    margin-top: 3rem;
+    cursor: pointer;
+    background-color: rgb(46, 212, 163);
 
+    opacity: 0;
+    visibility: hidden;
+}       
+
+.nextCoupon {
+    cursor: pointer;
+
+    // it starts hidden
+    opacity: 0;
+    visibility: hidden; 
+}
+
+.random {
+    cursor: pointer;
+    background-color: grey;
+
+    // it starts hidden
+    opacity: 0;
+    visibility: hidden; 
+
+}
 
 
 

@@ -2,33 +2,14 @@
 
 .center-element { text-align: center;}
 
-
-
 //Margins ##############################################################
 
 .margin-bottom-small { margin-bottom: 1rem; }
-.margin-bottom-medium { margin-bottom: 2rem; }
+.margin-bottom-medium { margin-bottom: 2.5rem; }
 .margin-bottom-big    { margin-bottom: 4rem; }
-
 
 .margin-left-very-small { margin-left: 0.5rem; }
 
-
-.display-none {
-    display: none !important;
-}
-
-.hide {
-    visibility: hidden !important;
-    opacity: 0;
-}
-
-
-
-.show {
-    visibility: visible !important;
-    opacity: 1 !important;
-}
 
 .showPopup {
     opacity: 1;
@@ -36,6 +17,52 @@
     transform: translate(-50%, -50%) scale(1) !important;
 }
 
-.shrink-table {
-    transform: scale(0.25);
+
+// ######################################################## IMPORTED ##########################################
+
+
+.display-none { display : none !important;}
+
+.hide {
+    opacity: 0 !important;
+    visibility: hidden !important;
+ }
+
+.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+ }
+
+
+ .show-cross {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(-50%,-50%) scale(1) !important;
+ }
+
+ 
+ .remove-cross {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translate(-50%,-50%) scale(0.01) !important;
+ }
+
+ .show-blockCursor {
+    cursor: not-allowed !important;
+ }
+
+ 
+ .block-interaction {
+    pointer-events: none !important;
+ }
+
+ .shrink-couponsWrapper {
+    transform: scale(0.8);
+    opacity: 0.1;
+ }
+
+
+ .scaleUp-couponsWrapper {
+    transform: scale(1);
 }
+

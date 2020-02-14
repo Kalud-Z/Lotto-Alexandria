@@ -48,12 +48,7 @@ body { /* all the stuff in here , will be inherited to the child elements.*/
 
 
 
-
-
-
-
-
-
-
-
-
+:root {
+    --big-box-height :50rem;
+    --big-box-width :50rem;
+}

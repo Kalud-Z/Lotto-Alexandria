@@ -31,6 +31,10 @@ body {
   box-sizing: border-box;
   background-color: #EAF0F5; }
 
+:root {
+  --big-box-height:50rem;
+  --big-box-width:50rem; }
+
 .primary-heading {
   font-size: 2.5rem;
   font-weight: 400;
@@ -50,7 +54,7 @@ body {
   margin-bottom: 1rem; }
 
 .margin-bottom-medium {
-  margin-bottom: 2rem; }
+  margin-bottom: 2.5rem; }
 
 .margin-bottom-big {
   margin-bottom: 4rem; }
@@ -58,24 +62,44 @@ body {
 .margin-left-very-small {
   margin-left: 0.5rem; }
 
-.display-none {
-  display: none !important; }
-
-.hide {
-  visibility: hidden !important;
-  opacity: 0; }
-
-.show {
-  visibility: visible !important;
-  opacity: 1 !important; }
-
 .showPopup {
   opacity: 1;
   visibility: visible !important;
   transform: translate(-50%, -50%) scale(1) !important; }
 
-.shrink-table {
-  transform: scale(0.25); }
+.display-none {
+  display: none !important; }
+
+.hide {
+  opacity: 0 !important;
+  visibility: hidden !important; }
+
+.show {
+  opacity: 1 !important;
+  visibility: visible !important; }
+
+.show-cross {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate(-50%, -50%) scale(1) !important; }
+
+.remove-cross {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate(-50%, -50%) scale(0.01) !important; }
+
+.show-blockCursor {
+  cursor: not-allowed !important; }
+
+.block-interaction {
+  pointer-events: none !important; }
+
+.shrink-couponsWrapper {
+  transform: scale(0.8);
+  opacity: 0.1; }
+
+.scaleUp-couponsWrapper {
+  transform: scale(1); }
 
 *,
 *::after,
@@ -109,6 +133,10 @@ body {
   /* all the stuff in here , will be inherited to the child elements.*/
   box-sizing: border-box;
   background-color: #EAF0F5; }
+
+:root {
+  --big-box-height:50rem;
+  --big-box-width:50rem; }
 
 .header {
   clip-path: ellipse(71% 75% at 50% 25%);
@@ -152,13 +180,69 @@ body {
   .row .col-1-of-4 {
     width: calc( (100% - (5rem * 3) ) / 4); }
 
-.couponsGroup {
+.coupons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3rem; }
+  .coupons-container__title {
+    align-self: flex-start; }
+
+.coupons-wrapper {
+  counter-reset: couponsCounter;
+  background-color: transparent;
+  padding: 2rem;
   display: flex;
   flex-wrap: wrap;
-  transform: scale(0.5); }
-  .couponsGroup__coupon {
-    width: 10%;
-    margin: 3rem; }
+  width: var(--big-box-width);
+  height: var(--big-box-height);
+  transition: transform 0.15s; }
+
+.coupon {
+  counter-increment: couponsCounter;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 0 30%;
+  border-radius: 10px;
+  background-color: white;
+  transition: all 0.15s;
+  padding: 1rem;
+  position: relative;
+  transform: scale(1); }
+  .coupon:not(:nth-child(3n)) {
+    margin-right: 2rem; }
+  .coupon:nth-last-child(n+4) {
+    margin-bottom: 2rem; }
+  .coupon--big {
+    flex: 0 0 100%;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    background-color: transparent;
+    transform: scale(1); }
+  .coupon__titleAndNumberContainer {
+    width: 100%;
+    position: absolute;
+    top: -6%;
+    left: 0;
+    pointer-events: none; }
+  .coupon__title {
+    font-size: 2rem;
+    background-color: yellowgreen;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden; }
+  .coupon__number {
+    font-size: 4rem;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 50%);
+    color: rgba(128, 128, 128, 0.555);
+    pointer-events: none; }
 
 .quickTips {
   text-align: center; }
@@ -296,6 +380,9 @@ body {
     .randomNumbers-popup__logo-astro:hover {
       filter: brightness(65%); }
 
+button::-moz-focus-inner {
+  border: 0; }
+
 .button-primary {
   font-family: inherit;
   color: #fff;
@@ -313,12 +400,52 @@ body {
   .button-primary:focus {
     outline: hidden; }
 
+.allButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; }
+  .allButtons > *:not(:last-child) {
+    margin-bottom: 5rem;
+    background-color: orangered;
+    width: 100%; }
+
+.btn {
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding: 1rem;
+  border-radius: 7px;
+  border: none; }
+  .btn:visited {
+    outline: none; }
+
 .goback {
-  border: none;
-  background-color: transparent;
-  font-size: 1rem; }
-  .goback::after {
-    display: block; }
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden; }
+
+.deleteAll {
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden; }
+
+.delete {
+  flex: 0 0 0%;
+  margin-top: 3rem;
+  cursor: pointer;
+  background-color: #2ed4a3;
+  opacity: 0;
+  visibility: hidden; }
+
+.nextCoupon {
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden; }
+
+.random {
+  cursor: pointer;
+  background-color: grey;
+  opacity: 0;
+  visibility: hidden; }
 
 table {
   text-align: center;
@@ -332,6 +459,47 @@ table {
     border-radius: 5px;
     font-size: 2.5rem;
     padding: 2vw; }
+
+.field {
+  flex: 0 0 18.4%;
+  border-radius: 5px;
+  background-color: #F6F6F8;
+  transition: all 0.15s;
+  position: relative;
+  pointer-events: none; }
+  .field:not(:nth-child(5n+1)) {
+    margin-right: 2%; }
+  .field:nth-last-child(n+6) {
+    margin-bottom: 2%; }
+  .field__cross {
+    height: 60.3%;
+    width: 60.3%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 34;
+    transform: translate(-50%, -50%) scale(0.01);
+    pointer-events: none;
+    transition: all 0.15s;
+    opacity: 0;
+    visibility: hidden; }
+  .field__number {
+    font-size: 2rem;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    pointer-events: none;
+    transition: transform 0.15s;
+    opacity: 0;
+    visibility: hidden; }
+  .field--goingBig {
+    background-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    pointer-events: auto; }
 
 .section-play {
   margin: 5rem 0;
