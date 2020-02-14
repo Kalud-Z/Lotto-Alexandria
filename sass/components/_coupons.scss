@@ -3,73 +3,14 @@
 
 
 .couponsGroup {
-    // width: 40rem;
     display: flex;
     flex-wrap: wrap;
 
+    transform: scale(0.5);
 
     &__coupon {
-        flex: 1 0 25.3%;
-
-        margin-right: .5rem;
-        &:nth-child(3n) { margin-right: 0rem; } // every third element.
-
-        // from the 4th element from the end , till the first one. (in other words, skip the last three elements)
-        &:nth-last-child(n+4) { margin-bottom: .5rem; }
-
-        padding: .4rem;
-        border-radius: 6px;
-        background-color: white;
-        box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
-        cursor: pointer;
-
-        //start state
-        opacity: 0;
-        transition: all .5s;
-       
+        width: 10%;
+        margin:3rem;
     }
-
-    &__couponNumber {
-        height: 100%;
-        width: 100%;
-        
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        
-    }
-
-    &__couponValue {
-        font-size: 4rem;
-        color: rgb(146, 193, 231);
-        opacity: 0.5;
-        font-weight: 300;
-    }
-
-    &__poolNumbersContainer {
-        display: flex;
-        flex-wrap: wrap;
-
-        padding: .3rem;
-    }
-
-
-    &__poolNumber {
-        flex: 0 0 20%;
-        padding: 0.1rem;
-        
-        
-        &::after {
-            content: '';
-            display: block;
-            background: #f6f6f8;
-            border-radius: 2px;
-            padding-bottom: 100%;
-        }
-    }
-    
-
-
 
 }

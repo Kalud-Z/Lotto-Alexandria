@@ -83,6 +83,23 @@ function closePopup(event) {
 
 
 
+document.querySelector('.goback').addEventListener('click', function() {
+    document.querySelector('.couponsGroup__coupon').classList.toggle('shrink-table');
+});
+
+/* 
+var tt = document.querySelectorAll('.couponsGroup__coupon');
+for(var i = 1 ; i < tt.length ; i++){
+    tt[i].classList.add('display-none');
+}
+ */
+
+
+
+
+
+
+
 /* 
 document.querySelector('body').addEventListener('click', function(e) {
     var elementClicked ;
