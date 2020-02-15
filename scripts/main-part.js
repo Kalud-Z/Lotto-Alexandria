@@ -84,6 +84,7 @@ var UIController = (function() {
         oneField: document.getElementById('#1-Fields'),
         threeFields: document.getElementById('#3-Fields'),
         sixFields: document.getElementById('#6-Fields'),
+        fillAllCouponsButton: document.getElementById('fillAllCouponsBtn'),
         chooseRandomNumPopup:document.querySelector('#popupRandomButton'),
 
         allPopups: document.querySelectorAll('.randomNumbers-popup'),
@@ -129,7 +130,7 @@ var UIController = (function() {
     }
 
     function hideAllFields() {
-        // children of coupon (number + fileds) they start hidden. . they we toggle the class show
+        // children of coupon (number + fileds) they start hidden. . then we toggle the class show
         for(var i = 1 ; i < selectedElementIs.allCoupons.length ; i++) {
             var allKidsOfCoupon = selectedElementIs.allCoupons[i].children;
             for(j = 1 ; j < allKidsOfCoupon.length ; j++) {  allKidsOfCoupon[j].classList.add('hide'); }
@@ -190,7 +191,8 @@ var UIController = (function() {
 
             var elementClicked   =  event.target;
             var elementClickedID = elementClicked.id;
-            if(elementClickedID === 'popupRandomButton'  || elementClicked === selectedElementIs.closePopupIcon || elementClickedID.includes('Fields') ) {
+            if(elementClickedID === 'popupRandomButton'  || elementClicked === selectedElementIs.closePopupIcon
+            || elementClickedID.includes('Fields') || elementClicked === selectedElementIs.fillAllCouponsButton ) {                                
                 //determine which popup window is shown so you can close it.
                 var allPopups = selectedElementIs.allPopups;
                 for(var i = 0 ; i  < allPopups.length ; i++) {
@@ -306,7 +308,7 @@ var UIController = (function() {
 
             /////// 2) make the coupon small , and show it along the other coupons . aka the initial UI.
            (function schrinkCoupon() {
-                console.log('inner schrib coupon is called hahahahaha');
+                // console.log('inner schrib coupon is called hahahahaha');
                 hideDeleteButton();
                 
                 //we make the opened coupons shrink. => to its initial state
@@ -387,6 +389,10 @@ var UIController = (function() {
             setTimeout(function(){ elementClicked.firstElementChild.remove(); }, crossTransition); // you need for as long as the transition takes !
         },
 
+        showFieldsOfOneCoupon: function(targetCpn) {
+                    var allKidsOfCoupon = targetCpn.children;
+                    for(j = 1 ; j < allKidsOfCoupon.length ; j++) {  allKidsOfCoupon[j].classList.remove('hide'); }
+        },
        
         showNextCouponButton: function() {
             selectedElementIs.nextCouponButton.classList.add('show');
@@ -412,6 +418,15 @@ var UIController = (function() {
 
         hideDeleteAllButton: function() {
             selectedElementIs.deleteAllButton.classList.remove('show');
+        },
+
+        hideNumOfCoupon: function(targetCpn){
+            var temp = targetCpn.id;
+            var targetIndex = parseInt(temp[temp.length-1]);
+
+            console.log('thsis is ithe target index%%%%%%%%% ' + targetIndex);
+            console.log('thsis is the type ' + typeof targetIndex);
+            selectedElementIs.allNumbersOfCoupons[targetIndex-1].classList.add('hide');
         },
 
         CouponClickable: function(id) {
@@ -517,47 +532,42 @@ var controller = (function(jackpotCtrl , UICtrl) {
 
 
     function CtrlChooseRandomNum(){
-         //if it is 1+ Field
-         if(event.target.id === DOMStrings.oneField) {
-            console.log('+1 is clicked');
-            var targetCoupon;
-            var allCoupons = selectedElementIs.allCoupons;
-            // var allSavedCoupons = jackpotCtrl.getAllCoupons();
-            for(var i = 0 ; i < allCoupons.length ; i++) {
-                if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) {
-                    targetCoupon = allCoupons[i];
-                    // console.log('thiiiiiiiiiiiiiii' + allCoupons[i]);
-                    break;
-                }
+            var clickedElementId, counterStr, counter , targetcoupn , allCoupons;
+        
+            clickedElementId = event.target.id;
+            allCoupons = selectedElementIs.allCoupons;
+
+            // console.log('the id the iddddddddddddddddddddddd ');
+            // console.log(selectedElementIs.fillAllCouponsButton.id);
+            
+            if(clickedElementId === selectedElementIs.fillAllCouponsButton.id) { counter = allCoupons.length; }
+            else if(clickedElementId.includes('Fields')) {
+                counterStr = clickedElementId[0];
+                counter = parseInt(counterStr);
             }
 
-            // fill up the targetCoupon randomly
-            UICtrl.fillRandomly(targetCoupon);
+                // var allSavedCoupons = jackpotCtrl.getAllCoupons();
+                for(var i = 0 ; i < allCoupons.length ; i++) {
+                    if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) {
+                        targetCoupon = allCoupons[i];
+                        UICtrl.fillRandomly(targetCoupon);
 
-            // 3) save the coupon
-            CtrlAddNewCoupon(targetCoupon);
-            // setTimeout(function(){ CtrlAddNewCoupon(targetCoupon);}, 900); //you need to wait a lil bit.
+                        // show it , by hidin the number of coupon , and showing the lil fields
+                        UICtrl.hideNumOfCoupon(targetCoupon);
+                        UICtrl.showFieldsOfOneCoupon(targetCoupon);
 
-            
+                        //we add the new coupon
+                        CtrlAddNewCoupon(targetCoupon); 
+
+                        counter--;  // keeping track of how many coupons to fill randomly.
+                    }
+                    if(counter === 0) { break;}
+                }
 
             //4)close the popup
             UICtrl.closePopup();
-            // setTimeout(function(){ UICtrl.closePopup();}, 200); //you need to wait a lil bit.
-
-        } 
-
-
-
-
-        //if it is 3+ Field
-    
-
-
-
-        //if it is 6+ Field
-
-
-
+            UICtrl.showDeleteAllButton();
+            console.log('thim after the closeup ppppppp')
     }
 
 
@@ -637,20 +647,19 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // we allowed to go back . only if the coupon is fully filled , or completely emtpy.
         if(checkedFields === 4 || checkedFields === 0 ) {
             UICtrl.currentCouponClickable(); // we make the recently blocked coupon clickable again , in case later we wanna expand again it and modify it .
-            // if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             UICtrl.shrinkCoupon();
             UICtrl.hideNextCouponButton();
             UICtrl.hideGobackButton();
-            UICtrl.showDeleteAllButton();
+            if(Object.keys(jackpotCtrl.getAllCoupons()).length !== 0) { UICtrl.showDeleteAllButton(); } 
+            
         }
         else { alert('Um den Schein abgeben zu können, muss dieser vervollständigt oder gelöscht werden.'); }
 
         if(checkedFields === 4) {
             if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
         }
-        console.log('CtrlShrinkCoupon is called , and this the chckedfileds' + checkedFields);
-        
+        // console.log('CtrlShrinkCoupon is called , and this the chckedfileds' + checkedFields);
     }
 
     function CtrlToggleCross() {
@@ -742,6 +751,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // addNewCouponFlag = 0;
         // UICtrl.fieldsClickable();
         jackpotCtrl.deleteAllCoupons();
+        UICtrl.hideDeleteAllButton();
         UICtrl.setInitialUI();
         // console.log('deleteall clicked = thisi is the flag : ' + addNewCouponFlag);
     }

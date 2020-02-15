@@ -417,7 +417,8 @@ button::-moz-focus-inner {
   font-size: 2rem;
   padding: 1rem;
   border-radius: 7px;
-  border: none; }
+  border: none;
+  transition: all 0.15s; }
   .btn:visited {
     outline: none; }
 

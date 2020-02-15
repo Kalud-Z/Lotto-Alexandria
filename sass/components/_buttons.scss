@@ -51,6 +51,8 @@ button::-moz-focus-inner {
     padding: 1rem;
     border-radius: 7px;
     border: none;
+    transition: all  $main-transition-duration;
+
     &:visited {
         outline: none;
 
