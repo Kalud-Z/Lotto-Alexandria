@@ -33,7 +33,6 @@
 
 
     <main class="section-play">
-
         <div class="section-play__left">
             <button class="btn goback"> <span> &larr; </span>  Overview </button>
             <div class="coupons-container" >
@@ -356,14 +355,14 @@
             <h1 class="primary-heading margin-bottom-medium">Quick-Tipps</h1>
             
             <div class="quickTips">
-                <div class="quickTips__item" id="quickTipsItemZufall">
+                <div class="quickTips__item" id="quickTipsItemRandomButton">
             
                 <svg class="quickTips__logo">  <use xlink:href="img/symbol-defs.svg#icon-dice"></use> </svg>
                   Zufall </div>
-                <div class="quickTips__item" id="quickTipsItemAstro"> 
+                <div class="quickTips__item" id="quickTipsItemAstroButton"> 
                 <svg class="quickTips__logo">  <use xlink:href="img/symbol-defs.svg#icon-star"></use> </svg>
                     Astro </div>
-                <div class="quickTips__item" id="quickTipsItemStatistik"> 
+                <div class="quickTips__item" id="quickTipsItemStatisticButton"> 
                 <svg class="quickTips__logo">  <use xlink:href="img/symbol-defs.svg#icon-bar-graph"></use> </svg>
                     Statistik </div>
             </div>
@@ -371,13 +370,7 @@
                 <button class="btn nextCoupon"> Next Coupon </button>
 
         </div>
-
-
     </main>
-
-
-
-
 
 
 
@@ -385,21 +378,21 @@
 
     <div class="allPopups">
 
-         <div class="randomNumbers-popup" id="popupZufall">
+         <div class="randomNumbers-popup" id="popupRandomButton">
                     <div class="randomNumbers-popup__container">
                         <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
                         <p>Wie viele Felder sollen befüllt werden ?</p>
                         <div class="randomNumbers-popup__ButtonsGroup">
-                            <div class="randomNumbers-popup__button random"> Feld   <span>  +1  </span></div>
-                            <div class="randomNumbers-popup__button"> Felder <span> +3 </span></div>
-                            <div class="randomNumbers-popup__button"> Felder <span> +6 </span></div>
+                            <div class="randomNumbers-popup__button" id="1-Fields"> Feld <span>+1</span></div>
+                            <div class="randomNumbers-popup__button" id="3-Fields"> Felder <span>+3</span></div>
+                            <div class="randomNumbers-popup__button" id="6-Fields"> Felder <span>+6</span></div>
                         </div>
                         <button class="button-primary"> Komplett befüllen </button>
                     </div>
          </div>
 
 
-         <div class="randomNumbers-popup " id="popupAstro">
+         <div class="randomNumbers-popup " id="popupAstroButton">
             <div class="randomNumbers-popup__container">
                 <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
                 <p>Welches ist Ihr Sternzeichen?</p>
@@ -421,7 +414,7 @@
          </div>
 
 
-         <div class="randomNumbers-popup" id="popupStatistik">
+         <div class="randomNumbers-popup" id="popupStatisticButton">
             <div class="randomNumbers-popup__container randomNumbers-popup__container--statistik">
                 <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
                 <p>Wählen Sie Ihren Statistik-Tipp</p>

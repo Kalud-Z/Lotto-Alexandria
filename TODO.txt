@@ -2,10 +2,23 @@
 
 
 
+
+
 * when you click +1 (randomly fill) ,
+
+-)when you are in the initial UI :
+
+1) fill up the first coupon.
+2) close the popup
+
+
+
+
+when you click the +3 :
+
 1) the fields will be filled
 2) close the popup
-3) display the next empty filled.
+
 
 
 * make everything in English

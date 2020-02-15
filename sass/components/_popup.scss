@@ -26,6 +26,7 @@
 
         use {
             border: 1px solid red;
+            pointer-events: none;
         }
     }
 
@@ -97,6 +98,7 @@
             font-size: 2rem;
             order: -1;  // stupid mistake in HTML , too lazy to fix it there.
             filter: brightness(65%);  // the smaller % , the darker it gets.	
+            pointer-events: none;
         }
 
         &--astro {

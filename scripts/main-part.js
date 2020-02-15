@@ -14,14 +14,6 @@ var JackpotController = (function() {
 
     function createCoupon(num) { return new Coupon(num); }
 
-
-   /*  var name = 'coupon-1';
-    addCoupon(id,num,name);
-    var name2 = 'coupon-2';
-    addCoupon(id,num,name2);
- */
-
-
     return {
         addCoupon: function(num,name) {
             AllFilledCoupons[name] = createCoupon(num); 
@@ -43,14 +35,18 @@ var JackpotController = (function() {
             console.log(AllFilledCoupons);
         },
 
-        //checks if the coupon exists in the allcoupons object
-        hasCoupon: function(name) {
+        //checks if the coupon exists in the allcoupons object .return 1 if yes it has it.
+        hasCoupon: function(id) {
             var temp = 0;
             var keysOfCouponsFilled = Object.keys(AllFilledCoupons); // return an array with the keys as elements (as strings)
             for(var i = 0 ; i < keysOfCouponsFilled.length ; i++){
-                if(keysOfCouponsFilled[i] === name) { temp = 1 ;}
+                if(keysOfCouponsFilled[i] === id) { temp = 1 ;}
             }
             return temp;
+        },
+
+        getAllCoupons: function() {
+            return AllFilledCoupons;
         }
     }
 
@@ -71,28 +67,37 @@ var UIController = (function() {
     var selectedElementIs = {
         couponsWrapper : document.querySelector('.coupons-wrapper'),
         allCoupons : document.querySelectorAll('.coupon'),
+        couponsTitle: document.querySelectorAll('.coupon__title'),
+        allNumbersOfCoupons : document.querySelectorAll('.coupon__number'),
+
         allFields : document.querySelectorAll('.field'),    
         allNumbersOfFields : document.querySelectorAll('.field__number'),
-        allNumbersOfCoupons : document.querySelectorAll('.coupon__number'),
+
         deleteButton : document.querySelector('.delete'),
         goBackButton : document.querySelector('.goback'),
         deleteAllButton: document.querySelector('.deleteAll'),
         nextCouponButton: document.querySelector('.nextCoupon'),
-        fillRandomlyButton: document.querySelector('.random'),
-        couponsTitle: document.querySelectorAll('.coupon__title'),
-        quickTips: document.querySelector('.quickTips')
+        // fillRandomlyButton: document.querySelector('.random'),
+
+        quickTips: document.querySelector('.quickTips'),
+        parentRandomButton: document.querySelector('#quickTipsItemRandomButton'),
+        oneField: document.getElementById('#1-Fields'),
+        threeFields: document.getElementById('#3-Fields'),
+        sixFields: document.getElementById('#6-Fields'),
+        chooseRandomNumPopup:document.querySelector('#popupRandomButton'),
+
+        allPopups: document.querySelectorAll('.randomNumbers-popup'),
+        closePopupIcon: document.querySelector('.randomNumbers-popup__cancel-logo') 
+        
+
 
     };
 
     var DOMStrings = {
-        couponsWrapper : '.coupons-wrapper',
-        allCoupons : '.coupon',
-        allFields : '.field',    
-        allNumbersOfFields : '.field__number',
-        allNumbersOfCoupons : '.coupon__number',
-        deleteButton : '.delete',
-        goBackButton : '.goback',
-        deleteAllButton: '.deleteAll'
+        oneField: '1-Fields' ,
+        threeFields: '3-Fields' ,
+        sixFields: '6-Fields'
+        
     };
 
     function showDeleteButton() {
@@ -152,7 +157,7 @@ var UIController = (function() {
         openPopup: function() {
             var elementClickedID;
             var elementClickedID = event.target.id;
-        
+            // console.log('this is the clicked element . im the openPopup : ' + elementClickedID);
             //extract the specific type of the popup , from the clicked item.
             var exactType =  elementClickedID.substring(13, elementClickedID.length);
         
@@ -165,7 +170,7 @@ var UIController = (function() {
 
         closePopup: function() {
     
-            var elementClicked   =  event.target;
+           /*  var elementClicked   =  event.target;
             var elementClickedID = elementClicked.id;
             var allFatherID;
         
@@ -173,12 +178,27 @@ var UIController = (function() {
             if(elementClicked.hasAttribute('id')) { allFatherID = elementClickedID; }
             else if(elementClicked.parentNode.hasAttribute('id')) { allFatherID = elementClicked.parentNode.id; }
             else if(elementClicked.parentNode.parentNode.hasAttribute('id')) { allFatherID = elementClicked.parentNode.parentNode.id; }
-           
-            // if the outer element is clicked , or the cancel logo is clicked.
-            if(elementClickedID == allFatherID || elementClicked.classList.contains('randomNumbers-popup__cancel-logo')) {
+            console.log('close popup being called. and this i the elemeclicked id : ' + elementClickedID);
+            // if the outer element is clicked , or the cancel logo is clicked , or the +3 /+1 / +6 buttons clicked.
+            if(elementClickedID == allFatherID || elementClicked.classList.contains('randomNumbers-popup__cancel-logo') || (elementClickedID === '1-Fields') ) {
+                // if(elementClickedID == allFatherID || elementClicked.classList.contains('randomNumbers-popup__cancel-logo') || elementClicked.classList.contains('popup__button')  ) {
                 document.getElementById(allFatherID).classList.remove('show');
                 document.getElementById(allFatherID).firstElementChild.classList.remove('showPopup');
-            }     
+            }  
+
+                            */
+
+            var elementClicked   =  event.target;
+            var elementClickedID = elementClicked.id;
+            if(elementClickedID === 'popupRandomButton'  || elementClicked === selectedElementIs.closePopupIcon || elementClickedID.includes('Fields') ) {
+                //determine which popup window is shown so you can close it.
+                var allPopups = selectedElementIs.allPopups;
+                for(var i = 0 ; i  < allPopups.length ; i++) {
+                    if(allPopups[i].classList.contains('show')) { allPopups[i].classList.remove('show');  }
+                }
+            }
+            
+            
         },
 
         setInitialUI: function() {
@@ -206,18 +226,17 @@ var UIController = (function() {
             return DOMStrings;
         },
 
-        //returns an array with the numbers of the checked fields
-        getCheckedFields: function(){
+        //returns an array with the numbers of the checked fields. it takes the coupon
+        getCheckedFields: function(couponToCheck){
+            var targetCoupon;
+            if(typeof couponToCheck === "undefined") {
+                targetCoupon = this.getExpandedCoupon() ;
+            } else { targetCoupon = couponToCheck; }
+
             var checkedFields = [];
-            var allFields = this.getExpandedCoupon().children; 
-            // console.log(allFields);
+            var allFields = targetCoupon.children; 
             for(var i = 1 ; i < allFields.length ; i++) {
-                if(allFields[i].childElementCount == 2) {
-                    var number = allFields[i].innerText;
-                    // console.log(number);
-                    var temp = parseInt(number);
-                    checkedFields.push(temp);
-                }
+                if(allFields[i].childElementCount == 2) { checkedFields.push(i); }
             }
             return checkedFields;
         },
@@ -318,23 +337,35 @@ var UIController = (function() {
             setTimeout(function(){ selectedElementIs.couponsWrapper.classList.remove('shrink-couponsWrapper');}, main_transition_duration); //you need to wait a lil bit.
         },
   
-        fillRandomly: function() {
-            var keepGoing = 1;
-            var allCurrentFields = this.getExpandedCoupon().children;
-            var targetElement;
-            // while(keepGoing) {
-                for(var j = 0 ; j < 2000 ; j++) {
-                var alreadyCheckedFields = this.getCheckedFields();
-                // console.log('alreadyCheckedFields : ' + alreadyCheckedFields.length);
-                // console.log('keepHoing : ' + keepGoing);
-                // if(alreadyCheckedFields === 6) { keepGoing = 0; }
-                if(alreadyCheckedFields.length === 4) { return; }
-                var randNum = Math.floor(Math.random() * 25) + 1;
+        // this function we pass the coupon that we wanna fill as argument.
+        fillRandomly: function(couponChosen) {
+            var targetCoupon;
+            console.log('thisi s the fillrandomly function : ');
+            console.log('this is is couponChosen : ' + couponChosen);
+            if(typeof couponChosen === "undefined") {
+                targetCoupon = this.getExpandedCoupon();
+            } else { targetCoupon = couponChosen; }
+
+            console.log('this is target coupon : ' + targetCoupon);
+            
+
+            // console.log('thsi is coupon to fill ' + couponChosen);
+            // var CouponToFill = couponChosen;
+            // var keepGoing = 1;
+            // var allCurrentFields = this.getExpandedCoupon().children;
+            var allCurrentFields = targetCoupon.children;
+            // var targetElement;
+            for(var j = 0 ; j < 2000 ; j++) {
+                var alreadyCheckedFields = this.getCheckedFields(targetCoupon);
                 
-                if(alreadyCheckedFields.includes(randNum) === false) {
-                        this.addCross(allCurrentFields[randNum]);
-                    }
+                if(alreadyCheckedFields.length === 4) { return; }
+                    
+                var randNum = Math.floor(Math.random() * 25) + 1;
+
+                if(alreadyCheckedFields.includes(randNum) === false) { this.addCross(allCurrentFields[randNum]); }
             }
+
+
         },
         
         addCross: function(elementClicked) {
@@ -356,13 +387,6 @@ var UIController = (function() {
             setTimeout(function(){ elementClicked.firstElementChild.remove(); }, crossTransition); // you need for as long as the transition takes !
         },
 
-        showRandomButton: function(){
-            selectedElementIs.fillRandomlyButton.classList.add('show');
-        },
-
-        hideRandomButton: function(){
-            selectedElementIs.fillRandomlyButton.classList.remove('show');
-        },
        
         showNextCouponButton: function() {
             selectedElementIs.nextCouponButton.classList.add('show');
@@ -466,34 +490,117 @@ var controller = (function(jackpotCtrl , UICtrl) {
     // because this variable is directly responsible for submitting a legit coupon. 
     var checkedFields;
     var addNewCouponFlag = 0; // 1 : yes => please do it. |  : 0 => no god no. dont !
+    var selectedElementIs = UICtrl.getSelectedElementIs();
+    var DOMStrings = UICtrl.getDOMStrings();
     
     
     setupEventListeners = function() {
         // var DOM = UICtrl.getDOMStrings();
         
-        var selectedElementIs = UICtrl.getSelectedElementIs();
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlExpandCoupon);
         selectedElementIs.goBackButton.addEventListener('click', CtrlShrinkCoupon);
+
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlToggleCross); 
         selectedElementIs.deleteButton.addEventListener('click', CtrlDeleteAllFieldsInOneCoupon);
         selectedElementIs.deleteAllButton.addEventListener('click', CtrlReset);
-        selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon)
-        selectedElementIs.fillRandomlyButton.addEventListener('click', CtrlRandomButton)
+
+        selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon);
+        // selectedElementIs.fillRandomlyButton.addEventListener('click', CtrlRandomButton)
+
         selectedElementIs.quickTips.addEventListener('click', openPopupCtrl);
+        document.querySelector('body').addEventListener('click', UICtrl.closePopup);
+
+        selectedElementIs.chooseRandomNumPopup.addEventListener('click', CtrlChooseRandomNum);
+        
+        // selectedElementIs.parentRandomButton.addEventListener('click' , CtrlParentRandomButton)
     };
 
-    function openPopupCtrl(){
-        UICtrl.openPopup();
-        //we activate this event listener only when we open the popup.
-        document.querySelector('body').addEventListener('click', UICtrl.closePopup);
+
+    function CtrlChooseRandomNum(){
+         //if it is 1+ Field
+         if(event.target.id === DOMStrings.oneField) {
+            console.log('+1 is clicked');
+            var targetCoupon;
+            var allCoupons = selectedElementIs.allCoupons;
+            // var allSavedCoupons = jackpotCtrl.getAllCoupons();
+            for(var i = 0 ; i < allCoupons.length ; i++) {
+                if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) {
+                    targetCoupon = allCoupons[i];
+                    // console.log('thiiiiiiiiiiiiiii' + allCoupons[i]);
+                    break;
+                }
+            }
+
+            // fill up the targetCoupon randomly
+            UICtrl.fillRandomly(targetCoupon);
+
+            // 3) save the coupon
+            CtrlAddNewCoupon(targetCoupon);
+            // setTimeout(function(){ CtrlAddNewCoupon(targetCoupon);}, 900); //you need to wait a lil bit.
+
+            
+
+            //4)close the popup
+            UICtrl.closePopup();
+            // setTimeout(function(){ UICtrl.closePopup();}, 200); //you need to wait a lil bit.
+
+        } 
+
+
+
+
+        //if it is 3+ Field
+    
+
+
+
+        //if it is 6+ Field
+
+
+
     }
+
+
+    function openPopupCtrl(){
+        //1) if we are in the state_1 , do the following :
+        if(typeof (UICtrl.getExpandedCoupon()) === "undefined") {
+            // console.log('we are in state_1');
+            UICtrl.openPopup();
+        }
+
+        // 2) otherwise we are in state_2 , and do different stuff
+        else {
+            console.log('we are in state_2');
+            //if the first button is clicked (the event flow for the first button is different from that of the other buttons.)
+            if(event.target === selectedElementIs.parentRandomButton) {
+                UICtrl.fillRandomly(); addNewCouponFlag = 1;  //we fill the coupon without opening the popUp
+                //we show the next coupon button
+                UICtrl.showNextCouponButton();
+            } 
+            else { // this is the case for the other two buttons
+                UICtrl.openPopup();
+                // document.querySelector('body').addEventListener('click', UICtrl.closePopup);
+            }
+        }
+    }
+
     // this is a helping function. its is not called directly from any event listener.
-    function CtrlAddNewCoupon(){
-        //create name of the coupon U gonna add to the allCoupons object in the Jackpot module.
-        var newCouponName = UICtrl.getExpandedCoupon().id;
+    //create name of the coupon U gonna add to the allCoupons object in the Jackpot module.
+    function CtrlAddNewCoupon(couponToAdd){
+        var targetCoupon;
+        if(typeof couponToAdd === "undefined") {
+            targetCoupon = UICtrl.getExpandedCoupon();
+        }
+        else { targetCoupon = couponToAdd; }
+
+        // var newCouponName = couponToAdd.id;
+        var targetCouponId = targetCoupon.id;
         //get checked fields
-       var pickedFields = UICtrl.getCheckedFields();
-       jackpotCtrl.addCoupon(pickedFields,newCouponName);
+        // console.log('this is target couponnnnnn' + targetCoupon);
+        // console.log(targetCoupon);
+       var pickedFields = UICtrl.getCheckedFields(targetCoupon);
+    //    console.log('these are the picked check fields ###### ' + pickedFields);
+       jackpotCtrl.addCoupon(pickedFields,targetCouponId);
     }
 
     // it would way more efficient. if you have only one function to open a coupon. (you tried it , it didnt work because of the passed argument. U created it in way , if the argument if defined then use it. otherwise get the id from the clicked element.)
@@ -505,13 +612,12 @@ var controller = (function(jackpotCtrl , UICtrl) {
         UICtrl.CouponUnclickable(couponId); // because we just turned it into clickable, as we called the schrinkCoupon method. in the same event handler
         UICtrl.showGobackButton();
         UICtrl.hideDeleteAllButton();
-        UICtrl.showRandomButton();
     }
 
     function CtrlExpandCoupon() {
         var cpnClickedId;
         if(event.target.classList.contains('coupon')){ 
-            UICtrl.showRandomButton();
+            // UICtrl.showRandomButton();
             var cpnClickedId = event.target.id;
             UICtrl.expandCoupon(cpnClickedId);
             //decide what value we give to checkedFields
@@ -531,6 +637,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // we allowed to go back . only if the coupon is fully filled , or completely emtpy.
         if(checkedFields === 4 || checkedFields === 0 ) {
             UICtrl.currentCouponClickable(); // we make the recently blocked coupon clickable again , in case later we wanna expand again it and modify it .
+            // if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             UICtrl.shrinkCoupon();
             UICtrl.hideNextCouponButton();
@@ -543,7 +650,6 @@ var controller = (function(jackpotCtrl , UICtrl) {
             if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
         }
         console.log('CtrlShrinkCoupon is called , and this the chckedfileds' + checkedFields);
-        UICtrl.hideRandomButton();
         
     }
 
@@ -603,10 +709,28 @@ var controller = (function(jackpotCtrl , UICtrl) {
     }
 
     function CtrlRandomButton(){
-        UICtrl.fillRandomly();
+
+    // 1) fill up the first coupon.  
+    UICtrl.fillRandomly();
+    
+    
+    // 2) close the popup
+
+
+
+
+        
         var num = UICtrl.getCheckedFields();
         var name = UICtrl.getExpandedCoupon().id;
         jackpotCtrl.addCoupon(num,name);
+
+        
+        UICtrl.closePopup();
+
+       
+
+
+        
         UICtrl.fieldsUnclickable();
         checkedFields = 4;
         UICtrl.showNextCouponButton();
@@ -637,7 +761,7 @@ controller.init();
 
 
 
-
-
-
+document.querySelector('html').addEventListener('click' , function(){
+    console.log(event.target);
+})
 

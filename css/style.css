@@ -3,7 +3,8 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit; }
+  box-sizing: inherit;
+  border: 0.2px solid rgba(0, 0, 0, 0.438); }
 
 :root {
   --color-primary: #eb2f64;
@@ -105,7 +106,8 @@ body {
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit; }
+  box-sizing: inherit;
+  border: 0.2px solid rgba(0, 0, 0, 0.438); }
 
 :root {
   --color-primary: #eb2f64;
@@ -289,7 +291,8 @@ body {
     transform: translate(-1%, -1%);
     cursor: pointer; }
     .randomNumbers-popup__cancel-logo use {
-      border: 1px solid red; }
+      border: 1px solid red;
+      pointer-events: none; }
   .randomNumbers-popup__container {
     position: absolute;
     top: 50%;
@@ -348,7 +351,8 @@ body {
       font-weight: 600;
       font-size: 2rem;
       order: -1;
-      filter: brightness(65%); }
+      filter: brightness(65%);
+      pointer-events: none; }
     .randomNumbers-popup__button--astro {
       flex: 0 0 20%;
       margin-right: 1.2rem !important;
