@@ -9,7 +9,8 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit; }
+  box-sizing: inherit;
+  border: 0.2px solid rgba(0, 0, 0, 0.438); }
 
 :root {
   --color-primary: #eb2f64;
@@ -115,7 +116,8 @@ body {
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit; }
+  box-sizing: inherit;
+  border: 0.2px solid rgba(0, 0, 0, 0.438); }
 
 :root {
   --color-primary: #eb2f64;
@@ -264,11 +266,15 @@ body {
     pointer-events: none; }
 
 .quickTips {
-  text-align: center; }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
   .quickTips__item {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 60%;
     padding: 1rem 2rem;
     font-size: 1.65rem;
     color: #47787f;
@@ -351,6 +357,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 1.2rem;
     color: #47787f;
     border-radius: 6px;
     background-color: white;
@@ -400,6 +407,10 @@ body {
     margin-bottom: 0.7rem; }
     .randomNumbers-popup__logo-astro:hover {
       filter: brightness(65%); }
+  .randomNumbers-popup__button--astro svg, .randomNumbers-popup__button--astro use {
+    pointer-events: none; }
+  .randomNumbers-popup__button--statistik h2, .randomNumbers-popup__button--statistik p {
+    pointer-events: none; }
 
 button::-moz-focus-inner {
   border: 0; }
@@ -475,6 +486,14 @@ button::-moz-focus-inner {
   opacity: 0;
   visibility: hidden; }
 
+.playBtn {
+  background-color: #3a6197;
+  border-radius: 100px;
+  color: white;
+  margin-top: auto; }
+  .playBtn:hover {
+    background-color: #214374; }
+
 table {
   text-align: center;
   border-collapse: separate;
@@ -539,7 +558,7 @@ table {
     flex-direction: column;
     position: relative; }
   .section-play__right {
-    flex: 0 0 15%;
+    flex: 0 0 20%;
     margin-left: 6rem;
     display: flex;
     flex-direction: column; }

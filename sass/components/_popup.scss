@@ -1,5 +1,6 @@
 
 
+
 .randomNumbers-popup {
         position: fixed;
         top: 0;
@@ -80,6 +81,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        font-size: 1.2rem;
 
         @include quickTips-item-style;
 
@@ -129,6 +131,16 @@
         margin-bottom: 0.7rem;
 
         &:hover { filter: brightness(65%); }
+
+        
+    }
+
+    &__button--astro {
+        & svg , & use { pointer-events: none; }
+    }
+
+    &__button--statistik {
+        & h2 , & p {  pointer-events: none;  }
     }
 
 }

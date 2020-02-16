@@ -103,6 +103,17 @@ button::-moz-focus-inner {
     visibility: hidden; 
 }
 
+.playBtn {
+    background-color: #3a6197;
+    border-radius: 100px;
+    color: white;
+    margin-top: auto;
+
+    &:hover {
+        background-color: #214374;
+    }
+}
+
 
 
 

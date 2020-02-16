@@ -1,12 +1,5 @@
 
 
+* random buttons functionality.
 
-* Refactoring :
-
-create a function that loops through all coupons . and decide whether to make a coupon clickable or not.
-this function will called by :
-
-goback button
-deleteAllcoupons button
-all randomly fill buttons
-
+* add new button : SubmitCoupons

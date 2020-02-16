@@ -80,12 +80,21 @@ var UIController = (function() {
         // fillRandomlyButton: document.querySelector('.random'),
 
         quickTips: document.querySelector('.quickTips'),
-        parentRandomButton: document.querySelector('#quickTipsItemRandomButton'),
+
+        randomButton: document.querySelector('#quickTipsItemRandomButton'),
+        astroButton: document.querySelector('#quickTipsItemAstroButton'),
+        statisticButton: document.querySelector('#quickTipsItemStatisticButton'),
+
         oneField: document.getElementById('#1-Fields'),
         threeFields: document.getElementById('#3-Fields'),
         sixFields: document.getElementById('#6-Fields'),
         fillAllCouponsButton: document.getElementById('fillAllCouponsBtn'),
         chooseRandomNumPopup:document.querySelector('#popupRandomButton'),
+
+        astroPopup: document.getElementById('popupAstroButton'),        
+        allAstroButtons: document.querySelectorAll('.randomNumbers-popup__button--astro'),
+    
+        statisticPopup: document.getElementById('popupStatisticButton'),
 
         allPopups: document.querySelectorAll('.randomNumbers-popup'),
         closePopupIcon: document.querySelector('.randomNumbers-popup__cancel-logo') 
@@ -99,7 +108,9 @@ var UIController = (function() {
         threeFields: '3-Fields' ,
         sixFields: '6-Fields' ,
         closePopupIcon: 'randomNumbers-popup__cancel-logo' ,
-        allPopups: 'randomNumbers-popup'
+        allPopups: 'randomNumbers-popup',
+        astroButton: 'randomNumbers-popup__button--astro',
+        statisticButton: 'randomNumbers-popup__button--statistik'
 
         
     };
@@ -179,6 +190,12 @@ var UIController = (function() {
     }
 
     return {
+        openFillRandomlyPopup: function(){
+            // console.log('openFillRandomlyPopup  is caleddddd ')
+            selectedElementIs.chooseRandomNumPopup.classList.add('show');
+            selectedElementIs.chooseRandomNumPopup.firstElementChild.classList.add('showPopup');
+        },
+
         openPopup: function() {
             var elementClickedID;
             var elementClickedID = event.target.id;
@@ -197,7 +214,9 @@ var UIController = (function() {
             var elementClicked   =  event.target;
             var elementClickedID = elementClicked.id;
             if(elementClicked.classList.contains(DOMStrings.allPopups) == true   || elementClicked.classList.contains(DOMStrings.closePopupIcon) == true 
-            || elementClickedID.includes('Fields') || elementClicked === selectedElementIs.fillAllCouponsButton ) {                                
+            || elementClickedID.includes('Fields') || elementClicked === selectedElementIs.fillAllCouponsButton 
+            || elementClicked.classList.contains(DOMStrings.astroButton)
+            || elementClicked.classList.contains(DOMStrings.statisticButton) ) {                                
                 //determine which popup window is shown so you can close it.
                 var allPopups = selectedElementIs.allPopups;
                 for(var i = 0 ; i  < allPopups.length ; i++) {
@@ -568,20 +587,44 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // selectedElementIs.fillRandomlyButton.addEventListener('click', CtrlRandomButton)
 
         //it whether open a popup or fill the expanded coupon randomly. depenedin on the state we are in.
-        selectedElementIs.quickTips.addEventListener('click', openPopupCtrl);
+        selectedElementIs.quickTips.addEventListener('click', CtrlOpenPopup);
         document.querySelector('body').addEventListener('click', CtrlClosePopup);
+
+        // listen to the UI of randomButtons
         selectedElementIs.chooseRandomNumPopup.addEventListener('click', CtrlChooseRandomNum);
 
+        // listen to the UI of astroPopup
+        selectedElementIs.astroPopup.addEventListener('click', CtrlAstroPopup);
+
+        // listen to the UI of Statistics popup
+        selectedElementIs.statisticPopup.addEventListener('click', CtrlStatisticPopup);
+
         
-        // selectedElementIs.parentRandomButton.addEventListener('click' , CtrlParentRandomButton)
+        // selectedElementIs.RandomButton.addEventListener('click' , CtrlParentRandomButton)
     };
 
-    function CtrlClosePopup() {
-        UICtrl.closePopup();
-        UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
+    function CtrlStatisticPopup() {
+        clickedElement = event.target;
+        clickedElementId = clickedElement.id;
+
+        if(clickedElement.classList.contains(DOMStrings.statisticButton)) {
+            UICtrl.closePopup();
+            setTimeout(function(){ UICtrl.openFillRandomlyPopup();}, 200); //you need to wait a lil bit. 
+        }
     }
 
-    function CtrlChooseRandomNum(){
+    function CtrlAstroPopup() {
+        clickedElement = event.target;
+        clickedElementId = clickedElement.id;
+
+        if(clickedElement.classList.contains(DOMStrings.astroButton)) {
+            UICtrl.closePopup(); 
+            setTimeout(function(){ UICtrl.openFillRandomlyPopup();}, 100); //you need to wait a lil bit. 
+        }
+
+    }
+
+     function CtrlChooseRandomNum(){
             var clickedElementId, counterStr, counter , targetcoupn , allCoupons;
         
             clickedElementId = event.target.id;
@@ -619,7 +662,12 @@ var controller = (function(jackpotCtrl , UICtrl) {
             }
     }
 
-    function openPopupCtrl(){
+    function CtrlClosePopup() {
+        UICtrl.closePopup();
+        UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
+    }
+
+    function CtrlOpenPopup(){
         //1) if we are in the state_1 , do the following :
         if(typeof (UICtrl.getExpandedCoupon()) === "undefined") {
             // console.log('we are in state_1');
@@ -628,21 +676,17 @@ var controller = (function(jackpotCtrl , UICtrl) {
 
         // 2) otherwise we are in state_2 , and do different stuff
         else {
-            // console.log('we are in state_2');
             //if the first button (RandomBtn) is clicked (the event flow for the first button is different from that of the other buttons.)
-            if(event.target === selectedElementIs.parentRandomButton) {
+            if(event.target === selectedElementIs.randomButton 
+              || event.target === selectedElementIs.astroButton
+              || event.target === selectedElementIs.statisticButton ) {
                 UICtrl.fillRandomly();
                 addNewCouponFlag = 1;
                 checkedFields = 4;  //we fill the coupon without opening the popUp
                 //we show the next coupon button
                 UICtrl.showNextCouponButton();
             } 
-            else { // this is the case for the other two buttons
-                UICtrl.openPopup();
-                // document.querySelector('body').addEventListener('click', UICtrl.closePopup);
-            }
         }
-        // console.log('checkedFiled : '+ checkedFields);
     }
 
     // this is a helping function. its is not called directly from any event listener.
@@ -699,7 +743,6 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // we allowed to go back . only if the coupon is fully filled , or completely emtpy.
         if(checkedFields === 4 || checkedFields === 0 ) {
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
-            // UICtrl.CouponClickable(); // we make the recently blocked coupon clickable again , in case later we wanna expand again it and modify it .
             if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             UICtrl.shrinkCoupon();
             UICtrl.hideNextCouponButton();
@@ -793,7 +836,6 @@ var controller = (function(jackpotCtrl , UICtrl) {
 
 
 controller.init();
-
 
 
 
