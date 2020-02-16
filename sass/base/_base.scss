@@ -6,7 +6,7 @@
     padding: 0;
     box-sizing: inherit;
 
-    border: .2px solid rgba(0, 0, 0, 0.438);
+    // border: .2px solid rgba(0, 0, 0, 0.438);
     
 }
 
@@ -36,7 +36,8 @@
 
 
 html { // this defines what 1 rem is : 1rem = 10px
-    font-size: 62.5%;  /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */        
+    // font-size: 62.5%;  /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */        
+    font-size: 50%;  /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */        
     font-family: 'Roboto', sans-serif;
 }
 

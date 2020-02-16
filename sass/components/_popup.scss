@@ -24,10 +24,7 @@
 
         cursor: pointer;
 
-        use {
-            border: 1px solid red;
-            pointer-events: none;
-        }
+        use { pointer-events: none; }
     }
 
     &__container {
@@ -59,7 +56,6 @@
             }
         }
     }
-
 
     &__ButtonsGroup {
         display: flex;

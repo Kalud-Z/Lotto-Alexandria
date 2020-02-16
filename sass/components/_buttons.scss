@@ -2,8 +2,7 @@
 // remove the stupid dotted line on the buttons upon click ! well , in firefox
 button::-moz-focus-inner {
     border: 0;
-  }  
-
+}  
 
 
 .button-primary {
@@ -25,9 +24,6 @@ button::-moz-focus-inner {
 
     &:focus { outline: hidden; }
 }
-
-
-// ################################################################## IMPORTED ############################
 
 
 .allButtons {
@@ -58,7 +54,6 @@ button::-moz-focus-inner {
 
     }
 }
-
 
 
 .goback {

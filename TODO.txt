@@ -1,28 +1,12 @@
 
 
 
+* Refactoring :
 
+create a function that loops through all coupons . and decide whether to make a coupon clickable or not.
+this function will called by :
 
+goback button
+deleteAllcoupons button
+all randomly fill buttons
 
-* when you click +1 (randomly fill) ,
-
--)when you are in the initial UI :
-
-1) fill up the first coupon.
-2) close the popup
-
-
-
-
-when you click the +3 :
-
-1) the fields will be filled
-2) close the popup
-
-
-
-* make everything in English
-
-* make UI nicer. colors and shapes wise.
-
-* add submit button

@@ -1,8 +1,10 @@
 
 
 .header {
+    animation: 2s ease-out 0s 1 headerAnimation;
     clip-path: ellipse(71% 75% at 50% 25%);
 
+    // clip-path: ellipse(53% 0% at 50% 25%); //start like this   
 
     background-color: #F3DE2E;
     width: 100%;

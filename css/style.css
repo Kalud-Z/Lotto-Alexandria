@@ -1,10 +1,15 @@
+@keyframes headerAnimation {
+  0% {
+    clip-path: ellipse(53% 26% at 50% 25%); }
+  100% {
+    clip-path: ellipse(71% 75% at 50% 25%); } }
+
 *,
 *::after,
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
-  border: 0.2px solid rgba(0, 0, 0, 0.438); }
+  box-sizing: inherit; }
 
 :root {
   --color-primary: #eb2f64;
@@ -22,7 +27,7 @@
   --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.151); }
 
 html {
-  font-size: 62.5%;
+  font-size: 50%;
   /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */
   font-family: 'Roboto', sans-serif; }
 
@@ -45,6 +50,7 @@ body {
   color: #544c4c; }
 
 .winning_chances {
+  font-size: 1.15rem;
   color: #544c4c; }
 
 .center-element {
@@ -94,6 +100,9 @@ body {
 .block-interaction {
   pointer-events: none !important; }
 
+.release-interaction {
+  pointer-events: auto !important; }
+
 .shrink-couponsWrapper {
   transform: scale(0.8);
   opacity: 0.1; }
@@ -106,8 +115,7 @@ body {
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
-  border: 0.2px solid rgba(0, 0, 0, 0.438); }
+  box-sizing: inherit; }
 
 :root {
   --color-primary: #eb2f64;
@@ -125,7 +133,7 @@ body {
   --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.151); }
 
 html {
-  font-size: 62.5%;
+  font-size: 50%;
   /* this is the root font-size ! | and = 62.5% of the default browser font-size which is usually 16px ==> final value 10px */
   font-family: 'Roboto', sans-serif; }
 
@@ -139,6 +147,7 @@ body {
   --big-box-width:50rem; }
 
 .header {
+  animation: 2s ease-out 0s 1 headerAnimation;
   clip-path: ellipse(71% 75% at 50% 25%);
   background-color: #F3DE2E;
   width: 100%;
@@ -200,7 +209,6 @@ body {
   transition: transform 0.15s; }
 
 .coupon {
-  counter-increment: couponsCounter;
   display: flex;
   flex-wrap: wrap;
   flex: 0 0 30%;
@@ -209,11 +217,15 @@ body {
   transition: all 0.15s;
   padding: 1rem;
   position: relative;
-  transform: scale(1); }
+  transform: scale(1);
+  opacity: 0;
+  visibility: hidden; }
+  .coupon:not(:first-child) {
+    pointer-events: none; }
   .coupon:not(:nth-child(3n)) {
-    margin-right: 2rem; }
+    margin-right: 1rem; }
   .coupon:nth-last-child(n+4) {
-    margin-bottom: 2rem; }
+    margin-bottom: 1rem; }
   .coupon--big {
     flex: 0 0 100%;
     margin-bottom: 0 !important;
@@ -222,8 +234,9 @@ body {
     transform: scale(1); }
   .coupon__titleAndNumberContainer {
     width: 100%;
+    height: 100%;
     position: absolute;
-    top: -6%;
+    top: 0%;
     left: 0;
     pointer-events: none; }
   .coupon__title {
@@ -232,6 +245,12 @@ body {
     border: 1px solid black;
     text-align: center;
     border-radius: 10px;
+    padding: .5rem 0rem;
+    width: 90%;
+    position: absolute;
+    top: -3.45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0;
     visibility: hidden; }
   .coupon__number {
@@ -240,8 +259,8 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, 50%);
-    color: rgba(128, 128, 128, 0.555);
+    transform: translate(-50%, -50%);
+    color: rgba(128, 128, 128, 0.322);
     pointer-events: none; }
 
 .quickTips {
@@ -291,7 +310,6 @@ body {
     transform: translate(-1%, -1%);
     cursor: pointer; }
     .randomNumbers-popup__cancel-logo use {
-      border: 1px solid red;
       pointer-events: none; }
   .randomNumbers-popup__container {
     position: absolute;

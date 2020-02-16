@@ -1,1 +1,13 @@
 
+
+
+
+
+@keyframes headerAnimation {
+    0% {
+        clip-path: ellipse(53% 26% at 50% 25%); //start like this   
+    }
+    100% {
+        clip-path: ellipse(71% 75% at 50% 25%);
+    }
+  }
