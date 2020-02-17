@@ -1,5 +1,11 @@
+DoneFilling Button : 
+it get activated when :
+* when we click on goback button, we loop through allSaved coupons . if sth. is saved . then activate.
+
+* when we click on NextCoupon Button. (its done automatically .because this one calls the goBack button.)
+
+* when we fillrandomly in state 1.
 
 
-* random buttons functionality.
-
-* add new button : SubmitCoupons
+itgets deactivated :
+* when we click delete all coupon buttons-

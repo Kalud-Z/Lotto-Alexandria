@@ -43,11 +43,12 @@ button::-moz-focus-inner {
 .btn {
     cursor: pointer;
     font-size: 2rem;
-    // text-transform: uppercase;
     padding: 1rem;
     border-radius: 7px;
     border: none;
     transition: all  $main-transition-duration;
+    font-family: 'Muli', sans-serif;
+
 
     &:visited {
         outline: none;
@@ -74,15 +75,32 @@ button::-moz-focus-inner {
 }
 
 .deleteAll {
+    font-family: 'Muli', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    align-self: flex-start;
+    color: #406094;
     cursor: pointer;
-    background-color: rgb(255, 72, 0);
+
+    // background-color: rgb(255, 72, 0);
     // flex: 0 0 20%;
-    width: 52%;
-    align-self: center;
+
+    // width: 52%;
     margin-top: -5%;
+
+    border: 1px solid yellowgreen;
      // it starts hidden.
-     opacity: 0;
-     visibility: hidden; 
+    //  opacity: 0;
+    //  visibility: hidden; 
+
+    &__logo {
+        margin-right: .75rem;
+        fill : #406094;
+        height: 3rem;
+        width: 3rem;
+    }
 }
 
 .delete {
@@ -94,24 +112,32 @@ button::-moz-focus-inner {
 }       
 
 .nextCoupon {
-    cursor: pointer;
-    background-color: rgba(178, 100, 223, 0.801);
-    align-self: center;
-    margin-top: 5rem;
+    background-color: #3a6197f5;
+    border-radius: 100px;
+    color: white;
+    margin-top: 10rem;
+
+    & span { margin-left: 1rem; }
+
     // it starts hidden
     opacity: 0;
     visibility: hidden; 
 }
 
-.playBtn {
-    background-color: #3a6197;
+.doneFillingBtn {
+    background-color: white;
     border-radius: 100px;
-    color: white;
-    margin-top: auto;
+    color: #214374;
+    margin-top: 2rem;
+    cursor: not-allowed;
 
-    &:hover {
-        background-color: #214374;
+    &--activated {
+        border:2px solid #F3DE2E;
+        cursor: pointer;
+        
     }
+
+    & span { margin-left: 1rem; }
 }
 
 

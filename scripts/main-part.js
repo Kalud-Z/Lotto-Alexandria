@@ -77,7 +77,9 @@ var UIController = (function() {
         goBackButton : document.querySelector('.goback'),
         deleteAllButton: document.querySelector('.deleteAll'),
         nextCouponButton: document.querySelector('.nextCoupon'),
-        // fillRandomlyButton: document.querySelector('.random'),
+        doneFillingButton: document.querySelector('.doneFillingBtn'),
+        
+
 
         quickTips: document.querySelector('.quickTips'),
 
@@ -443,6 +445,15 @@ var UIController = (function() {
             setTimeout(function(){ elementClicked.firstElementChild.remove(); }, crossTransition); // you need for as long as the transition takes !
         },
 
+        activateDoneFillingBtn: function() {
+            selectedElementIs.doneFillingButton.classList.add('doneFillingBtn--activated');
+        },
+
+        deactivateDoneFillingBtn: function() {
+            selectedElementIs.doneFillingButton.classList.remove('doneFillingBtn--activated');
+        },
+
+
         showFieldsOfOneCoupon: function(targetCpn) {
             var allKidsOfCoupon = targetCpn.children;
             for(j = 1 ; j < allKidsOfCoupon.length ; j++) {  allKidsOfCoupon[j].classList.remove('hide'); }
@@ -584,7 +595,6 @@ var controller = (function(jackpotCtrl , UICtrl) {
         selectedElementIs.deleteAllButton.addEventListener('click', CtrlReset);
 
         selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon);
-        // selectedElementIs.fillRandomlyButton.addEventListener('click', CtrlRandomButton)
 
         //it whether open a popup or fill the expanded coupon randomly. depenedin on the state we are in.
         selectedElementIs.quickTips.addEventListener('click', CtrlOpenPopup);
@@ -636,7 +646,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 counter = parseInt(counterStr);
             }
 
-            //go through with the function only if the couter is defined
+            //go through with the function only if the counter is defined
             if(typeof counter !== "undefined") {
                 for(var i = 0 ; i < allCoupons.length ; i++) {
                     if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) {
@@ -655,10 +665,11 @@ var controller = (function(jackpotCtrl , UICtrl) {
                     if(counter === 0) { break;}
                 }
 
-            //4)close the popup
-            CtrlClosePopup();
-            UICtrl.showDeleteAllButton();
-            UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
+                //4)close the popup
+                CtrlClosePopup();
+                UICtrl.showDeleteAllButton();
+                UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
+                UICtrl.activateDoneFillingBtn();
             }
     }
 
@@ -748,6 +759,10 @@ var controller = (function(jackpotCtrl , UICtrl) {
             UICtrl.hideNextCouponButton();
             UICtrl.hideGobackButton();
             UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
+            //we activate DoneFilling button , only if there are saved coupons. otherwise deactivate and dispaly initialUI
+            if(Object.keys(jackpotCtrl.getAllCoupons()).length > 0) { UICtrl.activateDoneFillingBtn(); }
+            else { UICtrl.deactivateDoneFillingBtn(); UICtrl.setInitialUI(); }
+
         }
         else { alert('Um den Schein abgeben zu können, muss dieser vervollständigt oder gelöscht werden.'); }
 
@@ -822,6 +837,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         jackpotCtrl.deleteAllCoupons();
         UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
         UICtrl.hideDeleteAllButton();
+        UICtrl.deactivateDoneFillingBtn()
         UICtrl.setInitialUI();
     }
 

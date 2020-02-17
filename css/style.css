@@ -447,7 +447,8 @@ button::-moz-focus-inner {
   padding: 1rem;
   border-radius: 7px;
   border: none;
-  transition: all 0.15s; }
+  transition: all 0.15s;
+  font-family: 'Muli', sans-serif; }
   .btn:visited {
     outline: none; }
 
@@ -464,13 +465,20 @@ button::-moz-focus-inner {
   visibility: hidden; }
 
 .deleteAll {
+  font-family: 'Muli', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  color: #406094;
   cursor: pointer;
-  background-color: #ff4800;
-  width: 52%;
-  align-self: center;
   margin-top: -5%;
-  opacity: 0;
-  visibility: hidden; }
+  border: 1px solid yellowgreen; }
+  .deleteAll__logo {
+    margin-right: .75rem;
+    fill: #406094;
+    height: 3rem;
+    width: 3rem; }
 
 .delete {
   cursor: pointer;
@@ -479,20 +487,26 @@ button::-moz-focus-inner {
   visibility: hidden; }
 
 .nextCoupon {
-  cursor: pointer;
-  background-color: rgba(178, 100, 223, 0.801);
-  align-self: center;
-  margin-top: 5rem;
-  opacity: 0;
-  visibility: hidden; }
-
-.playBtn {
-  background-color: #3a6197;
+  background-color: #3a6197f5;
   border-radius: 100px;
   color: white;
-  margin-top: auto; }
-  .playBtn:hover {
-    background-color: #214374; }
+  margin-top: 10rem;
+  opacity: 0;
+  visibility: hidden; }
+  .nextCoupon span {
+    margin-left: 1rem; }
+
+.doneFillingBtn {
+  background-color: white;
+  border-radius: 100px;
+  color: #214374;
+  margin-top: 2rem;
+  cursor: not-allowed; }
+  .doneFillingBtn--activated {
+    border: 2px solid #F3DE2E;
+    cursor: pointer; }
+  .doneFillingBtn span {
+    margin-left: 1rem; }
 
 table {
   text-align: center;
@@ -558,7 +572,7 @@ table {
     flex-direction: column;
     position: relative; }
   .section-play__right {
-    flex: 0 0 20%;
+    flex: 0 0 17%;
     margin-left: 6rem;
     display: flex;
     flex-direction: column; }
