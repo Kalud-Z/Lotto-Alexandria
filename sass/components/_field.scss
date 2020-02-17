@@ -40,7 +40,7 @@
         left:50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        color : red;
+        color : rgba(210, 36, 33, 0.767) ;
         pointer-events: none;   // to make this element literally invisible to the cursor ! so U can click stuff behind it
         transition:transform $main-transition-duration;
         // transition-delay: .4s;

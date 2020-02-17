@@ -41,13 +41,13 @@ button::-moz-focus-inner {
 }
 
 .btn {
-    cursor: pointer;
+    font-family: 'Muli', sans-serif;
+    border: none;
     font-size: 2rem;
     padding: 1rem;
     border-radius: 7px;
-    border: none;
+    cursor: pointer;
     transition: all  $main-transition-duration;
-    font-family: 'Muli', sans-serif;
 
 
     &:visited {
@@ -75,7 +75,6 @@ button::-moz-focus-inner {
 }
 
 .deleteAll {
-    font-family: 'Muli', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,20 +83,13 @@ button::-moz-focus-inner {
     color: #406094;
     cursor: pointer;
 
-    // background-color: rgb(255, 72, 0);
-    // flex: 0 0 20%;
+    margin-top: -8%;
 
-    // width: 52%;
-    margin-top: -5%;
-
-    border: 1px solid yellowgreen;
-     // it starts hidden.
-    //  opacity: 0;
-    //  visibility: hidden; 
+    &:hover { color: #162c4e; }
 
     &__logo {
         margin-right: .75rem;
-        fill : #406094;
+        fill : currentColor;
         height: 3rem;
         width: 3rem;
     }
@@ -127,14 +119,18 @@ button::-moz-focus-inner {
 .doneFillingBtn {
     background-color: white;
     border-radius: 100px;
-    color: #214374;
+    color: #21447481;
     margin-top: 2rem;
     cursor: not-allowed;
+    border:2px solid #21447481;
 
     &--activated {
+        color: #214474;
         border:2px solid #F3DE2E;
         cursor: pointer;
-        
+        &:hover {
+            border:2px solid red;
+        }
     }
 
     & span { margin-left: 1rem; }

@@ -9,8 +9,7 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
-  border: 0.2px solid rgba(0, 0, 0, 0.438); }
+  box-sizing: inherit; }
 
 :root {
   --color-primary: #eb2f64;
@@ -69,6 +68,9 @@ body {
 .margin-left-very-small {
   margin-left: 0.5rem; }
 
+.margin-left-medium {
+  margin-left: 3rem; }
+
 .showPopup {
   opacity: 1;
   visibility: visible !important;
@@ -116,8 +118,7 @@ body {
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
-  border: 0.2px solid rgba(0, 0, 0, 0.438); }
+  box-sizing: inherit; }
 
 :root {
   --color-primary: #eb2f64;
@@ -151,7 +152,7 @@ body {
 .header {
   animation: 2s ease-out 0s 1 headerAnimation;
   clip-path: ellipse(71% 75% at 50% 25%);
-  background-color: #F3DE2E;
+  background-image: linear-gradient(to bottom, #F3DE2E, white);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -202,7 +203,6 @@ body {
     font-size: 1.3rem; }
 
 .coupons-wrapper {
-  counter-reset: couponsCounter;
   background-color: transparent;
   display: flex;
   flex-wrap: wrap;
@@ -213,7 +213,7 @@ body {
 .coupon {
   display: flex;
   flex-wrap: wrap;
-  flex: 0 0 30%;
+  flex: 0 0 31.97%;
   border-radius: 10px;
   background-color: white;
   transition: all 0.15s;
@@ -243,10 +243,10 @@ body {
     pointer-events: none; }
   .coupon__title {
     font-size: 2rem;
-    background-color: yellowgreen;
-    border: 1px solid black;
+    color: rgba(210, 36, 33, 0.767);
+    background-color: #F8EC88;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: .5rem 0rem;
     width: 90%;
     position: absolute;
@@ -294,7 +294,8 @@ body {
     width: 2rem;
     margin-right: .7rem;
     fill: currentColor;
-    pointer-events: none; }
+    pointer-events: none;
+    flex-shrink: 0; }
 
 .randomNumbers-popup {
   position: fixed;
@@ -442,13 +443,13 @@ button::-moz-focus-inner {
     width: 100%; }
 
 .btn {
-  cursor: pointer;
+  font-family: 'Muli', sans-serif;
+  border: none;
   font-size: 2rem;
   padding: 1rem;
   border-radius: 7px;
-  border: none;
-  transition: all 0.15s;
-  font-family: 'Muli', sans-serif; }
+  cursor: pointer;
+  transition: all 0.15s; }
   .btn:visited {
     outline: none; }
 
@@ -465,18 +466,18 @@ button::-moz-focus-inner {
   visibility: hidden; }
 
 .deleteAll {
-  font-family: 'Muli', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: flex-start;
   color: #406094;
   cursor: pointer;
-  margin-top: -5%;
-  border: 1px solid yellowgreen; }
+  margin-top: -8%; }
+  .deleteAll:hover {
+    color: #162c4e; }
   .deleteAll__logo {
     margin-right: .75rem;
-    fill: #406094;
+    fill: currentColor;
     height: 3rem;
     width: 3rem; }
 
@@ -499,12 +500,16 @@ button::-moz-focus-inner {
 .doneFillingBtn {
   background-color: white;
   border-radius: 100px;
-  color: #214374;
+  color: #21447481;
   margin-top: 2rem;
-  cursor: not-allowed; }
+  cursor: not-allowed;
+  border: 2px solid #21447481; }
   .doneFillingBtn--activated {
+    color: #214474;
     border: 2px solid #F3DE2E;
     cursor: pointer; }
+    .doneFillingBtn--activated:hover {
+      border: 2px solid red; }
   .doneFillingBtn span {
     margin-left: 1rem; }
 
@@ -551,7 +556,7 @@ table {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: red;
+    color: rgba(210, 36, 33, 0.767);
     pointer-events: none;
     transition: transform 0.15s;
     opacity: 0;
@@ -561,6 +566,12 @@ table {
     border-radius: 10px;
     cursor: pointer;
     pointer-events: auto; }
+
+.line {
+  width: .5rem;
+  border-left: 2px solid rgba(148, 17, 255, 0.082);
+  height: 42rem;
+  align-self: center; }
 
 .section-play {
   margin: 5rem 0;
@@ -573,6 +584,5 @@ table {
     position: relative; }
   .section-play__right {
     flex: 0 0 17%;
-    margin-left: 6rem;
     display: flex;
     flex-direction: column; }

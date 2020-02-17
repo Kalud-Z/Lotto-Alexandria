@@ -78,8 +78,6 @@ var UIController = (function() {
         deleteAllButton: document.querySelector('.deleteAll'),
         nextCouponButton: document.querySelector('.nextCoupon'),
         doneFillingButton: document.querySelector('.doneFillingBtn'),
-        
-
 
         quickTips: document.querySelector('.quickTips'),
 
@@ -99,7 +97,8 @@ var UIController = (function() {
         statisticPopup: document.getElementById('popupStatisticButton'),
 
         allPopups: document.querySelectorAll('.randomNumbers-popup'),
-        closePopupIcon: document.querySelector('.randomNumbers-popup__cancel-logo') 
+        closePopupIcon: document.querySelector('.randomNumbers-popup__cancel-logo'), 
+        allPopupsContainer: document.querySelector('.allPopups')
         
 
 
@@ -125,14 +124,14 @@ var UIController = (function() {
         }
     }
 
-
+/* 
     function showDeleteButton() {
         selectedElementIs.deleteButton.classList.add('show');
     }
 
     function hideDeleteButton() { 
         selectedElementIs.deleteButton.classList.remove('show');
-    }
+    } */
 
     //delete all checked fields. basically a reset.
     function deleteAllFieldGlobally() {
@@ -321,7 +320,7 @@ var UIController = (function() {
                         selectedElementIs.allNumbersOfFields[i].classList.add('show');
                     }       
             
-                    showDeleteButton();        
+                    // showDeleteButton();        
                     //we hide the number of that coupon
                     expandedCoupon.firstElementChild.lastElementChild.classList.add('hide');
                 })();
@@ -347,7 +346,7 @@ var UIController = (function() {
             /////// 2) make the coupon small , and show it along the other coupons . aka the initial UI.
            (function schrinkCouponMain() {
                 // console.log('inner schrib coupon is called hahahahaha');
-                hideDeleteButton();
+                // hideDeleteButton();
                 
                 //we make the opened coupons shrink. => to its initial state
                 expandedCoupon.classList.remove('coupon--big');
@@ -380,7 +379,7 @@ var UIController = (function() {
         //it takes an object . where u find all the filled and saved coupons
         exposeNextCoupon: function(allSavedCoupons){
             var targetCpn;
-            // if there are filled Coupons , we show the showDeleteAllButton && we expose the next tiny coupon
+            // if there are filled Coupons , we show the we expose the (last-saved + 1) tiny coupon
             if(Object.keys(allSavedCoupons).length !== 0) {
                 var allSavedCouponsArrayOfStrings = Object.keys(allSavedCoupons); 
                 var lastSavedCouponId = allSavedCouponsArrayOfStrings[allSavedCouponsArrayOfStrings.length -1];
@@ -391,7 +390,7 @@ var UIController = (function() {
                 //we expose the next tiny coupon and make it clickable
                 this.showFieldsOfOneCoupon(targetCpn);
                 this.CouponClickable(targetCpn.id);
-                this.showDeleteAllButton();
+                // this.showDeleteAllButton();
             }
         },
   
@@ -488,6 +487,15 @@ var UIController = (function() {
             selectedElementIs.deleteAllButton.classList.remove('show');
         },
 
+        changeNameOfDeleteAllBtn: function() {
+            var deleteAllCouponsStr = 'Clear All Coupons';
+            var deleteAllFieldsStr = 'Clear All Fields' ;
+            var target = selectedElementIs.deleteAllButton.lastElementChild; 
+
+            if(target.textContent === deleteAllCouponsStr)      { target.textContent = deleteAllFieldsStr ;}
+            else if(target.textContent === deleteAllFieldsStr)  { target.textContent = deleteAllCouponsStr;}
+        },
+
         hideNumOfCoupon: function(targetCpn){
             var temp = targetCpn.id;
             var targetIndex = parseInt(temp[temp.length-1]);
@@ -506,6 +514,7 @@ var UIController = (function() {
         },
 
         CouponClickable: function(couponId) {
+            console.log(' CouponClickable is calleddääääääääääääääääää');
             if(typeof couponId !== "undefined") { 
                 document.getElementById(couponId).classList.remove('block-interaction');
                 document.getElementById(couponId).classList.add('release-interaction');
@@ -514,31 +523,29 @@ var UIController = (function() {
                 (this.getExpandedCoupon()).classList.remove('block-interaction');
                 (this.getExpandedCoupon()).classList.add('release-interaction');
             }
-            
-
         },
 
         CouponUnclickable: function(couponId) {
             if(typeof couponId !== "undefined") {
-                document.getElementById(couponId).classList.add('block-interaction');
+                console.log('we are heeeeer . not undefned');
                 document.getElementById(couponId).classList.remove('release-interaction');
+                document.getElementById(couponId).classList.add('block-interaction');
             }
             else {
-                (this.getExpandedCoupon()).classList.add('block-interaction');
+                console.log('we are heeeeer . couponid : undefned');
                 (this.getExpandedCoupon()).classList.remove('release-interaction');
+                (this.getExpandedCoupon()).classList.add('block-interaction');
             }
             
         },
 
         fieldsUnclickable: function(){
-            // console.log('i am fieldsUnclickable and im caleld');
             var allFields = (this.getExpandedCoupon()).children; 
             for(var i = 1 ; i < allFields.length ; i++) {
                 if(allFields[i].childElementCount == 1) { 
                     allFields[i].classList.add('block-interaction');
                 }
             }
-            // selectedElementIs.couponsWrapper.classList.add('block-interaction'); // i had to add this. otherwise the fileds would still be clickable !
         },
 
         fieldsClickable: function(){
@@ -591,14 +598,16 @@ var controller = (function(jackpotCtrl , UICtrl) {
         selectedElementIs.goBackButton.addEventListener('click', CtrlShrinkCoupon);
 
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlToggleCross); 
-        selectedElementIs.deleteButton.addEventListener('click', CtrlDeleteAllFieldsInOneCoupon);
-        selectedElementIs.deleteAllButton.addEventListener('click', CtrlReset);
+        // selectedElementIs.deleteButton.addEventListener('click', CtrlDeleteAllFieldsInOneCoupon);
+        selectedElementIs.deleteAllButton.addEventListener('click', CtrlDelete);
 
         selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon);
 
         //it whether open a popup or fill the expanded coupon randomly. depenedin on the state we are in.
         selectedElementIs.quickTips.addEventListener('click', CtrlOpenPopup);
-        document.querySelector('body').addEventListener('click', CtrlClosePopup);
+
+        // document.querySelector('body').addEventListener('click', CtrlClosePopup);
+        selectedElementIs.allPopupsContainer.addEventListener('click', CtrlClosePopup);
 
         // listen to the UI of randomButtons
         selectedElementIs.chooseRandomNumPopup.addEventListener('click', CtrlChooseRandomNum);
@@ -635,18 +644,20 @@ var controller = (function(jackpotCtrl , UICtrl) {
     }
 
      function CtrlChooseRandomNum(){
-            var clickedElementId, counterStr, counter , targetcoupn , allCoupons;
-        
+            var clickedElementId, counterStr, counter ,targetCoupon , allCoupons;
             clickedElementId = event.target.id;
             allCoupons = selectedElementIs.allCoupons;
+
+            console.log('CtrlChooseRandomNum is caleeddddd');
             
+            // check whether we clicked on fillAllCouponsButton or on one of the other FiillrandomButton
             if(clickedElementId === selectedElementIs.fillAllCouponsButton.id) { counter = allCoupons.length; }
             else if(clickedElementId.includes('Fields')) {
                 counterStr = clickedElementId[0];
                 counter = parseInt(counterStr);
             }
 
-            //go through with the function only if the counter is defined
+            //this is the main-part . go through with the function only if the counter is defined
             if(typeof counter !== "undefined") {
                 for(var i = 0 ; i < allCoupons.length ; i++) {
                     if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) {
@@ -678,6 +689,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
     }
 
+    // this method . whether it opens a popup, OR it fill the expandedCoupon randomly. 
     function CtrlOpenPopup(){
         //1) if we are in the state_1 , do the following :
         if(typeof (UICtrl.getExpandedCoupon()) === "undefined") {
@@ -696,6 +708,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 checkedFields = 4;  //we fill the coupon without opening the popUp
                 //we show the next coupon button
                 UICtrl.showNextCouponButton();
+                UICtrl.activateDoneFillingBtn();
             } 
         }
     }
@@ -734,50 +747,52 @@ var controller = (function(jackpotCtrl , UICtrl) {
     function CtrlExpandCoupon() {
         var cpnClickedId;
         if(event.target.classList.contains('coupon')){ 
-            // UICtrl.showRandomButton();
             var cpnClickedId = event.target.id;
             UICtrl.expandCoupon(cpnClickedId);
+
             //decide what value we give to checkedFields
-            // console.log('the id is ' + cpnClickedId);
-            // console.log('rsult of hasCoupon ' + jackpotCtrl.hasCoupon(cpnClickedId));
-            if(jackpotCtrl.hasCoupon(cpnClickedId) === 1){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }
+            if(jackpotCtrl.hasCoupon(cpnClickedId) === 1){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }                
             UICtrl.CouponUnclickable(); // because if you can click it between the fields . it will mess up the checkedFields variable. !
+            
             //show and hide buttons
             UICtrl.showGobackButton();
-            UICtrl.hideDeleteAllButton();
+            // UICtrl.hideDeleteAllButton();
+            UICtrl.changeNameOfDeleteAllBtn();
+
         }
-        // console.log('CtrlExpandCoupon is called , and this the chckedfileds' + checkedFields);
-     
     }
 
     function CtrlShrinkCoupon() {
         // we allowed to go back . only if the coupon is fully filled , or completely emtpy.
         if(checkedFields === 4 || checkedFields === 0 ) {
+            if(checkedFields === 4) { if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;} }
+            if(checkedFields === 0) { UICtrl.CouponClickable(); }
+
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
             if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             UICtrl.shrinkCoupon();
             UICtrl.hideNextCouponButton();
             UICtrl.hideGobackButton();
+            //dont change name , when we click on nextCouponButton
+            if(event.target !== selectedElementIs.nextCouponButton) { UICtrl.changeNameOfDeleteAllBtn(); }
             UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
             //we activate DoneFilling button , only if there are saved coupons. otherwise deactivate and dispaly initialUI
             if(Object.keys(jackpotCtrl.getAllCoupons()).length > 0) { UICtrl.activateDoneFillingBtn(); }
             else { UICtrl.deactivateDoneFillingBtn(); UICtrl.setInitialUI(); }
-
+            
         }
         else { alert('Um den Schein abgeben zu können, muss dieser vervollständigt oder gelöscht werden.'); }
 
-        if(checkedFields === 4) {
-            if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
-        }
+       
     }
 
     function CtrlToggleCross() {
         var elementClicked ;
         elementClicked = event.target;
-        // console.log(elementClicked);
 
-
+        // we make sure first, that clicked element is indeed a field.
         if(elementClicked.classList.contains('field--goingBig')){
+            // if there no cross element in the HTML . we gonna add one.
             if(elementClicked.childElementCount == 1)  {
         
                 if(checkedFields < 4) {
@@ -786,35 +801,30 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 }
 
                 if(checkedFields === 4) {
-                    UICtrl.showNextCouponButton();
+                    UICtrl.showNextCouponButton(); 
                     addNewCouponFlag = 1 ; // permission flag. . => yes do it
-                    //3)block all other fields and coupons.
+
+                    //block all the empty fields. 
                     UICtrl.fieldsUnclickable();
                 }
 
+                if(checkedFields === 0 || checkedFields === 4) { UICtrl.activateDoneFillingBtn(); } else { UICtrl.deactivateDoneFillingBtn(); }
+
 
             }
+            // if there is a cross element in the HTML . we gonna remove one.
             else if(elementClicked.childElementCount == 2){
-                console.log('child count is isssssssss ' + elementClicked.childElementCount)
                 UICtrl.removeCross(elementClicked);
                 checkedFields--;
-                console.log('checkedFiled : '+ checkedFields);
                 //we make them clickable again , only when ( => max-number-of-checked-fields - 1)
                 if(checkedFields == (4-1)) { UICtrl.fieldsClickable(); }
                 addNewCouponFlag = 0; // permission denied.
                 UICtrl.fieldsClickable();
                 UICtrl.hideNextCouponButton();
+                if(checkedFields === 0 ) { UICtrl.activateDoneFillingBtn(); } 
+                else { UICtrl.deactivateDoneFillingBtn(); }
             }
         }
-    }
-
-    function CtrlDeleteAllFieldsInOneCoupon() {
-        addNewCouponFlag = 0; // we are not allowed to add new coupon
-        UICtrl.deleteAllFieldsInOneCoupon();
-        UICtrl.fieldsClickable();
-        UICtrl.hideNextCouponButton();
-        jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id);
-        checkedFields = 0;
     }
 
     function CtrlGoToNextCoupon() {
@@ -827,18 +837,35 @@ var controller = (function(jackpotCtrl , UICtrl) {
         
         openNextCoupon(couponId);
         if(jackpotCtrl.hasCoupon(couponId) === 1){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }
-        // console.log('CtrlGoToNextCoupon is called , and this the chckedfileds' + checkedFields);
         
     }
 
 
-    function CtrlReset() {
+    // this is a helping functions.
+    function deleteAllFieldsInOneCoupon(){
+        addNewCouponFlag = 0; // we are not allowed to add new coupon
+        UICtrl.deleteAllFieldsInOneCoupon();
+        UICtrl.fieldsClickable();
+        UICtrl.hideNextCouponButton();
+        jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id);
+        checkedFields = 0;
+    };
 
-        jackpotCtrl.deleteAllCoupons();
-        UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
-        UICtrl.hideDeleteAllButton();
-        UICtrl.deactivateDoneFillingBtn()
-        UICtrl.setInitialUI();
+    //change its name later.
+    function CtrlDelete() {
+        //in case we are in state 1 . we simply delete all filled coupons.
+        if(typeof UICtrl.getExpandedCoupon() === "undefined") {
+            jackpotCtrl.deleteAllCoupons();
+            UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
+            UICtrl.hideDeleteAllButton();
+            UICtrl.deactivateDoneFillingBtn()
+            UICtrl.setInitialUI();    
+        }
+
+        // in case we are in state 2 . we delete all fields.
+         else {
+            deleteAllFieldsInOneCoupon();
+        } 
     }
 
     return {
@@ -859,4 +886,4 @@ document.querySelector('html').addEventListener('click' , function(){
     console.log('the clicked element is : ');
     console.log(event.target);
 })
- 
+  

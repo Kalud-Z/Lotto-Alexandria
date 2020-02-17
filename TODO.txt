@@ -1,11 +1,44 @@
-DoneFilling Button : 
-it get activated when :
-* when we click on goback button, we loop through allSaved coupons . if sth. is saved . then activate.
-
-* when we click on NextCoupon Button. (its done automatically .because this one calls the goBack button.)
-
-* when we fillrandomly in state 1.
 
 
-itgets deactivated :
-* when we click delete all coupon buttons-
+you stake part :
+imclundon processing fee. 12€
+
+---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+____________________________________________________________-
+
+Questions for your Mentor :
+
+it takes me forever. to find a bug ! in my own code ! 
+it got huge and complicated , what can I do to make the process of findin bugs super easy and fast ?
+
+
+____________________________________________________________-
+
+Lessons you have learnt :
+
+
+NEVER write unnecessary code ! not because you want a Clean Code , but instead because you will never know when it will come back and bites you in the ass !
+==> so always make sure , the methods are doinf EXCATLY what they supposed to do , no more no less. and the event listeners, are listenin to least amount of HTML elements as possible !.
+
+
+
+
+
+
+
+
