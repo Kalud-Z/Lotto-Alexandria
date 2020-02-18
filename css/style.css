@@ -226,7 +226,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex: 0 0 31.97%;
-  border-radius: 10px;
+  border-radius: 4px;
   background-color: white;
   transition: all 0.15s;
   padding: 1rem;
