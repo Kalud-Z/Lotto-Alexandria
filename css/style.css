@@ -198,8 +198,20 @@ body {
   justify-content: center;
   align-items: center; }
   .coupons-container__title {
-    align-self: flex-start; }
+    align-self: flex-start;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .coupons-container__title__info-logo {
+      cursor: pointer;
+      margin-left: 1rem;
+      height: 3rem;
+      width: 3rem;
+      fill: currentColor; }
+      .coupons-container__title__info-logo use {
+        pointer-events: none; }
   .coupons-container .bitch {
+    display: none;
     font-size: 1.3rem; }
 
 .coupons-wrapper {
@@ -412,6 +424,13 @@ body {
     pointer-events: none; }
   .randomNumbers-popup__button--statistik h2, .randomNumbers-popup__button--statistik p {
     pointer-events: none; }
+
+#popupInfo p {
+  line-height: 150%;
+  text-align: left; }
+  #popupInfo p::first-line {
+    font-size: 2.5rem;
+    font-weight: 500; }
 
 button::-moz-focus-inner {
   border: 0; }

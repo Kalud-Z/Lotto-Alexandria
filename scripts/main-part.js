@@ -1,6 +1,5 @@
 
 
-
 // #########################################################################################################################
 // BUDGET CONTROLLER ########################################################################################################
 var JackpotController = (function() {
@@ -61,10 +60,11 @@ var UIController = (function() {
     var expandedCouponID;
     var expandedCoupon;
 
-    var main_transition_duration = 190;  //just lil bit longer than the transition to make sure , everything goes fines. x * 1.1
+    var main_transition_duration = 190;  //just lil bit longer than the transition of the animated elements to make sure , everything goes fines. x * 1.1
 
 
     var selectedElementIs = {
+        infoButton : document.getElementById('info-button'),
         couponsWrapper : document.querySelector('.coupons-wrapper'),
         allCoupons : document.querySelectorAll('.coupon'),
         couponsTitle: document.querySelectorAll('.coupon__title'),
@@ -197,16 +197,25 @@ var UIController = (function() {
             selectedElementIs.chooseRandomNumPopup.firstElementChild.classList.add('showPopup');
         },
 
+        // it opens whether one of the quicktips popups , or the info popup
         openPopup: function() {
             var elementClickedID;
             var elementClickedID = event.target.id;
-            // console.log('this is the clicked element . im the openPopup : ' + elementClickedID);
-            //extract the specific type of the popup , from the clicked item.
-            var exactType =  elementClickedID.substring(13, elementClickedID.length);
+            var exactType;
+
+            console.log(elementClickedID);
+
+            //if this method is onvoked by the info button
+            if(elementClickedID.includes('info')) {
+                exactType = "Info";
+            } 
+            // otherwise it is invoked by the quicktips buttons and we must extract the specific type of the popup.
+            else {
+                exactType =  elementClickedID.substring(13, elementClickedID.length);
+            }      
         
             // we add that type to the second part of the id of the target popup
             var exactPopupID = 'popup' + exactType;
-        
             document.getElementById(exactPopupID).classList.add('show');
             document.getElementById(exactPopupID).firstElementChild.classList.add('showPopup');
         },
@@ -594,6 +603,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
     setupEventListeners = function() {
         // var DOM = UICtrl.getDOMStrings();
         
+        selectedElementIs.infoButton.addEventListener('click' , CtrlOpenPopup);
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlExpandCoupon);
         selectedElementIs.goBackButton.addEventListener('click', CtrlShrinkCoupon);
 
@@ -693,7 +703,6 @@ var controller = (function(jackpotCtrl , UICtrl) {
     function CtrlOpenPopup(){
         //1) if we are in the state_1 , do the following :
         if(typeof (UICtrl.getExpandedCoupon()) === "undefined") {
-            // console.log('we are in state_1');
             UICtrl.openPopup();
         }
 
@@ -781,7 +790,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
             else { UICtrl.deactivateDoneFillingBtn(); UICtrl.setInitialUI(); }
             
         }
-        else { alert('Um den Schein abgeben zu können, muss dieser vervollständigt oder gelöscht werden.'); }
+        else { alert('In order to be able to submit the coupon, it must be completed or completely cleared.'); }
 
        
     }

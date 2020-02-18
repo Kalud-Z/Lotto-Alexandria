@@ -8,9 +8,25 @@
 
     &__title {
         align-self: flex-start;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__info-logo {
+            cursor: pointer;
+            margin-left: 1rem;
+            height: 3rem;
+            width: 3rem;
+            fill : currentColor;
+
+            & use { pointer-events: none; }
+        }
     }
 
-    .bitch { font-size: 1.3rem;}
+    .bitch {
+        display: none;
+        font-size: 1.3rem;}
 }
 
 

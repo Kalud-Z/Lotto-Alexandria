@@ -38,7 +38,9 @@
         <div class="section-play__left">
             <button class="btn goback"> <span> &larr; </span>  Overview </button>
             <div class="coupons-container" >
-                <h1 class="coupons-container__title primary-heading margin-bottom-big">Please Fill up your fields, <span class="bitch"> Bitch </span> </h1>
+                <h1 class="coupons-container__title primary-heading margin-bottom-big">Please Fill up your fields
+                    <svg class="coupons-container__title__info-logo" id="info-button">  <use xlink:href="img/symbol-defs-2.svg#icon-info"></use> </svg> 
+                     <span class=", bitch"> Bitch </span> </h1>
     
                 <div class="coupons-wrapper margin-bottom-small">
                    
@@ -388,7 +390,17 @@
 
     <div class="allPopups">
 
-         <div class="randomNumbers-popup" id="popupRandomButton">
+        <div class="randomNumbers-popup" id="popupInfo">
+            <div class="randomNumbers-popup__container">
+                <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
+                <p>This is how you play Lotto Alexandria <br>
+                    On a LOTTO ticket there are 9 coupons with 25 numbers each. In a single coupon you have to tick 4 numbers. You can click on a field and tick the numbers yourself or you can use our quick tips: you can fill out one or more fields quickly and easily by Random, with an Astro tip, with your Zodiac Sign or with a Statistics tip.
+                    </p>
+            </div>
+        </div>
+
+
+        <div class="randomNumbers-popup" id="popupRandomButton">
                     <div class="randomNumbers-popup__container">
                         <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
                         <p>How many Coupons should be filled ?</p>
@@ -402,7 +414,7 @@
          </div>
 
 
-         <div class="randomNumbers-popup " id="popupAstroButton">
+        <div class="randomNumbers-popup " id="popupAstroButton">
             <div class="randomNumbers-popup__container">
                 <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
                 <p>What is Your Zodiac Sign ?</p>
@@ -424,7 +436,7 @@
          </div>
 
 
-         <div class="randomNumbers-popup" id="popupStatisticButton">
+        <div class="randomNumbers-popup" id="popupStatisticButton">
             <div class="randomNumbers-popup__container randomNumbers-popup__container--statistik">
                 <svg class="randomNumbers-popup__cancel-logo">  <use xlink:href="img/symbol-defs.svg#icon-cancel-circle"></use> </svg>
                 <!-- <p>Wählen Sie Ihren Statistik-Tipp</p> -->
@@ -452,7 +464,8 @@
                     </div>
 
                 </div>
-            </div>
+        </div>
+
     </div>
 
 

@@ -144,3 +144,15 @@
     }
 
 }
+
+
+#popupInfo {
+    & p {
+        line-height: 150%;
+        text-align: left;
+        &::first-line {
+            font-size: 2.5rem;
+            font-weight: 500;
+        }
+    }
+}
