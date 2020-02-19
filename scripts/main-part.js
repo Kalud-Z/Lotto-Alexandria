@@ -4,21 +4,27 @@
 // BUDGET CONTROLLER ########################################################################################################
 var JackpotController = (function() {
 
-    var AllFilledCoupons = {};
+    var AllFilledCoupons = {}; //an object. to save all the filled coupons.
 
+    // object function constructor of coupon
     var Coupon = function(num) {
-        // this.id = id;
         this.numbersPicked = num;
     };
 
+
+    // helping function to create a new coupon object.
     function createCoupon(num) { return new Coupon(num); }
 
     return {
+
+        // add coupon object to the AllFilledCoupons object. 
         addCoupon: function(num,name) {
             AllFilledCoupons[name] = createCoupon(num); 
+            console.log('we just added an item from the allCoupons object');
             console.log(AllFilledCoupons);
         },
 
+        // it removes a coupon from the data structure. only if it exists.
         removeCoupon: function(id) {
             //check if it exits first
             if(this.hasCoupon(id)) {
@@ -29,8 +35,10 @@ var JackpotController = (function() {
             
         },
 
+        // delete all coupons at once.
         deleteAllCoupons: function(){
             for(var member in AllFilledCoupons) delete AllFilledCoupons[member]; // nice way to loop through all elements.
+            console.log('we just deleted all coupons');
             console.log(AllFilledCoupons);
         },
 
@@ -42,9 +50,7 @@ var JackpotController = (function() {
             return temp;
         },
 
-        getAllCoupons: function() {
-            return AllFilledCoupons;
-        }
+        getAllCoupons: function() {  return AllFilledCoupons; }
     }
 
 })();
@@ -58,8 +64,7 @@ var UIController = (function() {
     var expandedCouponID;
     var expandedCoupon;
 
-    var main_transition_duration = 190;  //just lil bit longer than the transition of the animated elements to make sure , everything goes fines. x * 1.1
-
+    var main_transition_duration = 190;  //just lil bit longer than the transition of the animated elements to make sure , everything goes smoothly.
 
     var selectedElementIs = {
         infoButton          : document.getElementById('info-button'),
@@ -111,6 +116,7 @@ var UIController = (function() {
 
     };
 
+    // It makes all coupons unclickable except the first one. which is bascially the start UI state.
     function allExceptTheFirstCouponUnclickable(){
         var allCoupons = selectedElementIs.allCoupons;
         for(var i = 1 ; i < allCoupons.length ; i++) {
@@ -118,15 +124,6 @@ var UIController = (function() {
             allCoupons[i].classList.add('block-interaction');
         }
     }
-
-/* 
-    function showDeleteButton() {
-        selectedElementIs.deleteButton.classList.add('show');
-    }
-
-    function hideDeleteButton() { 
-        selectedElementIs.deleteButton.classList.remove('show');
-    } */
 
     //delete all checked fields. basically a reset.
     function deleteAllFieldGlobally() {
@@ -138,57 +135,62 @@ var UIController = (function() {
         }
     }
 
+    // it makes all numbers of all coupons visible.
     function showNumbersOfallCoupons() {
         for(var i = 0 ; i < selectedElementIs.allNumbersOfCoupons.length ; i++) {
             selectedElementIs.allNumbersOfCoupons[i].classList.remove('hide');
         } 
     }
 
-    function hideNumberOfOneCoupon(couponId) {
+    // it hides the number a coupon . // do we even need this function ??????
+   /*  function hideNumberOfOneCoupon(nextCouponId) {
         var indexTemp , indexTempInt , targetIndex , targetNumber;
 
-        indexTemp = couponId[couponId.length-1]
+        indexTemp = nextCouponId[nextCouponId.length-1] //we extract the index from the id
         indexTempInt = parseInt(indexTemp);
-        targetIndex = indexTempInt - 1 ;
+        targetIndex = indexTempInt - 1 ;  // because coupons starts from 1 . and numbers start from 0
         targetNumber = selectedElementIs.allNumbersOfCoupons[targetIndex];
         targetNumber.classList.add('hide');
-    }
+    } */
 
+
+    //it hides all fields of all couponds. this is called by SetInitialUI function.
     function hideAllFields() {
-        // children of coupon (number + fileds) they start hidden. . then we toggle the class show
+        // children of coupon (number + fields) they start hidden. . then we toggle the class show
         for(var i = 1 ; i < selectedElementIs.allCoupons.length ; i++) {
             var allKidsOfCoupon = selectedElementIs.allCoupons[i].children;
             for(j = 1 ; j < allKidsOfCoupon.length ; j++) {  allKidsOfCoupon[j].classList.add('hide'); }
         }
     }
 
+    // it shows the title of the expanded coupon.
     function showTitle() {
         UIController.getExpandedCoupon().firstElementChild.firstElementChild.classList.add('show');  // this is how a private function , calls a public one of the same module.
     }
 
+    // it hides the title of the expanded coupon.
     function hideTitle() {
         UIController.getExpandedCoupon().firstElementChild.firstElementChild.classList.remove('show');
     }
 
+    // it displays the coupons when we first load the page.
     function displayCoupons() {
         var allCoupons = selectedElementIs.allCoupons;
 
         for(let i = 0 ; i < allCoupons.length ; i++) {
-            //   allCoupons[i].classList.add('display-element');
             (function() {
-                setTimeout(function(){
+                setTimeout(function(){  // display coupons one after the other ==> Nice Animation
                     var allCoupons = selectedElementIs.allCoupons;
                     allCoupons[i].classList.add('show');
                 } ,222 * i); //you need to wait a lil bit.
-    
             })(i);
          }
     }
 
     return {
-
+        
+        // it opens the FillRandomlyPopup : the UI responsible for selectin how many coupons to fill randomly. 
         openFillRandomlyPopup: function(){
-            // console.log('openFillRandomlyPopup  is caleddddd ')
             selectedElementIs.chooseRandomNumPopup.classList.add('show');
             selectedElementIs.chooseRandomNumPopup.firstElementChild.classList.add('showPopup');
         },
@@ -212,6 +214,7 @@ var UIController = (function() {
             document.getElementById(exactPopupID).firstElementChild.classList.add('showPopup'); //we have different utility classes , cause some have different animation beahvior.
         },
 
+        // it closes the currently opened popup.
         closePopup: function() {
             var elementClicked   =  event.target;
             var elementClickedID = elementClicked.id;
@@ -246,13 +249,9 @@ var UIController = (function() {
                 }
         },
 
-        getSelectedElementIs: function() {
-            return selectedElementIs;
-        },
+        getSelectedElementIs: function() {  return selectedElementIs; },
 
-        getDOMStrings: function() {
-            return DOMStrings;
-        },
+        getDOMStrings: function() { return DOMStrings; },
 
         //returns an array with the numbers of the checked fields. it can take a coupon as an argument.
         getCheckedFields: function(couponToCheck){
@@ -271,15 +270,16 @@ var UIController = (function() {
         },
 
         // return a coupon element . based on id
-        getCoupon: function(couponId) {
+        getCoupon: function(nextCouponId) {
             var allCoupons = selectedElementIs.allCoupons;
             for(var i = 0 ; i < allCoupons.length ; i++) {
-                if( allCoupons[i].id === couponId) {
+                if( allCoupons[i].id === nextCouponId) {
                     return allCoupons[i];
                 }
             }
         },
 
+        // it exapnds  a coupon. (alot of steps to achieve the desired animation)
         expandCoupon: function(cpnId) { 
             var CouponClicked , CouponClickedID , CouponClickedChildren;
 
@@ -293,9 +293,6 @@ var UIController = (function() {
             if(expandedCouponID !== '') {
                 //////// 1)the whole coupon wrapper schrinks a lil bit towards the middle & become a bit transparent
                 selectedElementIs.couponsWrapper.classList.add('shrink-couponsWrapper');
-                
-                // setTimeout(function(){ selectedElementIs.couponsWrapper.classList.add('shrink-couponsWrapper');}, main_transition_duration); //you need to wait a lil bit.
-
 
                 //////// 2) the clicked coupon quickly fully expands , in its tiny form inside of the shrinked wrapper.
                (function expandWhileStillTiny(){
@@ -316,11 +313,8 @@ var UIController = (function() {
                     }      
         
                     //make the numbers of fields appear
-                    for(var i = 0 ; i < selectedElementIs.allFields.length ; i++) {
-                        selectedElementIs.allNumbersOfFields[i].classList.add('show');
-                    }       
-            
-                    // showDeleteButton();        
+                    for(var i = 0 ; i < selectedElementIs.allFields.length ; i++) { selectedElementIs.allNumbersOfFields[i].classList.add('show'); }       
+                 
                     //we hide the number of that coupon
                     expandedCoupon.firstElementChild.lastElementChild.classList.add('hide');
                 })();
@@ -328,49 +322,35 @@ var UIController = (function() {
                 //////// 3) from the middle . the  already expanded coupon scales up in nice transition to 1. this done by returin the scale of wrapper back to 1.
                 setTimeout(function(){ selectedElementIs.couponsWrapper.classList.remove('shrink-couponsWrapper');}, main_transition_duration); //you need to wait a lil bit.
 
-                // setTimeout(function(){ showTitle(); }, main_transition_duration); //you need to wait a lil bit.
                 showTitle();
-
             }
         },
         
+        // it shrinks  a coupon. (alot of steps to achieve the desired animation)
         shrinkCoupon: function() { 
             expandedCoupon = this.getExpandedCoupon();
             hideTitle();
             
             //////// 1) the wrapper shrinks.
             selectedElementIs.couponsWrapper.classList.add('shrink-couponsWrapper');
-            // setTimeout(function(){ selectedElementIs.couponsWrapper.classList.add('shrink-couponsWrapper');}, main_transition_duration); //you need to wait a lil bit.
 
-
-            /////// 2) make the coupon small , and show it along the other coupons . aka the initial UI.
+            /////// 2) make the coupon small (and show it along the other coupons . aka the initial UI.)
            (function schrinkCouponMain() {
-                // console.log('inner schrib coupon is called hahahahaha');
-                // hideDeleteButton();
-                
-                //we make the opened coupons shrink. => to its initial state
+                //we make the opened coupon shrink. => to its initial state
                 expandedCoupon.classList.remove('coupon--big');
             
                 //we make all other coupons appear again. alongside with the previously opened one.
-                for(var i = 0 ; i < selectedElementIs.allCoupons.length ; i++) {
-                    selectedElementIs.allCoupons[i].classList.remove('display-none');
-                }
+                for(var i = 0 ; i < selectedElementIs.allCoupons.length ; i++) { selectedElementIs.allCoupons[i].classList.remove('display-none');}
                 
                 // make the fields small again.
-                for(var i = 1 ; i < expandedCoupon.children.length ; i++) {
-                    expandedCoupon.children[i].classList.remove('field--goingBig');
-                }
+                for(var i = 1 ; i < expandedCoupon.children.length ; i++) { expandedCoupon.children[i].classList.remove('field--goingBig'); }
                 
                 // make the fields numbers disappear again
-                for(var i = 0 ; i < selectedElementIs.allNumbersOfFields.length ; i++) {
-                    selectedElementIs.allNumbersOfFields[i].classList.remove('show');
-                }
+                for(var i = 0 ; i < selectedElementIs.allNumbersOfFields.length ; i++) {selectedElementIs.allNumbersOfFields[i].classList.remove('show');}
                 
                 // hide the number of the just closed coupon. it is the last child of the first element of that coupon.
                 expandedCoupon.firstElementChild.lastElementChild.classList.add('hide');
-            
             })();
-
 
             /////// 3) make the wrapper big.
             setTimeout(function(){ selectedElementIs.couponsWrapper.classList.remove('shrink-couponsWrapper');}, main_transition_duration); //you need to wait a lil bit.
@@ -444,7 +424,8 @@ var UIController = (function() {
         showFieldsOfOneCoupon: function(targetCpn) {
             var allKidsOfCoupon = targetCpn.children;
             for(j = 1 ; j < allKidsOfCoupon.length ; j++) {  allKidsOfCoupon[j].classList.remove('hide'); }
-            hideNumberOfOneCoupon(targetCpn.id);
+            // hideNumberOfOneCoupon(targetCpn.id); // do we even need this function ???
+            this.hideNumOfCoupon(targetCpn);
         },
        
         // it displays the nextCouponButton in the UI.
@@ -506,10 +487,10 @@ var UIController = (function() {
         },
 
         // make only one specific coupon clickable.
-        CouponClickable: function(couponId) {
-            if(typeof couponId !== "undefined") {   //if it is called with an argument.
-                document.getElementById(couponId).classList.remove('block-interaction');
-                document.getElementById(couponId).classList.add('release-interaction');
+        CouponClickable: function(nextCouponId) {
+            if(typeof nextCouponId !== "undefined") {   //if it is called with an argument.
+                document.getElementById(nextCouponId).classList.remove('block-interaction');
+                document.getElementById(nextCouponId).classList.add('release-interaction');
             }
             else {  //otherwise , make the expanded coupon clickable.
                 (this.getExpandedCoupon()).classList.remove('block-interaction');
@@ -518,10 +499,10 @@ var UIController = (function() {
         },
 
         // make only one specific coupon unclickable.
-        CouponUnclickable: function(couponId) {
-            if(typeof couponId !== "undefined") {  //if it is called with an argument.
-                document.getElementById(couponId).classList.remove('release-interaction');
-                document.getElementById(couponId).classList.add('block-interaction');
+        CouponUnclickable: function(nextCouponId) {
+            if(typeof nextCouponId !== "undefined") {  //if it is called with an argument.
+                document.getElementById(nextCouponId).classList.remove('release-interaction');
+                document.getElementById(nextCouponId).classList.add('block-interaction');
             }
             else { //otherwise , make the expanded coupon unclickable
                 (this.getExpandedCoupon()).classList.remove('release-interaction');
@@ -562,9 +543,7 @@ var UIController = (function() {
                 }
             }
         }
-        
     }
-
 
 })();
 
@@ -586,12 +565,12 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // when we click the info Button. the info popup appears.
         selectedElementIs.infoButton.addEventListener('click' , CtrlOpenPopupOrFillRandomly);
 
-
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlExpandCoupon);
+
         selectedElementIs.goBackButton.addEventListener('click', CtrlShrinkCoupon);
 
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlToggleCross); 
-        // selectedElementIs.deleteButton.addEventListener('click', CtrlDeleteAllFieldsInOneCoupon);
+
         selectedElementIs.deleteAllButton.addEventListener('click', CtrlDelete);
 
         selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon);
@@ -599,7 +578,6 @@ var controller = (function(jackpotCtrl , UICtrl) {
         //it whether open a popup or fill the expanded coupon randomly. depenedin on the state we are in.
         selectedElementIs.quickTips.addEventListener('click', CtrlOpenPopupOrFillRandomly);
 
-        // document.querySelector('body').addEventListener('click', CtrlClosePopup);
         selectedElementIs.allPopupsContainer.addEventListener('click', CtrlClosePopup);
 
         // listen to the UI of randomButtons
@@ -615,61 +593,63 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // selectedElementIs.RandomButton.addEventListener('click' , CtrlParentRandomButton)
     };
 
+    //it takes care of buttons functionalities inside the Statistic Popup
     function CtrlStatisticPopup() {
         clickedElement = event.target;
         clickedElementId = clickedElement.id;
 
+        //if one of the statistic paragraphs are clicked ,inside of the StatistikPopup, is clicked then we open the FillRandomlyPopup
         if(clickedElement.classList.contains(DOMStrings.statisticButton)) {
             UICtrl.closePopup();
-            setTimeout(function(){ UICtrl.openFillRandomlyPopup();}, 200); //you need to wait a lil bit. 
+            setTimeout(function(){ UICtrl.openFillRandomlyPopup();}, 200); //you need to wait till the previous popup is closed.
         }
     }
 
+    //it takes care of buttons functionalities inside the Astro Popup
     function CtrlAstroPopup() {
         clickedElement = event.target;
         clickedElementId = clickedElement.id;
 
-        if(clickedElement.classList.contains(DOMStrings.astroButton)) {
+        //if one of the astro buttons ,inside of the AstroPopup, is clicked then we open the FillRandomlyPopup
+        if(clickedElement.classList.contains(DOMStrings.astroButton)) {  
             UICtrl.closePopup(); 
-            setTimeout(function(){ UICtrl.openFillRandomlyPopup();}, 100); //you need to wait a lil bit. 
+            setTimeout(function(){ UICtrl.openFillRandomlyPopup();}, 100); 
         }
 
     }
 
-     function CtrlChooseRandomNum(){
+    // this function is called when we click on +1 / +3 / +6 or fill all coupons randomly buttons.
+    function CtrlChooseRandomNum(){
             var clickedElementId, counterStr, counter ,targetCoupon , allCoupons;
             clickedElementId = event.target.id;
             allCoupons = selectedElementIs.allCoupons;
 
-            console.log('CtrlChooseRandomNum is caleeddddd');
-            
-            // check whether we clicked on fillAllCouponsButton or on one of the other FiillrandomButton
+            // check whether we clicked on fillAllCouponsButton or on one of the other FillrandomButton
             if(clickedElementId === selectedElementIs.fillAllCouponsButton.id) { counter = allCoupons.length; }
             else if(clickedElementId.includes('Fields')) {
-                counterStr = clickedElementId[0];
-                counter = parseInt(counterStr);
+                counterStr = clickedElementId[0]; // extract from the id, how many coupons we wanna fill.
+                counter = parseInt(counterStr);    // we make the extracted number and Interger.
             }
 
-            //this is the main-part . go through with the function only if the counter is defined
+            //this is the main-part . go through with the function ONLY IF the counter is defined
             if(typeof counter !== "undefined") {
-                for(var i = 0 ; i < allCoupons.length ; i++) {
-                    if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) {
+                for(var i = 0 ; i < allCoupons.length ; i++) {   // we loop through all coupons from first to the nineth coupon.
+                    if(jackpotCtrl.hasCoupon(allCoupons[i].id) === 0) { // if the coupon is NOT saved yet. then fill it randomly.
                         targetCoupon = allCoupons[i];
                         UICtrl.fillRandomly(targetCoupon);
 
-                        // show it , by hidin the number of coupon , and showing the lil fields
-                        UICtrl.hideNumOfCoupon(targetCoupon);
+                        // show it , by hidin the number of coupon, and showing the lil fields
+                        UICtrl.hideNumOfCoupon(targetCoupon); // it hides the numbers up untill the last filled coupon.
                         UICtrl.showFieldsOfOneCoupon(targetCoupon);
 
-                        //we add the new coupon
+                        //we add the new coupon to the data structure
                         CtrlAddNewCoupon(targetCoupon); 
 
                         counter--;  // keeping track of how many coupons to fill randomly.
                     }
-                    if(counter === 0) { break;}
+                    if(counter === 0) { break;}  // we get out of the loop once the chosen number coupons to fill , is reached.
                 }
 
-                //4)close the popup
                 CtrlClosePopup();
                 UICtrl.showDeleteAllButton();
                 UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
@@ -677,6 +657,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
             }
     }
 
+    // it closes the currently openend popup
     function CtrlClosePopup() {
         UICtrl.closePopup();
         UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
@@ -708,38 +689,29 @@ var controller = (function(jackpotCtrl , UICtrl) {
         }
     }
 
-    // this is a helping function. its is not called directly from any event listener.
-    //create name of the coupon U gonna add to the allCoupons object in the Jackpot module.
+    // this is a helping function. its is not called directly from any event listener
+    // It saved a coupon to the data structure.
     function CtrlAddNewCoupon(couponToAdd){
-        var targetCoupon;
-        if(typeof couponToAdd === "undefined") {
-            targetCoupon = UICtrl.getExpandedCoupon();
-        }
+        var targetCoupon , targetCouponId , pickedFields;
+        //if we call it without an argument. we add the currently expanded coupon.
+        if(typeof couponToAdd === "undefined") { targetCoupon = UICtrl.getExpandedCoupon(); }
         else { targetCoupon = couponToAdd; }
 
-        // var newCouponName = couponToAdd.id;
-        var targetCouponId = targetCoupon.id;
-        //get checked fields
-        // console.log('this is target couponnnnnn' + targetCoupon);
-        // console.log(targetCoupon);
-       var pickedFields = UICtrl.getCheckedFields(targetCoupon);
-    //    console.log('these are the picked check fields ###### ' + pickedFields);
-       jackpotCtrl.addCoupon(pickedFields,targetCouponId);
+        targetCouponId = targetCoupon.id;
+    
+       pickedFields = UICtrl.getCheckedFields(targetCoupon);
+       jackpotCtrl.addCoupon(pickedFields,targetCouponId);  // it saves the new coupon in the data structure. Coupon id is the same as the key of the coupon in the data structure.
     }
 
-    // it would way more efficient. if you have only one function to open a coupon. (you tried it , it didnt work because of the passed argument. U created it in way , if the argument if defined then use it. otherwise get the id from the clicked element.)
-    function openNextCoupon(couponId) {  // you can make the other big expand coupon , use this one ad a helping function. it passes the target-coupon ID to it after it defines it.
-        UICtrl.expandCoupon(couponId);
-        if(jackpotCtrl.hasCoupon(couponId) === 1){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }
-        // UICtrl.currentCouponUnclickable();
+    // it would be way more efficient. if you have only one function to open a coupon. (you tried it , it didnt work because of the passed argument. U created it in way , if the argument if defined then use it. otherwise get the id from the clicked element.)
+    function openNextCoupon(nextCouponId) {  // you can make the other big expand coupon , use this one ad a helping function. it passes the target-coupon ID to it after it defines it.
+        UICtrl.expandCoupon(nextCouponId);
         UICtrl.CouponUnclickable();
-        // console.log('just before showGobackButton');
-        UICtrl.CouponUnclickable(couponId); // because we just turned it into clickable, as we called the schrinkCoupon method. in the same event handler
         UICtrl.showGobackButton();
         UICtrl.hideDeleteAllButton();
     }
 
-
+    // it takes all the needed steps to expand the clicked  coupon.
     function CtrlExpandCoupon() {
         var cpnClickedId;
         if(event.target.classList.contains('coupon')){ // check if the clicked element is indeed a coupon.
@@ -757,99 +729,92 @@ var controller = (function(jackpotCtrl , UICtrl) {
         }
     }
 
+    // it takes all the needed steps to shrink a coupon and go back to overview UI
     function CtrlShrinkCoupon() {
         // we allowed to go back . only if the coupon is fully filled , or completely emtpy.
         if(checkedFields === 4 || checkedFields === 0 ) {
-            if(checkedFields === 4) { if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;} }
-            if(checkedFields === 0) { UICtrl.CouponClickable(); }
+            if(checkedFields === 4) { if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0; } } // if addNewCouponFlag is released, then we save the new coupon.
+            if(checkedFields === 0) { UICtrl.CouponClickable(); } //
 
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
-            if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0;}
             UICtrl.shrinkCoupon();
             UICtrl.hideNextCouponButton();
             UICtrl.hideGobackButton();
             //dont change name , when we click on nextCouponButton
             if(event.target !== selectedElementIs.nextCouponButton) { UICtrl.changeNameOfDeleteAllBtn(); }
-            UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
+            UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons()); // expose the next empty coupon in state 1. so we can click , expand it and fill it.
             //we activate DoneFilling button , only if there are saved coupons. otherwise deactivate and dispaly initialUI
-            if(Object.keys(jackpotCtrl.getAllCoupons()).length > 0) { UICtrl.activateDoneFillingBtn(); }
-            else { UICtrl.deactivateDoneFillingBtn(); UICtrl.setInitialUI(); }
+            if(Object.keys(jackpotCtrl.getAllCoupons()).length > 0) { UICtrl.activateDoneFillingBtn(); } // if there are any saved coupons . activate DoneFillingBtn
+            else { UICtrl.deactivateDoneFillingBtn(); UICtrl.setInitialUI(); } 
             
         }
-        else { alert('In order to be able to submit the coupon, it must be completed or completely cleared.'); }
-
-       
+        else { alert('In order to be able to submit the coupon, it must be completed or completely cleared.'); } 
     }
 
+    // it whether adds or removes the cross from the clicked field.
     function CtrlToggleCross() {
         var elementClicked ;
         elementClicked = event.target;
 
-        // we make sure first, that clicked element is indeed a field.
-        if(elementClicked.classList.contains('field--goingBig')){
-            // if there no cross element in the HTML . we gonna add one.
-            if(elementClicked.childElementCount == 1)  {
-        
-                if(checkedFields < 4) {
-                    UICtrl.addCross(elementClicked);
-                    checkedFields++;
-                }
-
+        if(elementClicked.classList.contains('field--goingBig')){ // we make sure first, that clicked element is indeed a field.
+           
+            //  This is Adding #############################################
+            if(elementClicked.childElementCount == 1) { // if there is no cross element in the HTML . we gonna add one.
+                if(checkedFields < 4) { UICtrl.addCross(elementClicked); checkedFields++;}
                 if(checkedFields === 4) {
                     UICtrl.showNextCouponButton(); 
-                    addNewCouponFlag = 1 ; // permission flag. . => yes do it
-
-                    //block all the empty fields. 
-                    UICtrl.fieldsUnclickable();
+                    addNewCouponFlag = 1 ;      // permission flag. . => yes do it 
+                    UICtrl.fieldsUnclickable();  //block all the empty fields.
                 }
 
+                // we de-activate the DoneFillingBtn based on the value of checkedFields.  
                 if(checkedFields === 0 || checkedFields === 4) { UICtrl.activateDoneFillingBtn(); } else { UICtrl.deactivateDoneFillingBtn(); }
-
-
             }
-            // if there is a cross element in the HTML . we gonna remove one.
-            else if(elementClicked.childElementCount == 2){
+
+            //  This is removing #############################################
+            else if(elementClicked.childElementCount == 2){ // if there is a cross element in the HTML . we gonna remove one.
                 UICtrl.removeCross(elementClicked);
                 checkedFields--;
                 //we make them clickable again , only when ( => max-number-of-checked-fields - 1)
-                if(checkedFields == (4-1)) { UICtrl.fieldsClickable(); }
+                if(checkedFields === (4-1)) { UICtrl.fieldsClickable(); }  //we only need to call function ONCE. the one time when we uncheck the first field from a fully checked coupon.
                 addNewCouponFlag = 0; // permission denied.
-                UICtrl.fieldsClickable();
+                // UICtrl.fieldsClickable();  
                 UICtrl.hideNextCouponButton();
-                if(checkedFields === 0 ) { UICtrl.activateDoneFillingBtn(); } 
-                else { UICtrl.deactivateDoneFillingBtn(); }
+
+                // we de-activate the DoneFillingBtn based on the value of checkedFields.  
+                if(checkedFields === 0 ) { UICtrl.activateDoneFillingBtn(); }  else { UICtrl.deactivateDoneFillingBtn(); }
             }
+
         }
     }
 
+    // ti takes us to the next coupon. to fill it or to modify it. it shrinks the coupon first, then it expands the next one. (for animation purposes)
     function CtrlGoToNextCoupon() {
-        var couponId , nextCoupon;
+        var nextCouponId , nextCoupon;
         //we get the id of the current coupon. so we can determine the next coupon.
         nextCoupon = UICtrl.getExpandedCoupon().nextElementSibling;
-        couponId = nextCoupon.id;
+        nextCouponId = nextCoupon.id;
         
         CtrlShrinkCoupon();
-        
-        openNextCoupon(couponId);
-        if(jackpotCtrl.hasCoupon(couponId) === 1){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }
-        
+        openNextCoupon(nextCouponId);
+
+        if(jackpotCtrl.hasCoupon(nextCouponId)){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }
     }
 
-
-    // this is a helping functions.
-    function deleteAllFieldsInOneCoupon(){
+    // this is a helping function. it is called by CtrlDelete . It take the needed steps to delete all Fields in the expanded coupon.
+    function CtrlDeleteAllFieldsInOneCoupon(){
         addNewCouponFlag = 0; // we are not allowed to add new coupon
         UICtrl.deleteAllFieldsInOneCoupon();
         UICtrl.fieldsClickable();
         UICtrl.hideNextCouponButton();
-        jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id);
+        jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id);  //we shoulnd call it here. !
         checkedFields = 0;
     };
 
-    //change its name later.
+    // whether it deletes all saved coupons. OR all fields of the expanded coupon. based on the state we are it.
     function CtrlDelete() {
         //in case we are in state 1 . we simply delete all filled coupons.
-        if(typeof UICtrl.getExpandedCoupon() === "undefined") {
+        if(typeof UICtrl.getExpandedCoupon() === "undefined") { //if there is no expanded coupon then we are in state 1.
             jackpotCtrl.deleteAllCoupons();
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
             UICtrl.hideDeleteAllButton();
@@ -858,9 +823,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         }
 
         // in case we are in state 2 . we delete all fields.
-         else {
-            deleteAllFieldsInOneCoupon();
-        } 
+         else {   CtrlDeleteAllFieldsInOneCoupon(); } 
     }
 
     return {
@@ -874,6 +837,11 @@ var controller = (function(jackpotCtrl , UICtrl) {
 
 
 controller.init();
+
+
+
+
+
 
 
 

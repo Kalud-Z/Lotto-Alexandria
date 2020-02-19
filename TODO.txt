@@ -1,21 +1,5 @@
 
 
-you stake part :
-imclundon processing fee. 12€
-
----------
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -34,6 +18,29 @@ Lessons you have learnt :
 
 NEVER write unnecessary code ! not because you want a Clean Code , but instead because you will never know when it will come back and bites you in the ass !
 ==> so always make sure , the methods are doinf EXCATLY what they supposed to do , no more no less. and the event listeners, are listenin to least amount of HTML elements as possible !.
+
+
+
+______________________________________________________________________________________________
+
+Refactoring : 
+
+1) expandcoupon . and openNextCoupon . merge them together.
+
+
+
+################################################################
+
+
+2)currently :
+
+we call removeCoupon() , only when we click deleteAllFields in one coupon !.
+
+
+===> what it should be: 
+we call it when we click goBack (if fieldsChecked === 0)
+
+and when we click goNextCoupon  (if fieldsChecked === 0))
 
 
 
