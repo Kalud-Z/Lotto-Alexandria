@@ -641,7 +641,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                         UICtrl.fillRandomly(targetCoupon);
 
                         // show it , by hidin the number of coupon, and showing the lil fields
-                        UICtrl.hideNumOfCoupon(targetCoupon); // it hides the numbers up untill the last filled coupon.
+                        UICtrl.hideNumOfCoupon(targetCoupon); // it hides the numbers up until the last filled coupon.
                         UICtrl.showFieldsOfOneCoupon(targetCoupon);
 
                         //we add the new coupon to the data structure
@@ -682,8 +682,8 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 UICtrl.fillRandomly(); //we fill the coupon without opening the popUp
                 checkedFields = 4;  
                 addNewCouponFlag = 1;  //we release the flag whenever all required fields are checked.
-                //we show the next coupon button
-                UICtrl.showNextCouponButton();
+                //we show the next coupon button . as long as we are not already in the last coupon. (nineth one)
+                if(Object.keys(jackpotCtrl.getAllCoupons()).length < 8) { UICtrl.showNextCouponButton(); } 
                 UICtrl.showDeleteAllButton();
                 UICtrl.activateDoneFillingBtn();
             }
@@ -766,7 +766,8 @@ var controller = (function(jackpotCtrl , UICtrl) {
             if(elementClicked.childElementCount == 1) { // if there is no cross element in the HTML . we gonna add one.
                 if(checkedFields < 4) { UICtrl.addCross(elementClicked); checkedFields++;}
                 if(checkedFields === 4) {
-                    UICtrl.showNextCouponButton(); 
+                    //we show the nextCouponButton as long as wei not in the last coupon already.
+                    if(Object.keys(jackpotCtrl.getAllCoupons()).length < 8) { UICtrl.showNextCouponButton(); } 
                     addNewCouponFlag = 1 ;      // permission flag. . => yes do it 
                     UICtrl.fieldsUnclickable();  //block all the empty fields.
                 }
@@ -787,7 +788,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 UICtrl.hideNextCouponButton();
 
                 // we de-activate the DoneFillingBtn based on the value of checkedFields.  
-                if(checkedFields === 0 ) { UICtrl.activateDoneFillingBtn(); }  else { UICtrl.deactivateDoneFillingBtn(); }
+                if(checkedFields === 0 ) { UICtrl.activateDoneFillingBtn(); UICtrl.hideDeleteAllButton(); }  else { UICtrl.deactivateDoneFillingBtn(); }
             }
 
         }
