@@ -78,14 +78,13 @@ button::-moz-focus-inner {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: not-allowed;
+    pointer-events: none;
 
     align-self: flex-start;
-    color: #406094;
-    cursor: pointer;
-
-    margin-top: -8%;
-
-    &:hover { color: #162c4e; }
+    
+    // it start very light colored. 
+    color: #40609460;
 
     &__logo {
         margin-right: .75rem;
@@ -95,26 +94,35 @@ button::-moz-focus-inner {
     }
 }
 
-.delete {
+.show-deleteAllButton {
+    color: #406094;
     cursor: pointer;
-    background-color: rgb(46, 212, 163);
-
-    opacity: 0;
-    visibility: hidden;
-}       
+    pointer-events: auto;
+    &:hover { color: #162c4e; }
+}
 
 .nextCoupon {
-    background-color: #3a6197f5;
+    background-color: #3a619767;
     border-radius: 100px;
     color: white;
     margin-top: 10rem;
+    cursor: not-allowed;
+    pointer-events: none;
 
     & span { margin-left: 1rem; }
 
     // it starts hidden
-    opacity: 0;
-    visibility: hidden; 
+    // opacity: 0;
+    // visibility: hidden; 
 }
+
+.show-nextCouponButton {
+    background-color: #3a6197f5;
+    pointer-events: auto;
+    cursor: pointer;
+    &:hover { background-color: #284977f5; }
+}
+
 
 .doneFillingBtn {
     background-color: white;

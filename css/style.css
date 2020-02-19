@@ -160,7 +160,7 @@ body {
   justify-content: center;
   padding: 2rem 20rem; }
   .header__logo {
-    height: 5rem;
+    height: 5.7rem;
     margin-bottom: 2rem; }
   .header__text-box {
     display: flex;
@@ -488,33 +488,39 @@ button::-moz-focus-inner {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: not-allowed;
+  pointer-events: none;
   align-self: flex-start;
-  color: #406094;
-  cursor: pointer;
-  margin-top: -8%; }
-  .deleteAll:hover {
-    color: #162c4e; }
+  color: #40609460; }
   .deleteAll__logo {
     margin-right: .75rem;
     fill: currentColor;
     height: 3rem;
     width: 3rem; }
 
-.delete {
+.show-deleteAllButton {
+  color: #406094;
   cursor: pointer;
-  background-color: #2ed4a3;
-  opacity: 0;
-  visibility: hidden; }
+  pointer-events: auto; }
+  .show-deleteAllButton:hover {
+    color: #162c4e; }
 
 .nextCoupon {
-  background-color: #3a6197f5;
+  background-color: #3a619767;
   border-radius: 100px;
   color: white;
   margin-top: 10rem;
-  opacity: 0;
-  visibility: hidden; }
+  cursor: not-allowed;
+  pointer-events: none; }
   .nextCoupon span {
     margin-left: 1rem; }
+
+.show-nextCouponButton {
+  background-color: #3a6197f5;
+  pointer-events: auto;
+  cursor: pointer; }
+  .show-nextCouponButton:hover {
+    background-color: #284977f5; }
 
 .doneFillingBtn {
   background-color: white;

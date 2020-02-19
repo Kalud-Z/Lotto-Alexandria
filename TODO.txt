@@ -25,22 +25,7 @@ ________________________________________________________________________________
 
 Refactoring : 
 
-1) expandcoupon . and openNextCoupon . merge them together.
 
-
-
-################################################################
-
-
-2)currently :
-
-we call removeCoupon() , only when we click deleteAllFields in one coupon !.
-
-
-===> what it should be: 
-we call it when we click goBack (if fieldsChecked === 0)
-
-and when we click goNextCoupon  (if fieldsChecked === 0))
 
 
 

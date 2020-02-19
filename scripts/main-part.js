@@ -76,7 +76,6 @@ var UIController = (function() {
         allFields           : document.querySelectorAll('.field'),    
         allNumbersOfFields  : document.querySelectorAll('.field__number'),
 
-        deleteButton        : document.querySelector('.delete'),
         goBackButton        : document.querySelector('.goback'),
         deleteAllButton     : document.querySelector('.deleteAll'),
         nextCouponButton    : document.querySelector('.nextCoupon'),
@@ -370,7 +369,7 @@ var UIController = (function() {
                 //we expose the next tiny coupon and make it clickable
                 this.showFieldsOfOneCoupon(targetCpn);
                 this.CouponClickable(targetCpn.id);
-                // this.showDeleteAllButton();
+                this.showDeleteAllButton();
             }
         },
   
@@ -430,12 +429,14 @@ var UIController = (function() {
        
         // it displays the nextCouponButton in the UI.
         showNextCouponButton: function() {
-            selectedElementIs.nextCouponButton.classList.add('show');
+            // selectedElementIs.nextCouponButton.classList.add('show');
+            selectedElementIs.nextCouponButton.classList.add('show-nextCouponButton');
         },
 
         // it hides the nextCouponButton in the UI.
         hideNextCouponButton: function() {
-            selectedElementIs.nextCouponButton.classList.remove('show');
+            selectedElementIs.nextCouponButton.classList.remove('show-nextCouponButton');
+            // selectedElementIs.nextCouponButton.classList.remove('show');
         },
 
         // it displays the goBackButton in the UI.
@@ -451,12 +452,13 @@ var UIController = (function() {
 
         // it displays the deleteAllButton in the UI.
         showDeleteAllButton: function() {
-            selectedElementIs.deleteAllButton.classList.add('show');
+            console.log('showDeleteAllButton is caleded');
+            selectedElementIs.deleteAllButton.classList.add('show-deleteAllButton');
         },
 
         // it hides the deleteAllButton in the UI.
         hideDeleteAllButton: function() {
-            selectedElementIs.deleteAllButton.classList.remove('show');
+            selectedElementIs.deleteAllButton.classList.remove('show-deleteAllButton');
         },
 
         // toggle between two Labels, of the same button |  the Delete button , has different label in different states of the program.
@@ -682,6 +684,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 addNewCouponFlag = 1;  //we release the flag whenever all required fields are checked.
                 //we show the next coupon button
                 UICtrl.showNextCouponButton();
+                UICtrl.showDeleteAllButton();
                 UICtrl.activateDoneFillingBtn();
             }
             //if the info button is clicked . we open the info popup
@@ -703,8 +706,8 @@ var controller = (function(jackpotCtrl , UICtrl) {
        jackpotCtrl.addCoupon(pickedFields,targetCouponId);  // it saves the new coupon in the data structure. Coupon id is the same as the key of the coupon in the data structure.
     }
 
-    // it would be way more efficient. if you have only one function to open a coupon. (you tried it , it didnt work because of the passed argument. U created it in way , if the argument if defined then use it. otherwise get the id from the clicked element.)
-    function openNextCoupon(nextCouponId) {  // you can make the other big expand coupon , use this one ad a helping function. it passes the target-coupon ID to it after it defines it.
+    // it takes the needed steps to open the next coupon.
+    function openNextCoupon(nextCouponId) { 
         UICtrl.expandCoupon(nextCouponId);
         UICtrl.CouponUnclickable();
         UICtrl.showGobackButton();
@@ -734,7 +737,8 @@ var controller = (function(jackpotCtrl , UICtrl) {
         // we allowed to go back . only if the coupon is fully filled , or completely emtpy.
         if(checkedFields === 4 || checkedFields === 0 ) {
             if(checkedFields === 4) { if(addNewCouponFlag) { CtrlAddNewCoupon(); addNewCouponFlag = 0; } } // if addNewCouponFlag is released, then we save the new coupon.
-            if(checkedFields === 0) { UICtrl.CouponClickable(); } //
+            // if the user unchecked all the fields , then we (try to) delete that coupon from the data structure.
+            if(checkedFields === 0) { jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id); UICtrl.CouponClickable(); } //
 
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
             UICtrl.shrinkCoupon();
@@ -769,6 +773,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
 
                 // we de-activate the DoneFillingBtn based on the value of checkedFields.  
                 if(checkedFields === 0 || checkedFields === 4) { UICtrl.activateDoneFillingBtn(); } else { UICtrl.deactivateDoneFillingBtn(); }
+                UICtrl.showDeleteAllButton();
             }
 
             //  This is removing #############################################
@@ -788,7 +793,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         }
     }
 
-    // ti takes us to the next coupon. to fill it or to modify it. it shrinks the coupon first, then it expands the next one. (for animation purposes)
+    // it takes us to the next coupon. to fill it or to modify it. it shrinks the coupon first, then it expands the next one. (for animation purposes)
     function CtrlGoToNextCoupon() {
         var nextCouponId , nextCoupon;
         //we get the id of the current coupon. so we can determine the next coupon.
@@ -798,7 +803,12 @@ var controller = (function(jackpotCtrl , UICtrl) {
         CtrlShrinkCoupon();
         openNextCoupon(nextCouponId);
 
-        if(jackpotCtrl.hasCoupon(nextCouponId)){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }
+        if(jackpotCtrl.hasCoupon(nextCouponId)){
+            checkedFields = 4;
+            UICtrl.showNextCouponButton();
+            UICtrl.showDeleteAllButton(); // we wanna be albe to uncheck all the fields , if there are checked.
+        } 
+        else { checkedFields = 0; UICtrl.fieldsClickable(); }
     }
 
     // this is a helping function. it is called by CtrlDelete . It take the needed steps to delete all Fields in the expanded coupon.
@@ -807,7 +817,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         UICtrl.deleteAllFieldsInOneCoupon();
         UICtrl.fieldsClickable();
         UICtrl.hideNextCouponButton();
-        jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id);  //we shoulnd call it here. !
+        // jackpotCtrl.removeCoupon((UICtrl.getExpandedCoupon()).id);  //we shoulnd call it here. ! instead , it should be called when click goBack button. in that way we are 100% sure the user wanted to delete
         checkedFields = 0;
     };
 
@@ -817,13 +827,14 @@ var controller = (function(jackpotCtrl , UICtrl) {
         if(typeof UICtrl.getExpandedCoupon() === "undefined") { //if there is no expanded coupon then we are in state 1.
             jackpotCtrl.deleteAllCoupons();
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
-            UICtrl.hideDeleteAllButton();
             UICtrl.deactivateDoneFillingBtn()
             UICtrl.setInitialUI();    
         }
 
         // in case we are in state 2 . we delete all fields.
          else {   CtrlDeleteAllFieldsInOneCoupon(); } 
+
+         UICtrl.hideDeleteAllButton();
     }
 
     return {
