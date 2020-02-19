@@ -34,13 +34,11 @@ var JackpotController = (function() {
             console.log(AllFilledCoupons);
         },
 
-        //checks if the coupon exists in the allcoupons object .return 1 if yes it has it.
+        //checks if the coupon exists in the AllFilledCoupons object based on the id of the targetCoupon .return 1 if yes, it has it.
         hasCoupon: function(id) {
             var temp = 0;
             var keysOfCouponsFilled = Object.keys(AllFilledCoupons); // return an array with the keys as elements (as strings)
-            for(var i = 0 ; i < keysOfCouponsFilled.length ; i++){
-                if(keysOfCouponsFilled[i] === id) { temp = 1 ;}
-            }
+            for(var i = 0 ; i < keysOfCouponsFilled.length ; i++){ if(keysOfCouponsFilled[i] === id) { temp = 1 ;} }
             return temp;
         },
 
@@ -64,44 +62,42 @@ var UIController = (function() {
 
 
     var selectedElementIs = {
-        infoButton : document.getElementById('info-button'),
-        couponsWrapper : document.querySelector('.coupons-wrapper'),
-        allCoupons : document.querySelectorAll('.coupon'),
-        couponsTitle: document.querySelectorAll('.coupon__title'),
+        infoButton          : document.getElementById('info-button'),
+        couponsWrapper      : document.querySelector('.coupons-wrapper'),
+        allCoupons          : document.querySelectorAll('.coupon'),
+        couponsTitle        : document.querySelectorAll('.coupon__title'),
         allNumbersOfCoupons : document.querySelectorAll('.coupon__number'),
 
-        allFields : document.querySelectorAll('.field'),    
-        allNumbersOfFields : document.querySelectorAll('.field__number'),
+        allFields           : document.querySelectorAll('.field'),    
+        allNumbersOfFields  : document.querySelectorAll('.field__number'),
 
-        deleteButton : document.querySelector('.delete'),
-        goBackButton : document.querySelector('.goback'),
-        deleteAllButton: document.querySelector('.deleteAll'),
-        nextCouponButton: document.querySelector('.nextCoupon'),
-        doneFillingButton: document.querySelector('.doneFillingBtn'),
+        deleteButton        : document.querySelector('.delete'),
+        goBackButton        : document.querySelector('.goback'),
+        deleteAllButton     : document.querySelector('.deleteAll'),
+        nextCouponButton    : document.querySelector('.nextCoupon'),
+        doneFillingButton   : document.querySelector('.doneFillingBtn'),
 
-        quickTips: document.querySelector('.quickTips'),
+        quickTips           : document.querySelector('.quickTips'),
 
-        randomButton: document.querySelector('#quickTipsItemRandomButton'),
-        astroButton: document.querySelector('#quickTipsItemAstroButton'),
-        statisticButton: document.querySelector('#quickTipsItemStatisticButton'),
+        randomButton        : document.querySelector('#quickTipsItemRandomButton'),
+        astroButton         : document.querySelector('#quickTipsItemAstroButton'),
+        statisticButton     : document.querySelector('#quickTipsItemStatisticButton'),
 
-        oneField: document.getElementById('#1-Fields'),
-        threeFields: document.getElementById('#3-Fields'),
-        sixFields: document.getElementById('#6-Fields'),
+        oneField            : document.getElementById('#1-Fields'),
+        threeFields         : document.getElementById('#3-Fields'),
+        sixFields           : document.getElementById('#6-Fields'),
         fillAllCouponsButton: document.getElementById('fillAllCouponsBtn'),
         chooseRandomNumPopup:document.querySelector('#popupRandomButton'),
 
-        astroPopup: document.getElementById('popupAstroButton'),        
-        allAstroButtons: document.querySelectorAll('.randomNumbers-popup__button--astro'),
+        astroPopup          : document.getElementById('popupAstroButton'),        
+        allAstroButtons     : document.querySelectorAll('.randomNumbers-popup__button--astro'),
     
-        statisticPopup: document.getElementById('popupStatisticButton'),
+        statisticPopup      : document.getElementById('popupStatisticButton'),
 
-        allPopups: document.querySelectorAll('.randomNumbers-popup'),
-        closePopupIcon: document.querySelector('.randomNumbers-popup__cancel-logo'), 
-        allPopupsContainer: document.querySelector('.allPopups')
+        allPopups           : document.querySelectorAll('.randomNumbers-popup'),
+        closePopupIcon      : document.querySelector('.randomNumbers-popup__cancel-logo'), 
+        allPopupsContainer  : document.querySelector('.allPopups')
         
-
-
     };
 
     var DOMStrings = {
@@ -113,7 +109,6 @@ var UIController = (function() {
         astroButton: 'randomNumbers-popup__button--astro',
         statisticButton: 'randomNumbers-popup__button--statistik'
 
-        
     };
 
     function allExceptTheFirstCouponUnclickable(){
@@ -191,6 +186,7 @@ var UIController = (function() {
     }
 
     return {
+
         openFillRandomlyPopup: function(){
             // console.log('openFillRandomlyPopup  is caleddddd ')
             selectedElementIs.chooseRandomNumPopup.classList.add('show');
@@ -200,24 +196,20 @@ var UIController = (function() {
         // it opens whether one of the quicktips popups , or the info popup
         openPopup: function() {
             var elementClickedID;
+            var exactType ; // string : the type of the popup we want to open.
+            var exactPopupID;  // string : the exact id of the popup we want to open. 
             var elementClickedID = event.target.id;
-            var exactType;
 
-            console.log(elementClickedID);
+            //if this method is invoked by the info button
+            if(elementClickedID.includes('info')) { exactType = "Info"; }
 
-            //if this method is onvoked by the info button
-            if(elementClickedID.includes('info')) {
-                exactType = "Info";
-            } 
-            // otherwise it is invoked by the quicktips buttons and we must extract the specific type of the popup.
-            else {
-                exactType =  elementClickedID.substring(13, elementClickedID.length);
-            }      
+            // otherwise it is invoked by the quicktips buttons and we must extract the specific type of the popup based on its ID.
+            else { exactType = elementClickedID.substring(13, elementClickedID.length); }      
         
             // we add that type to the second part of the id of the target popup
-            var exactPopupID = 'popup' + exactType;
+            exactPopupID = 'popup' + exactType;
             document.getElementById(exactPopupID).classList.add('show');
-            document.getElementById(exactPopupID).firstElementChild.classList.add('showPopup');
+            document.getElementById(exactPopupID).firstElementChild.classList.add('showPopup'); //we have different utility classes , cause some have different animation beahvior.
         },
 
         closePopup: function() {
@@ -250,9 +242,7 @@ var UIController = (function() {
         getExpandedCoupon: function() {
             //this is public function , that being used by other modules , as well as by other sibling public methods. in the latter case , you HAVE to add 'this' when invokin it.
                 for(var i = 0 ; i <  selectedElementIs.allCoupons.length ; i++){
-                    if(selectedElementIs.allCoupons[i].classList.contains('coupon--big')){
-                        return selectedElementIs.allCoupons[i];
-                    }
+                    if(selectedElementIs.allCoupons[i].classList.contains('coupon--big')) { return selectedElementIs.allCoupons[i]; }
                 }
         },
 
@@ -264,17 +254,18 @@ var UIController = (function() {
             return DOMStrings;
         },
 
-        //returns an array with the numbers of the checked fields. it takes the coupon
+        //returns an array with the numbers of the checked fields. it can take a coupon as an argument.
         getCheckedFields: function(couponToCheck){
             var targetCoupon;
-            if(typeof couponToCheck === "undefined") {
-                targetCoupon = this.getExpandedCoupon() ;
-            } else { targetCoupon = couponToCheck; }
+            // if it is called without an argument. then run it on the expanded coupon.
+            if(typeof couponToCheck === "undefined") { targetCoupon = this.getExpandedCoupon() ; } else { targetCoupon = couponToCheck; }
 
-            var checkedFields = [];
-            var allFields = targetCoupon.children; 
-            for(var i = 1 ; i < allFields.length ; i++) {
-                if(allFields[i].childElementCount == 2) { checkedFields.push(i); }
+            var checkedFields = [];  // array to hold all integers. numbers of all checked fields.
+            var allFields = targetCoupon.children;   // NodeList of all fields of the target coupon.
+
+            // loop from 1 till 25.
+            for(var i = 1 ; i < allFields.length ; i++) { 
+                if(allFields[i].childElementCount == 2) { checkedFields.push(i); } // if the element field has two children. it means the <img> cross is inserted. it means it IS checked.
             }
             return checkedFields;
         },
@@ -404,179 +395,170 @@ var UIController = (function() {
         },
   
         // this function we pass the coupon that we wanna fill as argument.
-        fillRandomly: function(couponChosen) {
+        fillRandomly: function(couponChosen) { 
             var targetCoupon;
-            // console.log('thisi s the fillrandomly function : ');
-            // console.log('this is is couponChosen : ' + couponChosen);
-            if(typeof couponChosen === "undefined") {
-                targetCoupon = this.getExpandedCoupon();
-            } else { targetCoupon = couponChosen; }
+            // if it is called without an argument , then we fill the expanded Coupon.
+            if(typeof couponChosen === "undefined") { targetCoupon = this.getExpandedCoupon(); }
+            else { targetCoupon = couponChosen; }
 
-            // console.log('this is target coupon : ' + targetCoupon);
-            
+            var allCurrentFields = targetCoupon.children; // NodeList of all the fields of the target coupon.
 
-            // console.log('thsi is coupon to fill ' + couponChosen);
-            // var CouponToFill = couponChosen;
-            // var keepGoing = 1;
-            // var allCurrentFields = this.getExpandedCoupon().children;
-            var allCurrentFields = targetCoupon.children;
-            // var targetElement;
-            for(var j = 0 ; j < 2000 ; j++) {
-                var alreadyCheckedFields = this.getCheckedFields(targetCoupon);
+            for(var j = 0 ; j < 2000 ; j++) {   // we keep looping repeatidly till we get 4 checked fields. (2000 iterations is more than enough to accomplish that)
+                var alreadyCheckedFields = this.getCheckedFields(targetCoupon);  // array of the numbers of checked fields.
                 
-                if(alreadyCheckedFields.length === 4) { return; }
+                if(alreadyCheckedFields.length === 4) { return; } // if we already checked 4 fields. Job is done, so exit the function.
                     
-                var randNum = Math.floor(Math.random() * 25) + 1;
+                var randNum = Math.floor(Math.random() * 25) + 1;  // pick w random number between 1 and 25.
 
+                // we check if the recently generated randNum has already been picked before and saved or not. if not : we add the cross to the field.
                 if(alreadyCheckedFields.includes(randNum) === false) { this.addCross(allCurrentFields[randNum]); }
             }
-
-
         },
         
+        // add a cross to the passed argument, which is a field. by inserting a HTML element <img> as a first child of that field.
         addCross: function(elementClicked) {
-            // console.log('addcross iscalled');
-            // var html = '<object class="field__cross" type="image/svg+xml" data="img/cross.svg"></object>'; //causes some error !
-            //we insert the element. it starts hidden. and then immediately afterwards we make visible with animation.
+            //we insert the element. it starts hidden. and then immediately afterwards we make it visible with animation.
             var html = '<img class="field__cross" src="img/cross.svg">';
             elementClicked.insertAdjacentHTML('afterbegin', html);
-
-            setTimeout(function(){ elementClicked.firstElementChild.classList.add('show-cross'); }, 25); //you need to wait a lil bit.
-            // elementClicked.firstElementChild.classList.add('show');
+            setTimeout(function(){ elementClicked.firstElementChild.classList.add('show-cross'); }, 25); //you need to wait a lil bit. till the HTML insertion is done.
         },
 
+        // remove the cross from the passed argument, which is a field. by removing a HTML element <img> , which is the first child of that field.
         removeCross: function(elementClicked){
-            
-            // var crossTransition = document.querySelector('.field__cross').style.transitionDuration;
             var crossTransition = main_transition_duration;
-            elementClicked.firstElementChild.classList.remove('show-cross');
-            setTimeout(function(){ elementClicked.firstElementChild.remove(); }, crossTransition); // you need for as long as the transition takes !
+            elementClicked.firstElementChild.classList.remove('show-cross');  // first we make it disappear , for animation purposes.
+            setTimeout(function(){ elementClicked.firstElementChild.remove(); }, crossTransition); // then finally we remove the HTML node. crossTransition : must be as long as the transition takes !
         },
 
+        // it makes  the doneFillingButton active. 
         activateDoneFillingBtn: function() {
             selectedElementIs.doneFillingButton.classList.add('doneFillingBtn--activated');
         },
 
+        // it makes  the doneFillingButton inactive. 
         deactivateDoneFillingBtn: function() {
             selectedElementIs.doneFillingButton.classList.remove('doneFillingBtn--activated');
         },
 
-
+        //it is called in state 1, to expose one coupon. In other words hides the couponNumber AND shows the fields in their tiny form.
         showFieldsOfOneCoupon: function(targetCpn) {
             var allKidsOfCoupon = targetCpn.children;
             for(j = 1 ; j < allKidsOfCoupon.length ; j++) {  allKidsOfCoupon[j].classList.remove('hide'); }
-            // console.log('ffffffffffffffffffffffffffffffffff ' + targetCpn.id);
             hideNumberOfOneCoupon(targetCpn.id);
-
         },
        
+        // it displays the nextCouponButton in the UI.
         showNextCouponButton: function() {
             selectedElementIs.nextCouponButton.classList.add('show');
         },
 
+        // it hides the nextCouponButton in the UI.
         hideNextCouponButton: function() {
             selectedElementIs.nextCouponButton.classList.remove('show');
         },
 
+        // it displays the goBackButton in the UI.
         showGobackButton: function() {
-            // console.log('showGobackButton being called');
             selectedElementIs.goBackButton.classList.add('show');
         },
 
+        // it hides the goBackButton in the UI.
         hideGobackButton: function() {
             // console.log('hideGobackButton being called');
             selectedElementIs.goBackButton.classList.remove('show');
         },
 
+        // it displays the deleteAllButton in the UI.
         showDeleteAllButton: function() {
             selectedElementIs.deleteAllButton.classList.add('show');
         },
 
+        // it hides the deleteAllButton in the UI.
         hideDeleteAllButton: function() {
             selectedElementIs.deleteAllButton.classList.remove('show');
         },
 
+        // toggle between two Labels, of the same button |  the Delete button , has different label in different states of the program.
         changeNameOfDeleteAllBtn: function() {
             var deleteAllCouponsStr = 'Clear All Coupons';
             var deleteAllFieldsStr = 'Clear All Fields' ;
-            var target = selectedElementIs.deleteAllButton.lastElementChild; 
+            var target = selectedElementIs.deleteAllButton.lastElementChild; // lastElement is the span tag where text is stored.
 
+            // we basically toggle between two Labels. of the same button
             if(target.textContent === deleteAllCouponsStr)      { target.textContent = deleteAllFieldsStr ;}
             else if(target.textContent === deleteAllFieldsStr)  { target.textContent = deleteAllCouponsStr;}
         },
 
+        // it hides the number of a the coupon , that passed as argument.
         hideNumOfCoupon: function(targetCpn){
             var temp = targetCpn.id;
-            var targetIndex = parseInt(temp[temp.length-1]);
+            var targetIndex = parseInt(temp[temp.length-1]); //the last charachter in the id. is the index.
 
-            // console.log('thsis is ithe target index%%%%%%%%% ' + targetIndex);
-            // console.log('thsis is the type ' + typeof targetIndex);
-            selectedElementIs.allNumbersOfCoupons[targetIndex-1].classList.add('hide');
+            // it targets the right number , based on the index. (targetIndex-1 : because the ids of the coupons start from 1, whereas the allNumbersOfCoupons start from 0. )
+            selectedElementIs.allNumbersOfCoupons[targetIndex-1].classList.add('hide'); 
         },
 
-        // this method will called by :  goback button | deleteAllcoupons button | all randomly fill buttons
+        // Make all filled/saved coupons clickable. This method will be called by : goback button | deleteAllcoupons button | all randomlyFill buttons
         makeAllFilledCouponsClickable: function(allSavedCoupons){
             var allCouponsArrayOfStrings = Object.keys(allSavedCoupons);
-            for(var i = 0 ; i < allCouponsArrayOfStrings.length ; i++) {
-                this.CouponClickable(allCouponsArrayOfStrings[i]);
-            }
+            //we pass the key of a coupon , because it is exactly the same as the id of HTML element coupon.
+            for(var i = 0 ; i < allCouponsArrayOfStrings.length ; i++) {  this.CouponClickable(allCouponsArrayOfStrings[i]); }
         },
 
+        // make only one specific coupon clickable.
         CouponClickable: function(couponId) {
-            console.log(' CouponClickable is calleddääääääääääääääääää');
-            if(typeof couponId !== "undefined") { 
+            if(typeof couponId !== "undefined") {   //if it is called with an argument.
                 document.getElementById(couponId).classList.remove('block-interaction');
                 document.getElementById(couponId).classList.add('release-interaction');
             }
-            else {
+            else {  //otherwise , make the expanded coupon clickable.
                 (this.getExpandedCoupon()).classList.remove('block-interaction');
                 (this.getExpandedCoupon()).classList.add('release-interaction');
             }
         },
 
+        // make only one specific coupon unclickable.
         CouponUnclickable: function(couponId) {
-            if(typeof couponId !== "undefined") {
-                console.log('we are heeeeer . not undefned');
+            if(typeof couponId !== "undefined") {  //if it is called with an argument.
                 document.getElementById(couponId).classList.remove('release-interaction');
                 document.getElementById(couponId).classList.add('block-interaction');
             }
-            else {
-                console.log('we are heeeeer . couponid : undefned');
+            else { //otherwise , make the expanded coupon unclickable
                 (this.getExpandedCoupon()).classList.remove('release-interaction');
                 (this.getExpandedCoupon()).classList.add('block-interaction');
             }
             
         },
 
+        // it makes all the not-checked fields ,of the expanded coupon, unclickable.
         fieldsUnclickable: function(){
-            var allFields = (this.getExpandedCoupon()).children; 
-            for(var i = 1 ; i < allFields.length ; i++) {
-                if(allFields[i].childElementCount == 1) { 
-                    allFields[i].classList.add('block-interaction');
-                }
+            var allFields = (this.getExpandedCoupon()).children;  // we get all the fields of the expanded coupon.
+            for(var i = 1 ; i < allFields.length ; i++) { // iterate from 1 , because the firstl HTML element in the coupon is NOT a field.
+                // it blocks only the fields that has one element. which means not-checked fields.
+                if(allFields[i].childElementCount == 1) {  allFields[i].classList.add('block-interaction'); }
             }
         },
 
+        // it makes all the not-checked fields ,of the expanded coupon, clickable.
         fieldsClickable: function(){
-            var allFields = (this.getExpandedCoupon()).children; 
-            for(var i = 1 ; i < allFields.length ; i++) {
-                if(allFields[i].childElementCount == 1) { 
-                    allFields[i].classList.remove('block-interaction');
-                }
+            var allFields = (this.getExpandedCoupon()).children;  // we get all the fields of the expanded coupon.
+            for(var i = 1 ; i < allFields.length ; i++) { // iterate from 1 , because the firstl HTML element in the coupon is NOT a field.
+                // it blocks only the fields that has one element. which means not-checked fields.
+                if(allFields[i].childElementCount == 1) {  allFields[i].classList.remove('block-interaction'); }
             }
         },
 
-        // delete all the ckecked fields in the currently opened coupon
+        // delete all the ckecked fields in the expanded coupon.
         deleteAllFieldsInOneCoupon: function(){
             expandedCoupon = this.getExpandedCoupon();
-            var kids = expandedCoupon.children;
+            var allFields = expandedCoupon.children;
             var crossTransition = 300;
-            function temp(i) {  setTimeout(function(){ kids[i].firstElementChild.remove(); } , crossTransition); }
+            function temp(i){  setTimeout(function(){ allFields[i].firstElementChild.remove(); } , crossTransition); } // function to remove the cross , with animation.
 
-            for(var i = 1 ; i < kids.length ; i++){
-                if(kids[i].childElementCount == 2) {
-                    kids[i].firstElementChild.classList.remove('show-cross');
-                    temp(i); // we did it like this, because two timer handler functions MUST NOT share the same i. one of them should just make a copy for itself and use it.
+            for(var i = 1 ; i < allFields.length ; i++){  // iteration starts from 1 because the first element of the coupon is NOT a field.
+                if(allFields[i].childElementCount == 2) {  // if a field is checked
+                    allFields[i].firstElementChild.classList.remove('show-cross');
+                    temp(i); // we did it like this, because two timer-handler functions MUST NOT share the same i. one of them should just make a copy for itself and use it.
                 }
             }
         }
@@ -592,18 +574,19 @@ var UIController = (function() {
 // ######################################################################################################################
 //  GLOBAL APP CONTROLLER ###############################################################################################
 var controller = (function(jackpotCtrl , UICtrl) {
-    // each time we open a coupon, we check if it is filled or not. if filled : checkedfields = 6 else = 0.
-    // because this variable is directly responsible for submitting a legit coupon. 
-    var checkedFields = 0 ;
+    // each time we open a coupon, we check if it is filled or not. if filled : checkedfields = 4 else = 0.
+    // because this variable is directly responsible for decidin whether to save a coupon or not. 
+    var checkedFields = 0 ; 
     var addNewCouponFlag = 0; // 1 : yes => please do it. |  : 0 => no god no. dont !
     var selectedElementIs = UICtrl.getSelectedElementIs();
-    var DOMStrings = UICtrl.getDOMStrings();
+    var DOMStrings = UICtrl.getDOMStrings();   // class or id of elements as a string.
     
     
     setupEventListeners = function() {
-        // var DOM = UICtrl.getDOMStrings();
-        
-        selectedElementIs.infoButton.addEventListener('click' , CtrlOpenPopup);
+        // when we click the info Button. the info popup appears.
+        selectedElementIs.infoButton.addEventListener('click' , CtrlOpenPopupOrFillRandomly);
+
+
         selectedElementIs.couponsWrapper.addEventListener('click', CtrlExpandCoupon);
         selectedElementIs.goBackButton.addEventListener('click', CtrlShrinkCoupon);
 
@@ -614,7 +597,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         selectedElementIs.nextCouponButton.addEventListener('click', CtrlGoToNextCoupon);
 
         //it whether open a popup or fill the expanded coupon randomly. depenedin on the state we are in.
-        selectedElementIs.quickTips.addEventListener('click', CtrlOpenPopup);
+        selectedElementIs.quickTips.addEventListener('click', CtrlOpenPopupOrFillRandomly);
 
         // document.querySelector('body').addEventListener('click', CtrlClosePopup);
         selectedElementIs.allPopupsContainer.addEventListener('click', CtrlClosePopup);
@@ -699,26 +682,29 @@ var controller = (function(jackpotCtrl , UICtrl) {
         UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
     }
 
-    // this method . whether it opens a popup, OR it fill the expandedCoupon randomly. 
-    function CtrlOpenPopup(){
-        //1) if we are in the state_1 , do the following :
-        if(typeof (UICtrl.getExpandedCoupon()) === "undefined") {
-            UICtrl.openPopup();
-        }
+    // this method . whether it opens a popup (the fillRandomly popups OR the Info popup), OR it fill the expandedCoupon randomly.
+    // this is because the clicked buttons , have different functionality in different states. 
+    function CtrlOpenPopupOrFillRandomly(){
+        var clickedElement = event.target;
+        //1) if we are in the state_1 , do the following :  ##############################################
+        //if there is no expanded coupon. we are in state 1
+        if(typeof (UICtrl.getExpandedCoupon()) === "undefined") { UICtrl.openPopup(); }
 
-        // 2) otherwise we are in state_2 , and do different stuff
+        // 2) otherwise we are in state_2 , and do different stuff #########################################
         else {
-            //if the first button (RandomBtn) is clicked (the event flow for the first button is different from that of the other buttons.)
-            if(event.target === selectedElementIs.randomButton 
-              || event.target === selectedElementIs.astroButton
-              || event.target === selectedElementIs.statisticButton ) {
-                UICtrl.fillRandomly();
-                addNewCouponFlag = 1;
-                checkedFields = 4;  //we fill the coupon without opening the popUp
+            //if one of the fillRandomly Buttons clicked. we fill randomly
+            if(  clickedElement === selectedElementIs.randomButton 
+              || clickedElement === selectedElementIs.astroButton
+              || clickedElement === selectedElementIs.statisticButton ) {
+                UICtrl.fillRandomly(); //we fill the coupon without opening the popUp
+                checkedFields = 4;  
+                addNewCouponFlag = 1;  //we release the flag whenever all required fields are checked.
                 //we show the next coupon button
                 UICtrl.showNextCouponButton();
                 UICtrl.activateDoneFillingBtn();
-            } 
+            }
+            //if the info button is clicked . we open the info popup
+            else if((clickedElement.id).includes('info')) { UICtrl.openPopup(); } 
         }
     }
 
@@ -753,21 +739,21 @@ var controller = (function(jackpotCtrl , UICtrl) {
         UICtrl.hideDeleteAllButton();
     }
 
+
     function CtrlExpandCoupon() {
         var cpnClickedId;
-        if(event.target.classList.contains('coupon')){ 
-            var cpnClickedId = event.target.id;
+        if(event.target.classList.contains('coupon')){ // check if the clicked element is indeed a coupon.
+            cpnClickedId = event.target.id;
             UICtrl.expandCoupon(cpnClickedId);
 
             //decide what value we give to checkedFields
-            if(jackpotCtrl.hasCoupon(cpnClickedId) === 1){ checkedFields = 4; UICtrl.showNextCouponButton(); } else { checkedFields = 0; UICtrl.fieldsClickable(); }                
-            UICtrl.CouponUnclickable(); // because if you can click it between the fields . it will mess up the checkedFields variable. !
+            if(jackpotCtrl.hasCoupon(cpnClickedId)){ checkedFields = 4; UICtrl.showNextCouponButton(); } // if the coupon is saved. then it is already filled.
+            else { checkedFields = 0; UICtrl.fieldsClickable(); }   //if the coupon is not filled, we make the fields clickable. so we can check them.           
+            UICtrl.CouponUnclickable();  //Either way , whenever we expand a coupon. we always make the coupon unclickable.
             
             //show and hide buttons
             UICtrl.showGobackButton();
-            // UICtrl.hideDeleteAllButton();
-            UICtrl.changeNameOfDeleteAllBtn();
-
+            UICtrl.changeNameOfDeleteAllBtn(); // changes from deleting the coupons , to deleting the fields of the expanded coupon.
         }
     }
 
