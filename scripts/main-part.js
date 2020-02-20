@@ -5,6 +5,8 @@
 var JackpotController = (function() {
 
     var AllFilledCoupons = {}; //an object. to save all the filled coupons.
+    var totalCosts = 0;
+    const oneCouponPrice = 1.2;
 
     // object function constructor of coupon
     var Coupon = function(num) {
@@ -20,7 +22,7 @@ var JackpotController = (function() {
         // add coupon object to the AllFilledCoupons object. 
         addCoupon: function(num,name) {
             AllFilledCoupons[name] = createCoupon(num); 
-            console.log('we just added an item from the allCoupons object');
+            // console.log('we just added an item from the allCoupons object');
             console.log(AllFilledCoupons);
         },
 
@@ -29,7 +31,7 @@ var JackpotController = (function() {
             //check if it exits first
             if(this.hasCoupon(id)) {
                 delete AllFilledCoupons[id]; // delete element from an object based on the key.
-                console.log('we just deleted an item from the allCoupons object');
+                // console.log('we just deleted an item from the allCoupons object');
                 console.log(AllFilledCoupons);
             }
             
@@ -38,7 +40,7 @@ var JackpotController = (function() {
         // delete all coupons at once.
         deleteAllCoupons: function(){
             for(var member in AllFilledCoupons) delete AllFilledCoupons[member]; // nice way to loop through all elements.
-            console.log('we just deleted all coupons');
+            // console.log('we just deleted all coupons');
             console.log(AllFilledCoupons);
         },
 
@@ -50,7 +52,16 @@ var JackpotController = (function() {
             return temp;
         },
 
-        getAllCoupons: function() {  return AllFilledCoupons; }
+        getAllCoupons: function() {  return AllFilledCoupons; },
+
+        getTotal : function() { return totalCosts; },
+
+         // it calculates the total . and assign it the totalCosts variable. 
+        calculateTotal: function(){
+            var numberOfSavedCoupons = Object.keys(this.getAllCoupons()).length;
+            totalCosts = parseFloat(numberOfSavedCoupons * oneCouponPrice)  // one coupon costs 2€ 
+        }
+
     }
 
 })();
@@ -61,6 +72,7 @@ var JackpotController = (function() {
 // ######################################################################################################################
 // UI ####################################################################################################################
 var UIController = (function() {
+    const oneCouponPrice = 1.2;
     var expandedCouponID;
     var expandedCoupon;
 
@@ -100,7 +112,8 @@ var UIController = (function() {
 
         allPopups           : document.querySelectorAll('.randomNumbers-popup'),
         closePopupIcon      : document.querySelector('.randomNumbers-popup__cancel-logo'), 
-        allPopupsContainer  : document.querySelector('.allPopups')
+        allPopupsContainer  : document.querySelector('.allPopups'),
+        price               : document.querySelector('.costs__price') 
         
     };
 
@@ -184,6 +197,10 @@ var UIController = (function() {
                 } ,222 * i); //you need to wait a lil bit.
             })(i);
          }
+    }
+
+    function getPrice() {
+        return selectedElementIs.price.textContent;
     }
 
     return {
@@ -446,13 +463,11 @@ var UIController = (function() {
 
         // it hides the goBackButton in the UI.
         hideGobackButton: function() {
-            // console.log('hideGobackButton being called');
             selectedElementIs.goBackButton.classList.remove('show');
         },
 
         // it displays the deleteAllButton in the UI.
         showDeleteAllButton: function() {
-            console.log('showDeleteAllButton is caleded');
             selectedElementIs.deleteAllButton.classList.add('show-deleteAllButton');
         },
 
@@ -544,6 +559,37 @@ var UIController = (function() {
                     temp(i); // we did it like this, because two timer-handler functions MUST NOT share the same i. one of them should just make a copy for itself and use it.
                 }
             }
+        },
+
+        //it takes a float number and a parameter ( 1 or -1)
+        // we  call calculate ONLY when we add or remove an item. in all other cases : we just use the value found in TotalCost , and we decide whether we increment it or decrement it.
+        // we call it with a paramater if we wanna add the price of one coupon to it. In case , the expandedCoupon is not saved yet.
+        displayTotal: function(costs,option) {
+            var PriceToDisplay;
+            if(typeof option !== "undefined") {  // if option is defined we extract the final price to display . from thee UI itself. Otherwise from data structure.
+                (function(){
+                    var currentPrice = getPrice();
+                    var ArrayOfStr = currentPrice.split(',');
+                    var decimalStr = parseInt(ArrayOfStr[0]);
+                    var fractionStr = parseInt(ArrayOfStr[1]);
+                    var newCurrentPriceStr = decimalStr + '.' + fractionStr;
+                    var newCurrentPriceFloat = parseFloat(newCurrentPriceStr); //here we have the current price as a float.
+    
+                    if(option === 1)  { PriceToDisplay = newCurrentPriceFloat + oneCouponPrice; }
+                    if(option === -1) { PriceToDisplay = newCurrentPriceFloat - oneCouponPrice; }
+                })(option);
+            }
+            else { PriceToDisplay = costs; }
+
+                var costsString = (PriceToDisplay.toFixed(2)).toString();
+                var ArrayOfStr = costsString.split('.');
+                var decimal = ArrayOfStr[0];
+                var fraction = ArrayOfStr[1];
+                var fractionToDisplay= fraction;
+    
+                if(fraction.length === 1) { fractionToDisplay = fraction + '0';}
+            
+            selectedElementIs.price.textContent = decimal + ',' + fractionToDisplay + ' €';
         }
     }
 
@@ -558,6 +604,8 @@ var controller = (function(jackpotCtrl , UICtrl) {
     // each time we open a coupon, we check if it is filled or not. if filled : checkedfields = 4 else = 0.
     // because this variable is directly responsible for decidin whether to save a coupon or not. 
     var checkedFields = 0 ; 
+    const oneCouponPrice = 1.2;
+    // var decrementTotal = 0; // 1 : you are allowed to decrement it. | -1 : you are NOT allowed to decrement it.
     var addNewCouponFlag = 0; // 1 : yes => please do it. |  : 0 => no god no. dont !
     var selectedElementIs = UICtrl.getSelectedElementIs();
     var DOMStrings = UICtrl.getDOMStrings();   // class or id of elements as a string.
@@ -653,6 +701,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 }
 
                 CtrlClosePopup();
+                updateTotal();
                 UICtrl.showDeleteAllButton();
                 UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons());
                 UICtrl.activateDoneFillingBtn();
@@ -680,6 +729,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
               || clickedElement === selectedElementIs.astroButton
               || clickedElement === selectedElementIs.statisticButton ) {
                 UICtrl.fillRandomly(); //we fill the coupon without opening the popUp
+                updateTotal(1);
                 checkedFields = 4;  
                 addNewCouponFlag = 1;  //we release the flag whenever all required fields are checked.
                 //we show the next coupon button . as long as we are not already in the last coupon. (nineth one)
@@ -744,9 +794,12 @@ var controller = (function(jackpotCtrl , UICtrl) {
             UICtrl.shrinkCoupon();
             UICtrl.hideNextCouponButton();
             UICtrl.hideGobackButton();
+            updateTotal();
+
             //dont change name , when we click on nextCouponButton
             if(event.target !== selectedElementIs.nextCouponButton) { UICtrl.changeNameOfDeleteAllBtn(); }
             UICtrl.exposeNextCoupon(jackpotCtrl.getAllCoupons()); // expose the next empty coupon in state 1. so we can click , expand it and fill it.
+            
             //we activate DoneFilling button , only if there are saved coupons. otherwise deactivate and dispaly initialUI
             if(Object.keys(jackpotCtrl.getAllCoupons()).length > 0) { UICtrl.activateDoneFillingBtn(); } // if there are any saved coupons . activate DoneFillingBtn
             else { UICtrl.deactivateDoneFillingBtn(); UICtrl.setInitialUI(); } 
@@ -770,6 +823,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                     if(Object.keys(jackpotCtrl.getAllCoupons()).length < 8) { UICtrl.showNextCouponButton(); } 
                     addNewCouponFlag = 1 ;      // permission flag. . => yes do it 
                     UICtrl.fieldsUnclickable();  //block all the empty fields.
+                    updateTotal(1); //we increase the amount displayed in the UI
                 }
 
                 // we de-activate the DoneFillingBtn based on the value of checkedFields.  
@@ -782,16 +836,28 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 UICtrl.removeCross(elementClicked);
                 checkedFields--;
                 //we make them clickable again , only when ( => max-number-of-checked-fields - 1)
-                if(checkedFields === (4-1)) { UICtrl.fieldsClickable(); }  //we only need to call function ONCE. the one time when we uncheck the first field from a fully checked coupon.
+                if(checkedFields === (4-1)) {
+                    updateTotal(-1); ////we decrease the amount displayed in the UI
+                    UICtrl.fieldsClickable();  //we only need to call function ONCE. the one time when we uncheck the first field from a fully checked coupon.
+                } 
                 addNewCouponFlag = 0; // permission denied.
                 // UICtrl.fieldsClickable();  
                 UICtrl.hideNextCouponButton();
+                
 
                 // we de-activate the DoneFillingBtn based on the value of checkedFields.  
                 if(checkedFields === 0 ) { UICtrl.activateDoneFillingBtn(); UICtrl.hideDeleteAllButton(); }  else { UICtrl.deactivateDoneFillingBtn(); }
             }
 
         }
+    }
+
+    // we  call calculate ONLY when we add or remove an item. in all other cases : we just use the value found in TotalCost , and we decide whether we increment it or decrement it.
+    // we call it with a paramater if we wanna add the price of one coupon to it. In case , the expandedCoupon is not saved yet.
+    function updateTotal(option){  // 1 => +1 couponPrice | -1 => -1 couponprice
+        if(typeof option === "undefined") { jackpotCtrl.calculateTotal(); } // we calculate the total only when needed.
+        var total = jackpotCtrl.getTotal();
+        UICtrl.displayTotal(total,option);
     }
 
     // it takes us to the next coupon. to fill it or to modify it. it shrinks the coupon first, then it expands the next one. (for animation purposes)
@@ -803,6 +869,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
         
         CtrlShrinkCoupon();
         openNextCoupon(nextCouponId);
+        updateTotal();
 
         if(jackpotCtrl.hasCoupon(nextCouponId)){
             checkedFields = 4;
@@ -836,6 +903,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
          else {   CtrlDeleteAllFieldsInOneCoupon(); } 
 
          UICtrl.hideDeleteAllButton();
+         updateTotal();
     }
 
     return {
@@ -852,13 +920,9 @@ controller.init();
 
 
 
-
-
-
-
-
+/* 
 document.querySelector('html').addEventListener('click' , function(){
     console.log('the clicked element is : ');
     console.log(event.target);
 })
-  
+ */  

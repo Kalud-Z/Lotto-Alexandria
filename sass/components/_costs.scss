@@ -1,0 +1,32 @@
+
+.costs {
+    margin-top: 7rem;
+    display: flex;
+    justify-content: space-between;
+
+    color: rgb(32, 104, 167);
+
+    // it start hidden :
+    // opacity: 0;
+    // visibility: hidden;
+
+
+    &__text {
+        font-size: 2rem;
+
+        & span {
+            font-size: 1.2rem;
+            margin-top: -2px;
+        }
+    }
+
+
+    &__price {
+        font-size: 3rem;
+        color: #544C4C;
+    }
+
+
+}
+
+

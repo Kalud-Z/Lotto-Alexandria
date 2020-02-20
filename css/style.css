@@ -598,6 +598,20 @@ table {
   height: 42rem;
   align-self: center; }
 
+.costs {
+  margin-top: 7rem;
+  display: flex;
+  justify-content: space-between;
+  color: #2068a7; }
+  .costs__text {
+    font-size: 2rem; }
+    .costs__text span {
+      font-size: 1.2rem;
+      margin-top: -2px; }
+  .costs__price {
+    font-size: 3rem;
+    color: #544C4C; }
+
 .section-play {
   margin: 5rem 0;
   display: flex;
