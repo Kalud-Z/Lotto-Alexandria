@@ -39,6 +39,7 @@
         <div class="section-play__left">
             <button class="btn goback"> <span> &larr; </span>  Overview </button>
             <div class="coupons-container" >
+                <!-- <button class="btn nextCoupon"> Next Coupon <span> &rarr; </span> </button> -->
                 <h1 class="coupons-container__title primary-heading margin-bottom-big">Your Coupons
                     <svg class="coupons-container__title__info-logo" id="info-button">  <use xlink:href="img/symbol-defs-2.svg#icon-info"></use> </svg> 
                      <span class=", bitch"> Bitch </span> </h1>
@@ -343,25 +344,22 @@
                         <div class="field">   <span class="field__number">25</span></div>    
                         
                     </div>
-        
-                </div>
-        
+                        
+                </div>        
         
             </div>
-            <button class="btn deleteAll">
-                <svg class="deleteAll__logo">  <use xlink:href="img/symbol-defs-2.svg#icon-trash-can"></use> </svg>
-                 <span>Clear All Coupons</span>  
-            </button>
-            
-           
-            
+            <button class="btn deleteAll"> <svg class="deleteAll__logo">  <use xlink:href="img/symbol-defs-2.svg#icon-trash-can"></use> </svg> <span>Clear All Coupons</span> </button>
+
+            <!-- <button class="btn doneFillingBtn"> Done Filling  <span> &#10004; </span>   </button> -->
+
+              
         </div>
 
-        <div class="line margin-left-medium">&nbsp;</div>
+        <div class="line-vertical margin-left-medium">&nbsp;</div>
+        <div class="line-horizontal margin-left-medium">&nbsp;</div>
 
         <div class="section-play__right margin-left-medium">
             <h1 class="section-play__right__title primary-heading margin-bottom-medium">Quick-Tips</h1>
-          
             <div class="quickTips">
                 <div class="quickTips__item" id="quickTipsItemRandomButton">
             
@@ -377,7 +375,6 @@
 
             <button class="btn nextCoupon"> Next Coupon <span> &rarr; </span> </button>
             
-            <!-- <button class="btn doneFillingBtn"> Done Filling     </button> -->
             <button class="btn doneFillingBtn"> Done Filling  <span> &#10004; </span>   </button>
            
             <div class="costs">
@@ -388,10 +385,12 @@
                 <div class="costs__price">0,00 €</div>
             </div>
 
-
-
+            
         </div>
     </main>
+
+
+    
 
 
 
@@ -493,6 +492,7 @@
 
 
     <script src="scripts/main-part.js"></script>
+    <script src="media-queries.js"></script>
     <script src="scripts/script.js"></script>
 </body>
 

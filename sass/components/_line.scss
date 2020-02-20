@@ -1,8 +1,29 @@
 
 
-.line {
+.line-vertical {
     width: .5rem;
     border-left: 2px solid rgba(148, 17, 255, 0.082);
     height: 42rem;
     align-self: center;  
+
+    @include respond(phone) {
+        display: none;
+    }
+}
+
+
+
+
+.line-horizontal{
+    display: none;
+    align-self: center; 
+    margin: 2rem 0; 
+
+    width: 42rem;
+    border-bottom: 2px solid rgba(148, 17, 255, 0.082);
+    height: .5rem;
+
+    @include respond(phone) {
+        display: block;
+    }
 }

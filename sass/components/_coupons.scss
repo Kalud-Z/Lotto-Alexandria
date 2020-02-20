@@ -8,7 +8,14 @@
     width: var(--big-box-width);
     height: var(--big-box-height);
 
+    @include respond(phone-very-small) {
+        width:  var(--big-box-width);
+        height: var(--big-box-height);
+    }
+
     transition: transform $main-transition-duration;
+
+    position: relative;
 
 
 }
@@ -34,6 +41,10 @@
 
     opacity: 0;
     visibility: hidden;
+
+    @include respond(phone-very-small) {
+        flex: 0 0 31.7%;
+    }
 
     &--big {
         flex: 0 0 100%;

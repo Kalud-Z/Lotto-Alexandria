@@ -48,6 +48,7 @@ button::-moz-focus-inner {
     border-radius: 7px;
     cursor: pointer;
     transition: all  $main-transition-duration;
+    background-color: transparent;
 
 
     &:visited {
@@ -71,6 +72,9 @@ button::-moz-focus-inner {
     opacity: 0;
     visibility: hidden; 
     
+    @include respond(phone) {top: -28%; }
+
+    @include respond(phone-very-small) {top: -15%; }
 
 }
 
@@ -80,8 +84,27 @@ button::-moz-focus-inner {
     align-items: center;
     cursor: not-allowed;
     pointer-events: none;
-
     align-self: flex-start;
+
+    /* @include respond(phone) {
+        // align-self: center;
+    } */
+
+    @include respond(phone) {
+        position: absolute;
+        bottom: -9%;
+        left: 64px;
+    }
+
+    @include respond(phone-small) {
+        left: 22px;
+    }
+
+    @include respond(phone-very-small) {
+        left: -2px;
+    }
+    
+
     
     // it start very light colored. 
     color: #40609460;
@@ -111,9 +134,15 @@ button::-moz-focus-inner {
 
     & span { margin-left: 1rem; }
 
-    // it starts hidden
-    // opacity: 0;
-    // visibility: hidden; 
+    @include respond(phone) {
+        position: absolute;
+        top :-4% ;
+        right: 32px;
+        margin: 0; 
+    }
+
+    @include respond(phone-very-small) { right: 9px; }
+    
 }
 
 .show-nextCouponButton {
@@ -131,6 +160,18 @@ button::-moz-focus-inner {
     margin-top: 2rem;
     cursor: not-allowed;
     border:2px solid #21447481;
+
+    @include respond(phone) {
+        position: absolute;
+        bottom: -10%;
+        right: 55px;
+    }
+
+    @include respond(phone-small) { right: 28px ;}
+    
+    @include respond(phone-very-small) { right: 5px; }
+
+    
 
     &--activated {
         color: #214474;

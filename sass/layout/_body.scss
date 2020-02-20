@@ -1,17 +1,26 @@
 
+
 .coupons-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // margin-right: 3rem;
+
+    @include respond(phone-very-small) { margin: 0 1rem; }
+
 
     &__title {
         align-self: flex-start;
-
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @include respond(phone) {
+            margin-left: 9%;
+            margin-top: -1%;
+        }
+
+        @include respond(phone-very-small) { margin-left: 1%; }
 
         &__info-logo {
             cursor: pointer;

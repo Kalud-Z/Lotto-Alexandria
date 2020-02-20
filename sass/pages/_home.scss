@@ -2,23 +2,40 @@
 
 .section-play {
     margin: 5rem 0;
-
+    // background-color: yellow;
     display: flex;
     align-items: stretch;
     justify-content: center;
+
+    @include respond(phone) {
+        flex-direction: column;
+    }
+    
 
     &__left {
         display: flex;
         flex-direction: column;
         position: relative;
+        margin-bottom: 6rem;
     }
 
     &__right {
-        flex: 0 0 17%;
+        flex-basis: 30rem;
         display: flex;
         flex-direction: column;
 
+        @include respond(phone) {
+            // flex-direction: row;
+            flex-basis: 0;
+            justify-content: center;
+            align-items: center;
+            margin-left: 3rem;
+            margin-right: 3rem;
+        }
 
+        &__title {
+            @include respond(phone) { display: none; }
+        }
     }
 
 

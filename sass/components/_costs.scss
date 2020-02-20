@@ -6,9 +6,13 @@
 
     color: rgb(32, 104, 167);
 
-    // it start hidden :
-    // opacity: 0;
-    // visibility: hidden;
+    
+    @include respond(phone) {
+        // margin-left: auto;
+         margin-top: 4rem;
+
+        // display: none;
+    }
 
 
     &__text {
@@ -18,14 +22,20 @@
             font-size: 1.2rem;
             margin-top: -2px;
         }
+
+        & p {
+            @include respond(phone) { line-height: 97%; }
+        }
     }
 
 
     &__price {
         font-size: 3rem;
         color: #544C4C;
-    }
 
+        @include respond(phone) {  margin-left: 5rem; }
+
+    }
 
 }
 

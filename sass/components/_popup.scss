@@ -39,6 +39,8 @@
         display: flex;
         flex-direction: column;
 
+        @include respond(phone) { width: 90vw;}
+
         & p {
             font-size: 2rem;
             font-weight: 300;
@@ -52,9 +54,7 @@
             max-height: 80vh;
             overflow-y: auto;
 
-            & p { 
-                text-align: left;
-            }
+            & p { text-align: left; }
         }
     }
 
