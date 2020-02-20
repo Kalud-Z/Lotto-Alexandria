@@ -605,7 +605,10 @@ var controller = (function(jackpotCtrl , UICtrl) {
     // because this variable is directly responsible for decidin whether to save a coupon or not. 
     var checkedFields = 0 ; 
     const oneCouponPrice = 1.2;
-    // var decrementTotal = 0; // 1 : you are allowed to decrement it. | -1 : you are NOT allowed to decrement it.
+    /*  this is flag is created just for the deleteAllFields button when it calls updateTotal() upon click.
+     if we dont use this flag , each time the button is clicked, it will call updateTotal() and keep decrementin the total on the UI !
+      1 : you are allowed to decrement it. | -1 : you are NOT allowed to decrement it. */
+    var decrementTotalFlag = 0; 
     var addNewCouponFlag = 0; // 1 : yes => please do it. |  : 0 => no god no. dont !
     var selectedElementIs = UICtrl.getSelectedElementIs();
     var DOMStrings = UICtrl.getDOMStrings();   // class or id of elements as a string.
@@ -730,6 +733,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
               || clickedElement === selectedElementIs.statisticButton ) {
                 UICtrl.fillRandomly(); //we fill the coupon without opening the popUp
                 updateTotal(1);
+                decrementTotalFlag = 1; // now we are allowed to decrement the total but clicking the deletAllfields button.
                 checkedFields = 4;  
                 addNewCouponFlag = 1;  //we release the flag whenever all required fields are checked.
                 //we show the next coupon button . as long as we are not already in the last coupon. (nineth one)
@@ -772,7 +776,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
             UICtrl.expandCoupon(cpnClickedId);
 
             //decide what value we give to checkedFields
-            if(jackpotCtrl.hasCoupon(cpnClickedId)){ checkedFields = 4; UICtrl.showNextCouponButton(); } // if the coupon is saved. then it is already filled.
+            if(jackpotCtrl.hasCoupon(cpnClickedId)){ checkedFields = 4; UICtrl.showNextCouponButton(); decrementTotalFlag = 1;} // if the coupon is saved. then it is already filled.
             else { checkedFields = 0; UICtrl.fieldsClickable(); }   //if the coupon is not filled, we make the fields clickable. so we can check them.           
             UICtrl.CouponUnclickable();  //Either way , whenever we expand a coupon. we always make the coupon unclickable.
             
@@ -824,6 +828,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                     addNewCouponFlag = 1 ;      // permission flag. . => yes do it 
                     UICtrl.fieldsUnclickable();  //block all the empty fields.
                     updateTotal(1); //we increase the amount displayed in the UI
+                    decrementTotalFlag = 1;
                 }
 
                 // we de-activate the DoneFillingBtn based on the value of checkedFields.  
@@ -838,6 +843,7 @@ var controller = (function(jackpotCtrl , UICtrl) {
                 //we make them clickable again , only when ( => max-number-of-checked-fields - 1)
                 if(checkedFields === (4-1)) {
                     updateTotal(-1); ////we decrease the amount displayed in the UI
+                    decrementTotalFlag = 0;
                     UICtrl.fieldsClickable();  //we only need to call function ONCE. the one time when we uncheck the first field from a fully checked coupon.
                 } 
                 addNewCouponFlag = 0; // permission denied.
@@ -896,14 +902,17 @@ var controller = (function(jackpotCtrl , UICtrl) {
             jackpotCtrl.deleteAllCoupons();
             UICtrl.makeAllFilledCouponsClickable(jackpotCtrl.getAllCoupons());
             UICtrl.deactivateDoneFillingBtn()
-            UICtrl.setInitialUI();    
+            UICtrl.setInitialUI(); 
+            updateTotal();   
         }
 
         // in case we are in state 2 . we delete all fields.
-         else {   CtrlDeleteAllFieldsInOneCoupon(); } 
+         else { 
+            CtrlDeleteAllFieldsInOneCoupon();
+            if(decrementTotalFlag) {  updateTotal(-1); decrementTotalFlag = 0;  } //we can update the total , only if the flag is released.
+        } 
 
          UICtrl.hideDeleteAllButton();
-         updateTotal();
     }
 
     return {

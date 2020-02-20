@@ -1,4 +1,24 @@
 
+/*  DO THIS : ###########################################################################################################
+a flag that controls if we are allowed to decrement the total or not, when we click delete all fields.
+it starts blocked. = 0;
+it gets released when : 
+-we expand the coupon. && checkedFields = 4  ###done###
+-we fill the expanded coupon randomly.   ##done###
+-we add the fourth cross.   ##done###
+
+it get blocked when :
+- we click on delete all fields button.  ##done##
+- we uncheck the third field.    ##done##
+
+*/
+
+
+
+
+
+
+
 
 
 
@@ -49,19 +69,6 @@ we gonna update the Total when :
 
  when we delete all fields .in state 2  ###done ### without option
 
-/*  NO NEED FOR THIS !!!!! because 
-a flag that controls if we are allowed to decrement the total or not, when we click delete all fields.
-it starts blocked. = 0;
-it gets released when : 
--we expand the coupon.
--we fill the expanded coupon randomly.
--we add the fourth cross.
-
-it get blocked when :
-- we click on delete all fields button.
-- we uncheck the third field.  
-
-*/
 
 
 
