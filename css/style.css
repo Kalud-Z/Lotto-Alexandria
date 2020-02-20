@@ -416,10 +416,8 @@ body {
   .randomNumbers-popup__logo-astro {
     height: 2.5rem;
     width: 2.5rem;
-    fill: #6C82A2;
+    fill: currentColor;
     margin-bottom: 0.7rem; }
-    .randomNumbers-popup__logo-astro:hover {
-      filter: brightness(65%); }
   .randomNumbers-popup__button--astro svg, .randomNumbers-popup__button--astro use {
     pointer-events: none; }
   .randomNumbers-popup__button--statistik h2, .randomNumbers-popup__button--statistik p {

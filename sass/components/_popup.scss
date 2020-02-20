@@ -127,12 +127,10 @@
     &__logo-astro {
         height: 2.5rem;
         width: 2.5rem;
-        fill: #6C82A2;
+        // fill: #6C82A2;
+        fill: currentColor;
         margin-bottom: 0.7rem;
 
-        &:hover { filter: brightness(65%); }
-
-        
     }
 
     &__button--astro {

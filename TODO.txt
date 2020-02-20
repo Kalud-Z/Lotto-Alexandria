@@ -1,20 +1,4 @@
 
-/*  DO THIS : ###########################################################################################################
-a flag that controls if we are allowed to decrement the total or not, when we click delete all fields.
-it starts blocked. = 0;
-it gets released when : 
--we expand the coupon. && checkedFields = 4  ###done###
--we fill the expanded coupon randomly.   ##done###
--we add the fourth cross.   ##done###
-
-it get blocked when :
-- we click on delete all fields button.  ##done##
-- we uncheck the third field.    ##done##
-
-*/
-
-
-
 
 
 
@@ -48,27 +32,6 @@ Refactoring :
 
 
 ______________________________________________________________________________________________
-
-
-Total costs stuff :
-
-we gonna update the Total when : 
-
-* click go next coupon  ####done###  without option
-
-* fill randomly buttons in state 2  ###done### with option 1
-
-* goback button ###done### without option
-
-* when we check the fourth field. (it runs through all coiupons. whaever it fiend , add 1) ###done## with option : 1
-
-* when we uncheck the fourth field   ## done### with option : -1
-
-
-* when we delete all coupons.  ###done ### without option
-
- when we delete all fields .in state 2  ###done ### without option
-
 
 
 
