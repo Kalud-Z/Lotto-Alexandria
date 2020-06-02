@@ -41,45 +41,7 @@ var selectedElementIs = {
                     price               : document.querySelector('.costs__price') 
                     
 };
-            
-/* 
-var phone = '(max-width: 650px)';
-var mql = window.matchMedia(phone);
 
-
-function moveNextCouponButton(e) {
-  if(e.matches) {
-    (function moveNextCouponButtonToNewPosition() {
-        //we remove the button from its original spot.
-        var parent = selectedElementIs.sectionPlayRight;
-        var target = selectedElementIs.nextCouponButton;
-        var targetRemoved = parent.removeChild(target);
-    
-        // we insert the button in its new spot.
-        parent = selectedElementIs.couponsContainer;
-        parent.prepend(targetRemoved);  // append a node child as first child of the parent node.
-    })();
-    } 
-  else { 
-      (function moveNextCouponButtonToNewToOriginalPosition() {
-        //we remove the button from its new spot.
-        var parent = selectedElementIs.couponsContainer;
-        var target = selectedElementIs.nextCouponButton;
-        var targetRemoved = parent.removeChild(target);
-        var referenceNode = selectedElementIs.doneFillingButton;
-
-        // we insert the button in its original spot.
-        parent = selectedElementIs.sectionPlayRight;
-        parent.insertBefore(targetRemoved, referenceNode);
-    })();
-  }
-}
-
-mql.addListener(moveNextCouponButton);  //adding event listener to the media query list.
-
- */
-
-//  the correct version 
 
 
 var phone = 650;
@@ -130,18 +92,6 @@ function repositionButtons() {
 
 
 repositionButtons();
-
-
-
-// the done filling button ##########################################
-
-// move it to : last child of 'section-play__left'
-
-
-
-
-
-
 
 
 
