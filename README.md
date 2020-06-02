@@ -12,7 +12,12 @@ The App is simple and self-explanatory. Just check your lucky numbers submit you
 * Sass - for proper styling.
 
 
-## Authors
 
-* **Khaled Fahem** 
+__________________________________________________________________
+
+![](AppPreviewScreenshots/pic1.png)
+
+__________________________________________________________________
+
+![](AppPreviewScreenshots/pic2.png)
 
